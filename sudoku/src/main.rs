@@ -1,26 +1,27 @@
 pub struct Polje {
     vrstica: u8,
     stolpec: u8,
-    stevilo: u8,
+    stevilo: Obstoj,
     moznosti: Vec<u8>,
 }
 
 pub struct Suduku {
     mreza: Vec<Polje>,
-    trenutno_polje: Polje,
-} //naredi kot seznam seznamov
+    trenutno_polje: usize, //kao indeks v seznamu
+} 
 
 pub enum Obstoj {
     Prazno,
     Polno(u8),
 }
 
+
 impl Obstoj {
     fn veljavnost(&self) -> bool{
         match self {
             &Self::Prazno => true,
             &Self::Polno(n) => {
-                if 0 < n && n < 10 then true else false
+                n > 0 && n < 10
             }
         }
     }
@@ -39,28 +40,41 @@ impl Polje {
     fn ali_je_stolpec_okej(&self, suduku: Suduku) -> bool {
         false
     }
-    fn prazno() -> Polje{
+    pub fn prazno_polje(vrst: u8, stolp: u8) -> Polje{
         Polje {
-            vrstica: 0,
-            stolpec: 0,
-            stevilo: 0,
+            vrstica: vrst,
+            stolpec: stolp,
+            stevilo: Obstoj::Prazno,
             moznosti: vec![1, 2, 3, 4, 5, 6, 7, 8, 9],
-        },
+        }
     }
 }
 
 impl Suduku {
-    fn prazen() -> Suduku {
+    fn prazen_suduku() -> Suduku {
+        let mut tabela = vec![];
+        for i in  1..=9 {
+            for j in 1..10 {
+                let polje = Polje::prazno_polje(i, j);
+                tabela.push(polje);
+            }
+        }
         Suduku {
-            mreza: vec![],
-            trenutno_polje: Polje {
-                vrstica: 0,
-                stolpec: 0,
-                stevilo: 0,
-                moznosti: vec![1, 2, 3, 4, 5, 6, 7, 8, 9],
-            },
+            mreza: tabela,
+            trenutno_polje: 0
         }
     }
+
+    fn napolni_polje(&mut self, vrst: u8, stolp: u8, st: u8) -> () {
+        let indeks = (vrst as usize) * 9 + (stolp as usize);
+        let polje = Polje {
+            vrstica: vrst,
+            stolpec: stolp,
+            stevilo: Obstoj::Polno(st),
+            moznosti: vec![],
+        };
+        self.mreza[indeks] = polje;
+    } 
 }
 
 fn main() {
