@@ -40,6 +40,13 @@ impl Polje {
     fn ali_je_stolpec_okej(&self, suduku: Suduku) -> bool {
         false
     }
+    fn ugotovi_stevilo_moznosti() -> u32 {
+
+    }
+    fn vpisi() -> Polje {
+
+    }
+
     pub fn prazno_polje(vrst: u8, stolp: u8) -> Polje{
         Polje {
             vrstica: vrst,
@@ -75,6 +82,9 @@ impl Suduku {
         };
         self.mreza[indeks] = polje;
     } 
+
+
+    fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }
 
 fn main() {
