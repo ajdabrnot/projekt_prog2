@@ -1,3 +1,3 @@
-mod strukture;
-mod logika;
 mod grafika;
+mod logika;
+mod strukture;

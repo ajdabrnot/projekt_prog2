@@ -3,4 +3,25 @@ name = "sudoku"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+crate-type = ["cdylib"]
+
 [dependencies]
+sauron = "0.70"
+console_error_panic_hook = "0.1"
+js-sys = "0.3"
+
+log = "0.4"
+console_log = "0.2"
+futures = "=0.3.30"
+
+
+[dependencies.web-sys]
+version = "0.3"
+features = ["console"]
+
+[dependencies.wasm-bindgen]
+version = "0.2"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
