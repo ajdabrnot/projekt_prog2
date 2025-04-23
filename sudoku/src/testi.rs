@@ -1,9 +1,11 @@
 use crate::strukture::{Polje, Obstoj, Suduku};
+use crate::logika;
 
 #[cfg(test)]
 mod tests {
     use crate::testi::Polje;
     use crate::testi::Obstoj;
+
     #[test]
     fn ustvari_polje() {
         let result = Polje::prazno_polje(2, 3);
