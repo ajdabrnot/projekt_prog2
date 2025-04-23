@@ -26,61 +26,97 @@ impl Obstoj {
 
 impl Polje {
     fn ugotovi_skatlo(&self) -> u8 {
-        match self::vrstica {
-            1 | 2 | 3 => match self::stolpec {
+        match self.vrstica {
+            1 | 2 | 3 => match self.stolpec {
                 1 | 2 | 3 => 1,
                 4 | 5 | 6 => 2,
                 7 | 8 | 9 => 3,
                 _ => 0
             },
-            4 | 5 | 6 => match self::stolpec {
+            4 | 5 | 6 => match self.stolpec {
                 1 | 2 | 3 => 4,
                 4 | 5 | 6 => 5,
                 7 | 8 | 9 => 6,
                 _ => 0
             },
-            7 | 8 | 9 => match self::stolpec {
+            7 | 8 | 9 => match self.stolpec {
                 1 | 2 | 3 => 7,
                 4 | 5 | 6 => 8,
                 7 | 8 | 9 => 9,
                 _ => 0
-            }
+            },
+            _ => 0
         }
     }
     fn ali_je_vrstica_okej(&self, suduku: Suduku) -> bool {
-        return self::vrstica > 0 && self::vrstica < 10;} 
+        return self.vrstica > 0 && self.vrstica < 10
+    } 
         /// poj bo mogl se prevert, ce je ze ksna ista stevilka not vpisana
         
     fn ali_je_skatla_okej(&self, suduku: Suduku) -> bool {
-        return self.ugotovi_skatlo > 0 && self.ugotovi_skatlo < 10; 
+        return self.ugotovi_skatlo() > 0 && self.ugotovi_skatlo() < 10
     }
     fn ali_je_stolpec_okej(&self, suduku: Suduku) -> bool {
-        return self::stolpec > 0 && self::stolpec < 10; 
+        return self.stolpec > 0 && self.stolpec < 10 
     }
-    fn ugotovi_stevilo_moznosti(&self, suduku: Suduku) -> u32 {
+    fn ugotovi_stevilo_moznosti(&self, suduku: Suduku) -> u32 { 3
     }
 
     fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: Suduku) -> Vec<u8> {
-        ze_vpisana_st = vec![];
-        ni_v_vrstici = vec![];
+        let mut ze_vpisana_st = vec![];
+        let mut ni_v_vrstici = vec![];
         for polje in &suduku.mreza {
-            if polje.vrstica = vrst {
-                ze_vpisana_st.append(polje.stevilo)
+            if polje.vrstica == vrst {
+                match polje.stevilo {
+                    Obstoj::Polno(i) => ze_vpisana_st.push(i),
+                    Obstoj::Prazno => {}
+                }
             }
         };
         for i in 1..=9 {
-            if ze_vpisana_st.contains(i) {} 
-            else {ni_v_vrstici.append(i)}
+            if ze_vpisana_st.contains(&i) {} 
+            else {ni_v_vrstici.push(i)}
         };
         return ni_v_vrstici
-
     }
-    fn ugotovi_stevila_v_stolpcu(stolp: u8, suduku: Suduku) -> Vec<u32> {}
-    fn ugotovi_stevila_v_skatli(skatla: u8, suduku: Suduku) -> Vec<u32> {}
+    fn ugotovi_stevila_v_stolpcu(stolp: u8, suduku: Suduku) -> Vec<u8> {
+        let mut ze_vpisana_st = vec![];
+        let mut ni_v_stolpcu = vec![];
+        for polje in &suduku.mreza {
+            if polje.stolpec == stolp {
+                match polje.stevilo {
+                    Obstoj::Polno(i) => ze_vpisana_st.push(i),
+                    Obstoj::Prazno => {}
+                }
+            }
+        };
+        for i in 1..=9 {
+            if ze_vpisana_st.contains(&i) {} 
+            else {ni_v_stolpcu.push(i)}
+        };
+        return ni_v_stolpcu
+    }
+    fn ugotovi_stevila_v_skatli(skatla: u8, suduku: Suduku) -> Vec<u8> {
+        let mut ze_vpisana_st = vec![];
+        let mut ni_v_skatli = vec![];
+        for polje in &suduku.mreza {
+            if polje.ugotovi_skatlo() == skatla {
+                match polje.stevilo {
+                    Obstoj::Polno(i) => ze_vpisana_st.push(i),
+                    Obstoj::Prazno => {}
+                }
+            }
+        };
+        for i in 1..=9 {
+            if ze_vpisana_st.contains(&i) {} 
+            else {ni_v_skatli.push(i)}
+        };
+        return ni_v_skatli
+    }
 
     fn vpisi(&mut self, stevilo: u8) -> () {
-        if &self::moznosti.contains(&stevilo) {
-            self::stevilo = stevilo
+        if self.moznosti.contains(&stevilo) {
+            self.stevilo = Obstoj::Polno(stevilo)
         };
         
     }
@@ -121,5 +157,5 @@ impl Suduku {
         self.mreza[indeks] = polje;
     }
 
-    fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
+    //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }
