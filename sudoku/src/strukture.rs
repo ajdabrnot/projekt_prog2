@@ -1,8 +1,10 @@
+
+#[derive(Debug, PartialEq)]
 pub struct Polje {
-    vrstica: u8,
-    stolpec: u8,
-    stevilo: Obstoj,
-    moznosti: Vec<u8>,
+    pub vrstica: u8,
+    pub stolpec: u8,
+    pub stevilo: Obstoj,
+    pub moznosti: Vec<u8>,
 }
 
 pub struct Suduku {
@@ -10,13 +12,15 @@ pub struct Suduku {
     trenutno_polje: usize, //kao indeks v seznamu
 }
 
+#[derive(PartialEq, Debug)]
 pub enum Obstoj {
     Prazno,
     Polno(u8),
 }
 
+
 impl Obstoj {
-    fn veljavnost(&self) -> bool {
+    pub fn veljavnost(&self) -> bool {
         match self {
             &Self::Prazno => true,
             &Self::Polno(n) => n > 0 && n < 10,
@@ -25,7 +29,7 @@ impl Obstoj {
 }
 
 impl Polje {
-    fn ugotovi_skatlo(&self) -> u8 {
+    pub fn ugotovi_skatlo(&self) -> u8 {
         match self.vrstica {
             1 | 2 | 3 => match self.stolpec {
                 1 | 2 | 3 => 1,
@@ -48,21 +52,21 @@ impl Polje {
             _ => 0
         }
     }
-    fn ali_je_vrstica_okej(&self, suduku: Suduku) -> bool {
+    pub fn ali_je_vrstica_okej(&self, suduku: Suduku) -> bool {
         return self.vrstica > 0 && self.vrstica < 10
     } 
         /// poj bo mogl se prevert, ce je ze ksna ista stevilka not vpisana
         
-    fn ali_je_skatla_okej(&self, suduku: Suduku) -> bool {
+    pub fn ali_je_skatla_okej(&self, suduku: Suduku) -> bool {
         return self.ugotovi_skatlo() > 0 && self.ugotovi_skatlo() < 10
     }
-    fn ali_je_stolpec_okej(&self, suduku: Suduku) -> bool {
+    pub fn ali_je_stolpec_okej(&self, suduku: Suduku) -> bool {
         return self.stolpec > 0 && self.stolpec < 10 
     }
-    fn ugotovi_stevilo_moznosti(&self, suduku: Suduku) -> u32 { 3
+    pub fn ugotovi_stevilo_moznosti(&self, suduku: Suduku) -> u32 { 3
     }
 
-    fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: Suduku) -> Vec<u8> {
+    pub fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: Suduku) -> Vec<u8> {
         let mut ze_vpisana_st = vec![];
         let mut ni_v_vrstici = vec![];
         for polje in &suduku.mreza {
@@ -79,7 +83,7 @@ impl Polje {
         };
         return ni_v_vrstici
     }
-    fn ugotovi_stevila_v_stolpcu(stolp: u8, suduku: Suduku) -> Vec<u8> {
+    pub fn ugotovi_stevila_v_stolpcu(stolp: u8, suduku: Suduku) -> Vec<u8> {
         let mut ze_vpisana_st = vec![];
         let mut ni_v_stolpcu = vec![];
         for polje in &suduku.mreza {
@@ -96,7 +100,7 @@ impl Polje {
         };
         return ni_v_stolpcu
     }
-    fn ugotovi_stevila_v_skatli(skatla: u8, suduku: Suduku) -> Vec<u8> {
+    pub fn ugotovi_stevila_v_skatli(skatla: u8, suduku: Suduku) -> Vec<u8> {
         let mut ze_vpisana_st = vec![];
         let mut ni_v_skatli = vec![];
         for polje in &suduku.mreza {
@@ -114,7 +118,7 @@ impl Polje {
         return ni_v_skatli
     }
 
-    fn vpisi(&mut self, stevilo: u8) -> () {
+    pub fn vpisi(&mut self, stevilo: u8) -> () {
         if self.moznosti.contains(&stevilo) {
             self.stevilo = Obstoj::Polno(stevilo)
         };
@@ -132,7 +136,7 @@ impl Polje {
 }
 
 impl Suduku {
-    fn prazen_suduku() -> Suduku {
+    pub fn prazen_suduku() -> Suduku {
         let mut tabela = vec![];
         for i in 1..=9 {
             for j in 1..10 {
@@ -146,7 +150,7 @@ impl Suduku {
         }
     }
 
-    fn napolni_polje(&mut self, vrst: u8, stolp: u8, st: u8) -> () {
+    pub fn napolni_polje(&mut self, vrst: u8, stolp: u8, st: u8) -> () {
         let indeks = (vrst as usize) * 9 + (stolp as usize);
         let polje = Polje {
             vrstica: vrst,
