@@ -46,6 +46,20 @@ impl Polje {
     fn vpisi() -> Polje {
 
     }
+    fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: Suduku) -> Vec<u8> {
+        ze_vpisana_st = vec![];
+        ni_v_vrstici = vec![];
+        for polje in &suduku.mreza {
+            if polje.vrstica = vrst {
+                ze_vpisana_st.append(polje.stevilo)
+            }
+        };
+        for i in 1..=9 {
+            if ze_vpisana_st.contains(i) {} 
+            else {ni_v_vrstici.append(i)}
+        };
+        return ni_v_vrstici
+    }
 
     pub fn prazno_polje(vrst: u8, stolp: u8) -> Polje{
         Polje {

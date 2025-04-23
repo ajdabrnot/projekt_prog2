@@ -26,19 +26,64 @@ impl Obstoj {
 
 impl Polje {
     fn ugotovi_skatlo(&self) -> u8 {
-        42
+        match self::vrstica {
+            1 | 2 | 3 => match self::stolpec {
+                1 | 2 | 3 => 1,
+                4 | 5 | 6 => 2,
+                7 | 8 | 9 => 3,
+                _ => 0
+            },
+            4 | 5 | 6 => match self::stolpec {
+                1 | 2 | 3 => 4,
+                4 | 5 | 6 => 5,
+                7 | 8 | 9 => 6,
+                _ => 0
+            },
+            7 | 8 | 9 => match self::stolpec {
+                1 | 2 | 3 => 7,
+                4 | 5 | 6 => 8,
+                7 | 8 | 9 => 9,
+                _ => 0
+            }
+        }
     }
     fn ali_je_vrstica_okej(&self, suduku: Suduku) -> bool {
-        false
-    }
+        return self::vrstica > 0 && self::vrstica < 10;} 
+        /// poj bo mogl se prevert, ce je ze ksna ista stevilka not vpisana
+        
     fn ali_je_skatla_okej(&self, suduku: Suduku) -> bool {
-        false
+        return self.ugotovi_skatlo > 0 && self.ugotovi_skatlo < 10; 
     }
     fn ali_je_stolpec_okej(&self, suduku: Suduku) -> bool {
-        false
+        return self::stolpec > 0 && self::stolpec < 10; 
     }
-    fn ugotovi_stevilo_moznosti() -> u32 {}
-    fn vpisi() -> Polje {}
+    fn ugotovi_stevilo_moznosti(&self, suduku: Suduku) -> u32 {
+    }
+
+    fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: Suduku) -> Vec<u8> {
+        ze_vpisana_st = vec![];
+        ni_v_vrstici = vec![];
+        for polje in &suduku.mreza {
+            if polje.vrstica = vrst {
+                ze_vpisana_st.append(polje.stevilo)
+            }
+        };
+        for i in 1..=9 {
+            if ze_vpisana_st.contains(i) {} 
+            else {ni_v_vrstici.append(i)}
+        };
+        return ni_v_vrstici
+
+    }
+    fn ugotovi_stevila_v_stolpcu(stolp: u8, suduku: Suduku) -> Vec<u32> {}
+    fn ugotovi_stevila_v_skatli(skatla: u8, suduku: Suduku) -> Vec<u32> {}
+
+    fn vpisi(&mut self, stevilo: u8) -> () {
+        if &self::moznosti.contains(&stevilo) {
+            self::stevilo = stevilo
+        };
+        
+    }
 
     pub fn prazno_polje(vrst: u8, stolp: u8) -> Polje {
         Polje {
