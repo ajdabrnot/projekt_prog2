@@ -2,7 +2,7 @@
 pub struct Polje {
     pub vrstica: u8,
     pub stolpec: u8,
-    pub stevilo: Obstoj,
+    pub stevilo: u8,
     pub moznosti: Vec<u8>,
 }
 #[derive(Debug, PartialEq, Clone)]

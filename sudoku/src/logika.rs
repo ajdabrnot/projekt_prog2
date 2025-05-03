@@ -15,8 +15,8 @@ pub fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: &Suduku) -> Vec<u8> {
     for polje in &suduku.mreza {
         if polje.vrstica == vrst {
             match polje.stevilo {
-                Obstoj::Polno(i) => ze_vpisana_st.push(i),
-                Obstoj::Prazno => {}
+                0 => {}
+                i => ze_vpisana_st.push(i)
             }
         }
     }
@@ -34,8 +34,8 @@ pub fn ugotovi_stevila_v_stolpcu(stolp: u8, suduku: &Suduku) -> Vec<u8> {
     for polje in &suduku.mreza {
         if polje.stolpec == stolp {
             match polje.stevilo {
-                Obstoj::Polno(i) => ze_vpisana_st.push(i),
-                Obstoj::Prazno => {}
+                0 => {}
+                i => ze_vpisana_st.push(i)
             }
         }
     }
@@ -53,8 +53,8 @@ pub fn ugotovi_stevila_v_skatli(skatla: u8, suduku: &Suduku) -> Vec<u8> {
     for polje in &suduku.mreza {
         if polje.ugotovi_skatlo() == skatla {
             match polje.stevilo {
-                Obstoj::Polno(i) => ze_vpisana_st.push(i),
-                Obstoj::Prazno => {}
+                0 => {}
+                i => ze_vpisana_st.push(i)
             }
         }
     }
@@ -146,7 +146,7 @@ impl Polje {
 
     pub fn vpisi(&mut self, stevilo: u8) -> () {
         if self.moznosti.contains(&stevilo) {
-            self.stevilo = Obstoj::Polno(stevilo);
+            self.stevilo = stevilo;
             self.moznosti = vec![]
         };
     }
@@ -155,7 +155,7 @@ impl Polje {
         Polje {
             vrstica: vrst,
             stolpec: stolp,
-            stevilo: Obstoj::Prazno,
+            stevilo: 0,
             moznosti: vec![1, 2, 3, 4, 5, 6, 7, 8, 9],
         }
     }
@@ -181,7 +181,7 @@ impl Suduku {
         let polje = Polje {
             vrstica: vrst,
             stolpec: stolp,
-            stevilo: Obstoj::Polno(st),
+            stevilo: st,
             moznosti: vec![],
         };
         let v_vrstici = polje.ali_je_vrstica_okej(self);
