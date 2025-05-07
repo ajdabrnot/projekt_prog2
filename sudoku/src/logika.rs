@@ -177,7 +177,7 @@ impl Suduku {
     }
 
     pub fn napolni_polje(&mut self, vrst: u8, stolp: u8, st: u8) -> () {
-        let indeks = (vrst as usize) * 9 + (stolp as usize);
+        let indeks = (vrst as usize - 1) * 9 + (stolp as usize) - 1;
         let polje = Polje {
             vrstica: vrst,
             stolpec: stolp,
@@ -200,12 +200,27 @@ impl Suduku {
             }
         }
     }
+
+    pub fn sudoku_kot_seznam_samo_vrednosti(&self) -> Vec<Vec<u8>> {
+        let mut nov = vec![];
+        let mut manjsi_sez = vec![];
+        for i in 0..81 {
+            if i != 0 && i%9 ==0 {
+                manjsi_sez.push(self.mreza[i].stevilo);
+                nov.push(manjsi_sez);
+                manjsi_sez = vec![];
+            }
+            else{manjsi_sez.push(self.mreza[i].stevilo)}
+        };
+        nov.push(manjsi_sez);
+        return nov;
+    }
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }
 
 use std::fmt::Display;
 use std::fmt::Formatter;
-use std::string;
+//use std::string;
 
 
 impl Display for Suduku {
