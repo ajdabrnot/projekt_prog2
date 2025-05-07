@@ -205,14 +205,13 @@ impl Suduku {
         let mut nov = vec![];
         let mut manjsi_sez = vec![];
         for i in 0..81 {
-            if i != 0 && i%9 ==0 {
+            if i % 9 == 8 {
                 manjsi_sez.push(self.mreza[i].stevilo);
                 nov.push(manjsi_sez);
                 manjsi_sez = vec![];
             }
             else{manjsi_sez.push(self.mreza[i].stevilo)}
         };
-        nov.push(manjsi_sez);
         return nov;
     }
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
