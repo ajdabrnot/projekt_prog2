@@ -202,3 +202,20 @@ impl Suduku {
     }
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }
+
+use std::fmt::Display;
+use std::fmt::Formatter;
+use std::string;
+
+
+impl Display for Suduku {
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), std::fmt::Error> { 
+        write!(fmt, "{:?}", self.mreza)
+     }
+}
+
+impl Display for Polje {
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), std::fmt::Error> { 
+        write!(fmt, "{} {} {}",  self.vrstica, self.stolpec, self.stevilo)
+     }
+}
