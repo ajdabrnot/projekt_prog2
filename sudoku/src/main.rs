@@ -30,6 +30,7 @@ impl App {
 // ctrl + k + c ti zakomentira vse kar oznacis
 // ctr + k ctrl u odkomentira
 // ctrl k s bliznice
+// ctrl c prekine terminal
 
 impl Application for App {
     type MSG = Msg;
