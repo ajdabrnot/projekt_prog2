@@ -2,223 +2,121 @@ use sauron::html::text;
 use sauron::prelude::*;
 use sauron::{node, Cmd, Component, Node, Program};
 
+pub mod strukture;
+pub mod logika;
+
+
+use crate::strukture::{Polje, Suduku};
+
 pub enum Msg {
-    R1C1(u32),
-    R1C2(u32),
-    R1C3(u32),
-    R1C4(u32),
-    R1C5(u32),
-    R1C6(u32),
-    R1C7(u32),
-    R1C8(u32),
-    R1C9(u32),
-    //
-    R2C1(u32),
-    R2C2(u32),
-    R2C3(u32),
-    R2C4(u32),
-    R2C5(u32),
-    R2C6(u32),
-    R2C7(u32),
-    R2C8(u32),
-    R2C9(u32),
-    //
-    R3C1(u32),
-    R3C2(u32),
-    R3C3(u32),
-    R3C4(u32),
-    R3C5(u32),
-    R3C6(u32),
-    R3C7(u32),
-    R3C8(u32),
-    R3C9(u32),
-    //
-    R4C1(u32),
-    R4C2(u32),
-    R4C3(u32),
-    R4C4(u32),
-    R4C5(u32),
-    R4C6(u32),
-    R4C7(u32),
-    R4C8(u32),
-    R4C9(u32),
-    //
-    R5C1(u32),
-    R5C2(u32),
-    R5C3(u32),
-    R5C4(u32),
-    R5C5(u32),
-    R5C6(u32),
-    R5C7(u32),
-    R5C8(u32),
-    R5C9(u32),
-    //
-    R6C1(u32),
-    R6C2(u32),
-    R6C3(u32),
-    R6C4(u32),
-    R6C5(u32),
-    R6C6(u32),
-    R6C7(u32),
-    R6C8(u32),
-    R6C9(u32),
-    //
-    R7C1(u32),
-    R7C2(u32),
-    R7C3(u32),
-    R7C4(u32),
-    R7C5(u32),
-    R7C6(u32),
-    R7C7(u32),
-    R7C8(u32),
-    R7C9(u32),
-    //
-    R8C1(u32),
-    R8C2(u32),
-    R8C3(u32),
-    R8C4(u32),
-    R8C5(u32),
-    R8C6(u32),
-    R8C7(u32),
-    R8C8(u32),
-    R8C9(u32),
-    //
-    R9C1(u32),
-    R9C2(u32),
-    R9C3(u32),
-    R9C4(u32),
-    R9C5(u32),
-    R9C6(u32),
-    R9C7(u32),
-    R9C8(u32),
-    R9C9(u32),
+    Stevka(u8),
+    Vrstica(u8),
+    Stolpec(u8),
 }
 
 pub struct App {
-    stevilo: u32,
+    stevilo: u8,
+    vrstica: u8,
+    stolpec: u8,
+    mreza: Suduku
 }
+
 
 impl App {
     pub fn new() -> App {
-        App { stevilo: 0 }
+        App { stevilo: 0, vrstica: 0, stolpec: 0, mreza: Suduku::prazen_suduku() }
     }
 }
+// ctrl + k + c ti zakomentira vse kar oznacis
+// ctr + k ctrl u odkomentira
+// ctrl k s bliznice
 
 impl Application for App {
     type MSG = Msg;
 
     fn update(&mut self, msg: Msg) -> Cmd<Msg> {
         match msg {
-            Msg::R1C1(a) => self.stevilo = a,
-            Msg::R1C2(a) => self.stevilo = a,
-            Msg::R1C3(a) => self.stevilo = a,
-            Msg::R1C4(a) => self.stevilo = a,
-            Msg::R1C5(a) => self.stevilo = a,
-            Msg::R1C6(a) => self.stevilo = a,
-            Msg::R1C7(a) => self.stevilo = a,
-            Msg::R1C8(a) => self.stevilo = a,
-            Msg::R1C9(a) => self.stevilo = a,
-
-            Msg::R2C1(a) => self.stevilo = a,
-            Msg::R2C2(a) => self.stevilo = a,
-            Msg::R2C3(a) => self.stevilo = a,
-            Msg::R2C4(a) => self.stevilo = a,
-            Msg::R2C5(a) => self.stevilo = a,
-            Msg::R2C6(a) => self.stevilo = a,
-            Msg::R2C7(a) => self.stevilo = a,
-            Msg::R2C8(a) => self.stevilo = a,
-            Msg::R2C9(a) => self.stevilo = a,
+            Msg::Stevka(1) => self.stevilo = 1,
+            Msg::Stevka(2) => self.stevilo = 2,
+            Msg::Stevka(3) => self.stevilo = 3,
+            Msg::Stevka(4) => self.stevilo = 4,
+            Msg::Stevka(5) => self.stevilo = 5,
+            Msg::Stevka(6) => self.stevilo = 6,
+            Msg::Stevka(7) => self.stevilo = 7,
+            Msg::Stevka(8) => self.stevilo = 8,
+            Msg::Stevka(9) => self.stevilo = 9,
+            Msg::Stevka(_) => self.stevilo = 0,
             //
-            Msg::R3C1(a) => self.stevilo = a,
-            Msg::R3C2(a) => self.stevilo = a,
-            Msg::R3C3(a) => self.stevilo = a,
-            Msg::R3C4(a) => self.stevilo = a,
-            Msg::R3C5(a) => self.stevilo = a,
-            Msg::R3C6(a) => self.stevilo = a,
-            Msg::R3C7(a) => self.stevilo = a,
-            Msg::R3C8(a) => self.stevilo = a,
-            Msg::R3C9(a) => self.stevilo = a,
+            Msg::Vrstica(1) => self.vrstica = 1,
+            Msg::Vrstica(2) => self.vrstica = 2,
+            Msg::Vrstica(3) => self.vrstica = 3,
+            Msg::Vrstica(4) => self.vrstica = 4,
+            Msg::Vrstica(5) => self.vrstica = 5,
+            Msg::Vrstica(6) => self.vrstica = 6,
+            Msg::Vrstica(7) => self.vrstica = 7,
+            Msg::Vrstica(8) => self.vrstica = 8,
+            Msg::Vrstica(9) => self.vrstica = 9,
+            Msg::Vrstica(_) => self.vrstica = 0,
             //
-            Msg::R4C1(a) => self.stevilo = a,
-            Msg::R4C2(a) => self.stevilo = a,
-            Msg::R4C3(a) => self.stevilo = a,
-            Msg::R4C4(a) => self.stevilo = a,
-            Msg::R4C5(a) => self.stevilo = a,
-            Msg::R4C6(a) => self.stevilo = a,
-            Msg::R4C7(a) => self.stevilo = a,
-            Msg::R4C8(a) => self.stevilo = a,
-            Msg::R4C9(a) => self.stevilo = a,
-            //
-            Msg::R5C1(a) => self.stevilo = a,
-            Msg::R5C2(a) => self.stevilo = a,
-            Msg::R5C3(a) => self.stevilo = a,
-            Msg::R5C4(a) => self.stevilo = a,
-            Msg::R5C5(a) => self.stevilo = a,
-            Msg::R5C6(a) => self.stevilo = a,
-            Msg::R5C7(a) => self.stevilo = a,
-            Msg::R5C8(a) => self.stevilo = a,
-            Msg::R5C9(a) => self.stevilo = a,
-            //
-            Msg::R6C1(a) => self.stevilo = a,
-            Msg::R6C2(a) => self.stevilo = a,
-            Msg::R6C3(a) => self.stevilo = a,
-            Msg::R6C4(a) => self.stevilo = a,
-            Msg::R6C5(a) => self.stevilo = a,
-            Msg::R6C6(a) => self.stevilo = a,
-            Msg::R6C7(a) => self.stevilo = a,
-            Msg::R6C8(a) => self.stevilo = a,
-            Msg::R6C9(a) => self.stevilo = a,
-            //
-            Msg::R7C1(a) => self.stevilo = a,
-            Msg::R7C2(a) => self.stevilo = a,
-            Msg::R7C3(a) => self.stevilo = a,
-            Msg::R7C4(a) => self.stevilo = a,
-            Msg::R7C5(a) => self.stevilo = a,
-            Msg::R7C6(a) => self.stevilo = a,
-            Msg::R7C7(a) => self.stevilo = a,
-            Msg::R7C8(a) => self.stevilo = a,
-            Msg::R7C9(a) => self.stevilo = a,
-            //
-            Msg::R8C1(a) => self.stevilo = a,
-            Msg::R8C2(a) => self.stevilo = a,
-            Msg::R8C3(a) => self.stevilo = a,
-            Msg::R8C4(a) => self.stevilo = a,
-            Msg::R8C5(a) => self.stevilo = a,
-            Msg::R8C6(a) => self.stevilo = a,
-            Msg::R8C7(a) => self.stevilo = a,
-            Msg::R8C8(a) => self.stevilo = a,
-            Msg::R8C9(a) => self.stevilo = a,
-            //
-            Msg::R9C1(a) => self.stevilo = a,
-            Msg::R9C2(a) => self.stevilo = a,
-            Msg::R9C3(a) => self.stevilo = a,
-            Msg::R9C4(a) => self.stevilo = a,
-            Msg::R9C5(a) => self.stevilo = a,
-            Msg::R9C6(a) => self.stevilo = a,
-            Msg::R9C7(a) => self.stevilo = a,
-            Msg::R9C8(a) => self.stevilo = a,
-            Msg::R9C9(a) => self.stevilo = a,
+            Msg::Stolpec(1) => self.stolpec = 1,
+            Msg::Stolpec(2) => self.stolpec = 2,
+            Msg::Stolpec(3) => self.stolpec = 3,
+            Msg::Stolpec(4) => self.stolpec = 4,
+            Msg::Stolpec(5) => self.stolpec = 5,
+            Msg::Stolpec(6) => self.stolpec = 6,
+            Msg::Stolpec(7) => self.stolpec = 7,
+            Msg::Stolpec(8) => self.stolpec = 8,
+            Msg::Stolpec(9) => self.stolpec = 9,
+            Msg::Stolpec(_) => self.stolpec = 0,
         };
+        self.mreza.napolni_polje(self.vrstica, self.stolpec, self.stevilo);
         return Cmd::none();
     }
 
     fn view(&self) -> Node<Msg> {
         div(
-            [class("some-class"), id("some-id"), attr("data-id", 1)],
+            [],
             [
-                div(
+                p([], [text!("Števka:")]),
+                input(
+                    [
+                        r#min(1),
+                        r#max(9),
+                        r#type("number"),
+                        on_input(|event: InputEvent| Msg::Stevka(event.value().parse().unwrap())),
+                    ],
                     [],
-                    [input(
-                        [
-                            r#type("text"),
-                            on_input(|event: InputEvent| {
-                                Msg::Stevka(event.value().parse().unwrap())
-                            }),
-                        ],
-                        [],
+                ),
+                p([], [text!("Vrstica:")]),
+                input(
+                    [
+                        r#min(1),
+                        r#max(9),
+                        r#type("number"),
+                        on_input(|event: InputEvent| Msg::Vrstica(event.value().parse().unwrap())),
+                    ],
+                    [],
+                ),
+                p([], [text!("Stolpec:")]),
+                input(
+                    [
+                        r#min(1),
+                        r#max(9),
+                        r#type("number"),
+                        on_input(|event: InputEvent| Msg::Stolpec(event.value().parse().unwrap())),
+                    ],
+                    [],
+                ),
+                p(
+                    [],
+                    [text!(
+                        "V polje v R{}C{} si napisal število {}, sudoku je {:?}",
+                        self.vrstica,
+                        self.stolpec,
+                        self.stevilo,
+                        self.mreza
                     )],
                 ),
-                p([], []),
             ],
         )
     }

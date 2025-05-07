@@ -1,4 +1,4 @@
 // pub mod grafika;
-mod logika;
-mod strukture;
-mod testi;
+// mod logika;
+// pub mod strukture;
+// mod testi;
