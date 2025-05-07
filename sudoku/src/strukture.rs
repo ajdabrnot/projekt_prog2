@@ -5,6 +5,7 @@ pub struct Polje {
     pub stevilo: u8,
     pub moznosti: Vec<u8>,
 }
+#[derive(Debug, PartialEq, Clone)]
 pub struct Suduku {
     pub mreza: Vec<Polje>,
     pub trenutno_polje: usize, //kao indeks v seznamu
