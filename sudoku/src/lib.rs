@@ -2,14 +2,12 @@
 
 mod testi;
 
-
 use sauron::html::text;
 use sauron::prelude::*;
 use sauron::{node, Cmd, Component, Node, Program};
 
-pub mod strukture;
 pub mod logika;
-
+pub mod strukture;
 
 use crate::strukture::{Polje, Suduku};
 
@@ -23,13 +21,17 @@ pub struct App {
     stevilo: u8,
     vrstica: u8,
     stolpec: u8,
-    mreza: Suduku
+    mreza: Suduku,
 }
-
 
 impl App {
     pub fn new() -> App {
-        App { stevilo: 0, vrstica: 0, stolpec: 0, mreza: Suduku::prazen_suduku() }
+        App {
+            stevilo: 0,
+            vrstica: 0,
+            stolpec: 0,
+            mreza: Suduku::prazen_suduku(),
+        }
     }
 }
 // ctrl + k + c ti zakomentira vse kar oznacis
@@ -75,7 +77,8 @@ impl Application for App {
             Msg::Stolpec(9) => self.stolpec = 9,
             Msg::Stolpec(_) => self.stolpec = 0,
         };
-        //self.mreza.napolni_polje(self.vrstica, self.stolpec, self.stevilo);
+        self.mreza
+            .napolni_polje(self.vrstica, self.stolpec, self.stevilo);
         return Cmd::none();
     }
 
@@ -116,12 +119,36 @@ impl Application for App {
                 p(
                     [],
                     [text!(
-                        "V polje v R{}C{} si napisal število {}, sudoku je",
+                        "V polje v R{}C{} si napisal število {}.",
                         self.vrstica,
                         self.stolpec,
-                        self.stevilo
-                        //self.mreza
+                        self.stevilo,
                     )],
+                ),
+                p(
+                    [],
+                    [
+                        text!("sudoku je",),
+                        br([], []),
+                        text!(" {:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[0]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[1]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[2]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[3]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[4]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[5]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[6]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[7]),
+                        br([], []),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[8]),
+                        br([], []),
+                    ],
                 ),
             ],
         )
@@ -133,4 +160,16 @@ pub fn main() {
     console_log::init_with_level(log::Level::Trace).unwrap();
     console_error_panic_hook::set_once();
     Program::mount_to_body(App::new());
-    }
+    // let mut sudoku_prvi = Suduku::prazen_suduku();
+    // println!("{:?}", sudoku_prvi.mreza);
+    // sudoku_prvi.napolni_polje(9, 9, 1);
+    // println!("TO BO NOVA MREZAAAAAA");
+    // println!("{:?}", sudoku_prvi.mreza);
+    // sudoku_prvi.napolni_polje(9, 8, 1);
+    // println!("TO BO NOVA MREZAAAAAA");
+    // println!("{:?}", sudoku_prvi.mreza);
+    // let seznam_vrednosti = sudoku_prvi.sudoku_kot_seznam_samo_vrednosti();
+    // println!("{:?}", seznam_vrednosti)
+
+
+}
