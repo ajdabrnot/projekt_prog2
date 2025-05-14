@@ -5,7 +5,7 @@ use crate::logika;
 
 #[cfg(test)]
 mod tests {
-    use crate::testi::{Polje, Obstoj, Suduku};
+    use crate::testi::{Polje, Suduku};
 
     #[test]
     fn ustvari_polje() {
