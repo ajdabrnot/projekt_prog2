@@ -130,7 +130,7 @@ impl Application for App {
                     [
                         text!("sudoku je",),
                         br([], []),
-                        text!(" {:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[0]),
+                        text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[0]),
                         br([], []),
                         text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[1]),
                         br([], []),
@@ -148,12 +148,22 @@ impl Application for App {
                         br([], []),
                         text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[8]),
                         br([], []),
+                        
                     ],
                 ),
             ],
         )
     }
 }
+
+fn izpisi_vrstico(sudoku: &Suduku, vrstica: usize)  ->Node<Msg>  {
+    text!("{:?}", sudoku.sudoku_kot_seznam_samo_vrednosti()[vrstica])
+
+    
+}
+
+//vpisi st naj ima kar div notri z devetimi inputi al neki
+
 
 #[wasm_bindgen(start)]
 pub fn main() {
