@@ -171,3 +171,6 @@ pub fn main() {
     // let seznam_vrednosti = sudoku_prvi.sudoku_kot_seznam_samo_vrednosti();
     // println!("{:?}", seznam_vrednosti)
 }
+
+
+//Če ne dela 0.0.0.0 spremeni v localhost

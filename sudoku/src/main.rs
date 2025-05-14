@@ -1,6 +1,6 @@
-pub mod strukture;
-pub mod logika;
-use crate::strukture::{Polje, Suduku};
+// pub mod strukture;
+// pub mod logika;
+// use crate::strukture::{Polje, Suduku};
 
 // pub fn main() {
 //     console_log::init_with_level(log::Level::Trace).unwrap();
