@@ -170,6 +170,4 @@ pub fn main() {
     // println!("{:?}", sudoku_prvi.mreza);
     // let seznam_vrednosti = sudoku_prvi.sudoku_kot_seznam_samo_vrednosti();
     // println!("{:?}", seznam_vrednosti)
-
-
 }
