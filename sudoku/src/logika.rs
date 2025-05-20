@@ -16,7 +16,7 @@ pub fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: &Suduku) -> Vec<u8> {
         if polje.vrstica == vrst {
             match polje.stevilo {
                 0 => {}
-                i => ze_vpisana_st.push(i)
+                i => ze_vpisana_st.push(i),
             }
         }
     }
@@ -35,7 +35,7 @@ pub fn ugotovi_stevila_v_stolpcu(stolp: u8, suduku: &Suduku) -> Vec<u8> {
         if polje.stolpec == stolp {
             match polje.stevilo {
                 0 => {}
-                i => ze_vpisana_st.push(i)
+                i => ze_vpisana_st.push(i),
             }
         }
     }
@@ -54,7 +54,7 @@ pub fn ugotovi_stevila_v_skatli(skatla: u8, suduku: &Suduku) -> Vec<u8> {
         if polje.ugotovi_skatlo() == skatla {
             match polje.stevilo {
                 0 => {}
-                i => ze_vpisana_st.push(i)
+                i => ze_vpisana_st.push(i),
             }
         }
     }
@@ -209,9 +209,10 @@ impl Suduku {
                 manjsi_sez.push(self.mreza[i].stevilo);
                 nov.push(manjsi_sez);
                 manjsi_sez = vec![];
+            } else {
+                manjsi_sez.push(self.mreza[i].stevilo)
             }
-            else{manjsi_sez.push(self.mreza[i].stevilo)}
-        };
+        }
         return nov;
     }
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
@@ -221,15 +222,14 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 //use std::string;
 
-
 impl Display for Suduku {
-    fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), std::fmt::Error> { 
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
         write!(fmt, "{:?}", self.mreza)
-     }
+    }
 }
 
 impl Display for Polje {
-    fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), std::fmt::Error> { 
-        write!(fmt, "{} {} {}",  self.vrstica, self.stolpec, self.stevilo)
-     }
+    fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+        write!(fmt, "{} {} {}", self.vrstica, self.stolpec, self.stevilo)
+    }
 }
