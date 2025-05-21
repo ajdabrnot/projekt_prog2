@@ -47,7 +47,7 @@ fn preveri_indeks(vrst: usize, stolp: usize) -> bool {
     return 0 <= izracunaj_indeks(vrst, stolp) && 81 > izracunaj_indeks(vrst, stolp);
 }
 
-
+fn ali_je_vpisana_stvar_stevilo() -> () {}
 
 impl Application for App {
     type MSG = Msg;
@@ -238,6 +238,7 @@ fn idk9krat(sudoku: &Suduku) -> Node<Msg> {
                     r#min(1),
                     r#max(9),
                     r#type("number"),
+                    // r#on_keypress(Suduku::ali_je_veljavno(sudoku,j, i, event.value().parse().unwrap())),
                     // value(sudoku.sudoku_kot_seznam_samo_vrednosti()[j][i]),
                     //on_input(|event: InputEvent| Msg::Stevka(event.value().parse().unwrap())),
                     on_input(move |event: InputEvent| {Msg::Polje(j, i, event.value().parse().unwrap())

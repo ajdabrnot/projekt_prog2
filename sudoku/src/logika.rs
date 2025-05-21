@@ -132,7 +132,7 @@ impl Polje {
         }
         return self.stolpec > 0 && self.stolpec < 10 && resnicnost;
     }
-    pub fn ugotovi_moznosti(&mut self, suduku: Suduku) -> () {
+    pub fn ugotovi_moznosti(&mut self, suduku:  Suduku) -> () {
         let vrstica = ugotovi_stevila_v_vrstici(self.vrstica, &suduku);
         let stolpec = ugotovi_stevila_v_stolpcu(self.stolpec, &suduku);
         let skatla = ugotovi_stevila_v_skatli(self.ugotovi_skatlo(), &suduku);
@@ -143,6 +143,7 @@ impl Polje {
             }
         }
     }
+    
 
     pub fn vpisi(&mut self, stevilo: u8) -> () {
         if self.moznosti.contains(&stevilo) {
@@ -192,6 +193,15 @@ impl Suduku {
         } else {
         }
     }
+
+    // pub fn spremeni_moznosti(&mut self) -> () {
+    //     for i in 0..9 {
+    //         for j in 0..9 {
+            
+    //             self.mreza[9 *  i + j].ugotovi_moznosti(self);
+    //         }
+    //     }
+    // }
 
     pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
         let polje = Polje {
