@@ -1,13 +1,13 @@
-use crate::strukture::{Obstoj, Polje, Suduku};
+use crate::strukture::{Polje, Suduku};
 
-impl Obstoj {
-    pub fn veljavnost(&self) -> bool {
-        match self {
-            &Self::Prazno => true,
-            &Self::Polno(n) => n > 0 && n < 10,
-        }
-    }
-}
+// impl Obstoj {
+//     pub fn veljavnost(&self) -> bool {
+//         match self {
+//             &Self::Prazno => true,
+//             &Self::Polno(n) => n > 0 && n < 10,
+//         }
+//     }
+// }
 
 pub fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: &Suduku) -> Vec<u8> {
     let mut ze_vpisana_st = vec![];
@@ -91,7 +91,7 @@ impl Polje {
             _ => 0,
         }
     }
-    pub fn ali_je_vrstica_okej(&self, suduku: &mut Suduku) -> bool {
+    pub fn ali_je_vrstica_okej(&self, suduku: &Suduku) -> bool {
         let mut resnicnost = true;
         for polje in suduku.mreza.clone() {
             if polje.vrstica == self.vrstica {
@@ -106,7 +106,7 @@ impl Polje {
     }
     /// poj bo mogl se prevert, ce je ze ksna ista stevilka not vpisana
 
-    pub fn ali_je_skatla_okej(&self, suduku: &mut Suduku) -> bool {
+    pub fn ali_je_skatla_okej(&self, suduku: &Suduku) -> bool {
         let mut resnicnost = true;
         for polje in suduku.mreza.clone() {
             if polje.ugotovi_skatlo() == self.ugotovi_skatlo() {
@@ -119,7 +119,7 @@ impl Polje {
         }
         return self.ugotovi_skatlo() > 0 && self.ugotovi_skatlo() < 10 && resnicnost;
     }
-    pub fn ali_je_stolpec_okej(&self, suduku: &mut Suduku) -> bool {
+    pub fn ali_je_stolpec_okej(&self, suduku: &Suduku) -> bool {
         let mut resnicnost = true;
         for polje in suduku.mreza.clone() {
             if polje.stolpec == self.stolpec {
@@ -191,6 +191,16 @@ impl Suduku {
             self.mreza[indeks] = polje
         } else {
         }
+    }
+
+    pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
+        let polje = Polje {
+            vrstica: vrst,
+            stolpec: stolp,
+            stevilo: st,
+            moznosti: vec![],
+        };
+        return polje.ali_je_vrstica_okej(self) && polje.ali_je_stolpec_okej(self) && polje.ali_je_skatla_okej(self)
     }
 
     fn vpisi_enolicno_dolocena_stevila(&mut self) -> () {
