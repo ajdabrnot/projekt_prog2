@@ -89,7 +89,14 @@ impl Application for App {
             // Msg::Vrstica(a) if a > 0 && a < 10 => self.vrstica = a,
             // Msg::Stolpec(a) if a > 0 && a < 10 => self.stolpec = a,
             // Msg::Stevka(a) if a > 0 && a < 10 => self.stevilo = a,
-            Msg::Polje(r, c, a) if preveri_indeks(r, c) && a > 0 && a < 10  && self.mreza.ali_je_veljavno(r as u8 + 1, c as u8 + 1, a as u8)=> {
+            Msg::Polje(r, c, a)
+                if preveri_indeks(r, c)
+                    && a > 0
+                    && a < 10
+                    && self
+                        .mreza
+                        .ali_je_veljavno(r as u8 + 1, c as u8 + 1, a as u8) =>
+            {
                 self.mreza.mreza[izracunaj_indeks(r, c)].stevilo = a as u8;
                 self.vrstica = r + 1;
                 self.stolpec = c + 1;
@@ -116,6 +123,7 @@ impl Application for App {
         div(
             [],
             [
+                h1([], [text!("**SUDOKU**")]),
                 // p([], [text!("Števka:")]),
                 // input(
                 //     [
@@ -182,9 +190,9 @@ impl Application for App {
                         // idk(&self.mreza, 1),
                         // izpisi_eno_vrstico_polj(&self.mreza, 1),
                         izpisi_vrstico(&self.mreza),
-                        idk9krat(&self.mreza),
                     ],
                 ),
+                div([], [idk9krat(&self.mreza)]),
             ],
         )
     }
@@ -229,6 +237,11 @@ fn idk(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     div([], sez)
 }
 
+fn ustvari_id(vrstica: usize, stolpec: usize) -> String {
+    let id = format!("r{}c{}", vrstica.to_string(), stolpec.to_string());
+    return id;
+}
+
 fn idk9krat(sudoku: &Suduku) -> Node<Msg> {
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
     for j in 0..9 {
@@ -238,20 +251,21 @@ fn idk9krat(sudoku: &Suduku) -> Node<Msg> {
                     r#min(1),
                     r#max(9),
                     r#type("number"),
+                    r#id(ustvari_id(j, i)),
                     // r#on_keypress(Suduku::ali_je_veljavno(sudoku,j, i, event.value().parse().unwrap())),
                     // value(sudoku.sudoku_kot_seznam_samo_vrednosti()[j][i]),
                     //on_input(|event: InputEvent| Msg::Stevka(event.value().parse().unwrap())),
-                    on_input(move |event: InputEvent| {Msg::Polje(j, i, event.value().parse().unwrap())
+                    on_input(move |event: InputEvent| {
+                        Msg::Polje(j, i, event.value().parse().unwrap())
                         // let moznosti = sudoku.mreza[9 * j + i].moznosti.clone();
                         // let string: usize = event.value().parse().unwrap();
                         // if moznosti.contains(&(string as u8)) {
                         //     Msg::Polje(j, i, event.value().parse().unwrap())
-                        // } 
+                        // }
                         // else {
                         //     Msg::Polje(j, i, 3)
 
                         // }
-
 
                         // if sudoku.ali_je_veljavno(j as u8, i as u8, event.value().parse().unwrap()) {Msg::Polje(j, i, event.value().parse().unwrap())}
                         // else {Msg::Polje(j, i, 0)}
@@ -302,7 +316,6 @@ fn idk9krat(sudoku: &Suduku) -> Node<Msg> {
 //     div([], sez)
 // }
 
-
 fn izpisi_sudoku_po_poljih(sudoku: &Suduku) -> Node<Msg> {
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![text!("sudoku je",)];
     for i in 0..9 {
@@ -335,8 +348,6 @@ pub fn main() {
 //zakaj dovoli dve isti števili v enem stolpcu???
 //x-wing preveri
 //škatle v debele obrobe css
-
-
 
 // wasm-pack build --target web --release
 // basic-http-server -a 0.0.0.0:4000

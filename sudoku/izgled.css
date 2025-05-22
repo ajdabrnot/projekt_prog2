@@ -1,0 +1,56 @@
+html,
+body {
+    background-color: lightpink;
+    margin: 0;
+    padding: 0;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    min-width: 230px;
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+/* #r0c0,
+#r0c1,
+#r0c2,
+#r0c3,
+#r0c4,
+#r0c5,
+#r0c6,
+#r0c7,
+#r0c8 {
+    border-top: #f30909;
+    border-top: 3cm;
+}
+
+#r3c0,
+#r3c1,
+#r3c2,
+#r3c3,
+#r3c4,
+#r3c5,
+#r3c6,
+#r3c7,
+#r3c8 {
+    border: #0bf92f;
+}
+
+#r6c0,
+#r6c1,
+#r6c2,
+#r6c3,
+#r6c4,
+#r6c5,
+#r6c6,
+#r6c7,
+#r6c8 {
+    border-top: #0bf92f, 500em, double;
+} */
+
+h1 {
+    font-style: italic;
+    font-weight: 300;
+    color: darkgreen;
+    text-decoration: wavy, darkgreen;
+    ;
+}
