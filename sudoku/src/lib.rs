@@ -193,6 +193,7 @@ impl Application for App {
                     ],
                 ),
                 div([], [idk9krat(&self.mreza)]),
+                div([], [izpisi_vse_vrstice_polj(&self.mreza)]),
             ],
         )
     }
@@ -210,14 +211,27 @@ fn izpisi_vrstico(sudoku: &Suduku) -> Node<Msg> {
 fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
     for i in 0..9 {
-        sez.push(text!(
-            "{:?}",
-            sudoku.sudoku_kot_seznam_samo_vrednosti()[vrstica][i]
+        sez.push(td(
+            [r#class("celica"), r#id(ustvari_id(vrstica, i))],
+            [div(
+                [r#class("celica")],
+                [text!(
+                    "{:?}",
+                    sudoku.sudoku_kot_seznam_samo_vrednosti()[vrstica][i]
+                )],
+            )],
         ));
+    }
+    div([], [tr([], sez)])
+}
+
+fn izpisi_vse_vrstice_polj(sudoku: &Suduku) -> Node<Msg> {
+    let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
+    for i in 0..9 {
+        sez.push(izpisi_eno_vrstico_polj(sudoku, i))
     }
     div([], sez)
 }
-
 fn idk(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
     for i in 0..9 {
@@ -252,6 +266,7 @@ fn idk9krat(sudoku: &Suduku) -> Node<Msg> {
                     r#max(9),
                     r#type("number"),
                     r#id(ustvari_id(j, i)),
+                    r#class("celica1"),
                     // r#on_keypress(Suduku::ali_je_veljavno(sudoku,j, i, event.value().parse().unwrap())),
                     // value(sudoku.sudoku_kot_seznam_samo_vrednosti()[j][i]),
                     //on_input(|event: InputEvent| Msg::Stevka(event.value().parse().unwrap())),
