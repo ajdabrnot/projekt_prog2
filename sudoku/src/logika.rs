@@ -1,13 +1,36 @@
 use crate::strukture::{Polje, Suduku};
 
-// impl Obstoj {
-//     pub fn veljavnost(&self) -> bool {
-//         match self {
-//             &Self::Prazno => true,
-//             &Self::Polno(n) => n > 0 && n < 10,
-//         }
-//     }
-// }
+pub fn pojavitve_stevila(sudoku: &Suduku, polje: &Polje) -> Vec<(usize, usize)> {
+    //vrne polja ki so v istem stolpcu/vrstici/škatli in imajo isto število
+    let mut odg = vec![];
+    let skatla_polje = polje.ugotovi_skatlo();
+    for celica in &sudoku.mreza {
+        let skatla_celica = celica.ugotovi_skatlo();
+        if celica.stevilo == polje.stevilo
+            && celica.stevilo != 0
+            && polje.stevilo != 0
+            && celica.vrstica == polje.vrstica
+            && celica.stolpec != polje.stolpec
+        {
+            odg.push((celica.vrstica as usize, celica.stolpec as usize))
+        } else if celica.stevilo == polje.stevilo
+            && celica.stevilo != 0
+            && polje.stevilo != 0
+            && celica.vrstica != polje.vrstica
+            && celica.stolpec == polje.stolpec
+        {
+            odg.push((celica.vrstica as usize, celica.stolpec as usize))
+        } else if celica.stevilo == polje.stevilo
+            && celica.stevilo != 0
+            && polje.stevilo != 0
+            && (celica.vrstica != polje.vrstica || celica.stolpec != polje.stolpec)
+            && skatla_polje == skatla_celica
+        {
+            odg.push((celica.vrstica as usize, celica.stolpec as usize))
+        }
+    }
+    return odg;
+}
 
 pub fn ugotovi_stevila_v_vrstici(vrst: u8, suduku: &Suduku) -> Vec<u8> {
     let mut ze_vpisana_st = vec![];
@@ -132,7 +155,7 @@ impl Polje {
         }
         return self.stolpec > 0 && self.stolpec < 10 && resnicnost;
     }
-    pub fn ugotovi_moznosti(&mut self, suduku:  Suduku) -> () {
+    pub fn ugotovi_moznosti(&mut self, suduku: Suduku) -> () {
         let vrstica = ugotovi_stevila_v_vrstici(self.vrstica, &suduku);
         let stolpec = ugotovi_stevila_v_stolpcu(self.stolpec, &suduku);
         let skatla = ugotovi_stevila_v_skatli(self.ugotovi_skatlo(), &suduku);
@@ -143,7 +166,6 @@ impl Polje {
             }
         }
     }
-    
 
     pub fn vpisi(&mut self, stevilo: u8) -> () {
         if self.moznosti.contains(&stevilo) {
@@ -197,7 +219,7 @@ impl Suduku {
     // pub fn spremeni_moznosti(&mut self) -> () {
     //     for i in 0..9 {
     //         for j in 0..9 {
-            
+
     //             self.mreza[9 *  i + j].ugotovi_moznosti(self);
     //         }
     //     }
@@ -210,7 +232,9 @@ impl Suduku {
             stevilo: st,
             moznosti: vec![],
         };
-        return polje.ali_je_vrstica_okej(self) && polje.ali_je_stolpec_okej(self) && polje.ali_je_skatla_okej(self)
+        return polje.ali_je_vrstica_okej(self)
+            && polje.ali_je_stolpec_okej(self)
+            && polje.ali_je_skatla_okej(self);
     }
 
     fn vpisi_enolicno_dolocena_stevila(&mut self) -> () {

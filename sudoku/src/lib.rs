@@ -9,6 +9,7 @@ use sauron::{node, Cmd, Component, Node, Program};
 pub mod logika;
 pub mod strukture;
 
+use crate::logika::pojavitve_stevila;
 use crate::strukture::{Polje, Suduku};
 
 pub enum Msg {
@@ -23,6 +24,7 @@ pub struct App {
     vrstica: usize,
     stolpec: usize,
     mreza: Suduku,
+    veljavnost: bool, //as in a je vpisana vrednost število med 0 in 10
 }
 
 impl App {
@@ -32,6 +34,7 @@ impl App {
             vrstica: 0,
             stolpec: 0,
             mreza: Suduku::prazen_suduku(),
+            veljavnost: true,
         }
     }
 }
@@ -54,42 +57,11 @@ impl Application for App {
 
     fn update(&mut self, msg: Msg) -> Cmd<Msg> {
         match msg {
-            // Msg::Stevka(1) => self.stevilo = 1,
-            // Msg::Stevka(2) => self.stevilo = 2,
-            // Msg::Stevka(3) => self.stevilo = 3,
-            // Msg::Stevka(4) => self.stevilo = 4,
-            // Msg::Stevka(5) => self.stevilo = 5,
-            // Msg::Stevka(6) => self.stevilo = 6,
-            // Msg::Stevka(7) => self.stevilo = 7,
-            // Msg::Stevka(8) => self.stevilo = 8,
-            // Msg::Stevka(9) => self.stevilo = 9,
-            // Msg::Stevka(_) => self.stevilo = 0,
-            // //
-            // Msg::Vrstica(1) => self.vrstica = 1,
-            // Msg::Vrstica(2) => self.vrstica = 2,
-            // Msg::Vrstica(3) => self.vrstica = 3,
-            // Msg::Vrstica(4) => self.vrstica = 4,
-            // Msg::Vrstica(5) => self.vrstica = 5,
-            // Msg::Vrstica(6) => self.vrstica = 6,
-            // Msg::Vrstica(7) => self.vrstica = 7,
-            // Msg::Vrstica(8) => self.vrstica = 8,
-            // Msg::Vrstica(9) => self.vrstica = 9,
-            // Msg::Vrstica(_) => self.vrstica = 0,
-            // //
-            // Msg::Stolpec(1) => self.stolpec = 1,
-            // Msg::Stolpec(2) => self.stolpec = 2,
-            // Msg::Stolpec(3) => self.stolpec = 3,
-            // Msg::Stolpec(4) => self.stolpec = 4,
-            // Msg::Stolpec(5) => self.stolpec = 5,
-            // Msg::Stolpec(6) => self.stolpec = 6,
-            // Msg::Stolpec(7) => self.stolpec = 7,
-            // Msg::Stolpec(8) => self.stolpec = 8,
-            // Msg::Stolpec(9) => self.stolpec = 9,
-            // Msg::Stolpec(_) => self.stolpec = 0,
             // Msg::Vrstica(a) if a > 0 && a < 10 => self.vrstica = a,
             // Msg::Stolpec(a) if a > 0 && a < 10 => self.stolpec = a,
             // Msg::Stevka(a) if a > 0 && a < 10 => self.stevilo = a,
             Msg::Polje(r, c, a)
+            //prva opcija: vse je okej
                 if preveri_indeks(r, c)
                     && a > 0
                     && a < 10
@@ -101,6 +73,39 @@ impl Application for App {
                 self.vrstica = r + 1;
                 self.stolpec = c + 1;
                 self.stevilo = a;
+                self.veljavnost = true;
+                self.mreza.napolni_polje(
+                    self.vrstica as u8,
+                    self.stolpec as u8,
+                    self.stevilo as u8,
+                );
+            }
+            Msg::Polje(r, c, a) 
+            // druga opcija: prevelika številka
+                if preveri_indeks(r, c)
+                    && self
+                        .mreza
+                        .ali_je_veljavno(r as u8 + 1, c as u8 + 1, a as u8) =>
+            {
+                self.mreza.mreza[izracunaj_indeks(r, c)].stevilo = a as u8;
+                self.vrstica = r + 1;
+                self.stolpec = c + 1;
+                self.stevilo = a;
+                self.veljavnost = false;
+                self.mreza.napolni_polje(
+                    self.vrstica as u8,
+                    self.stolpec as u8,
+                    self.stevilo as u8,
+                );
+            }
+            Msg::Polje(r, c, a)=>
+            //tretja opcija: številka se že nahaja v vrstici/stolpcu/škatli, glede velikosti mi je vseeno
+            {
+                self.mreza.mreza[izracunaj_indeks(r, c)].stevilo = a as u8;
+                self.vrstica = r + 1;
+                self.stolpec = c + 1;
+                self.stevilo = a;
+                self.veljavnost = true;
                 self.mreza.napolni_polje(
                     self.vrstica as u8,
                     self.stolpec as u8,
@@ -110,9 +115,10 @@ impl Application for App {
             // Msg::Vrstica(_) => self.vrstica = 0,
             // Msg::Stolpec(_) => self.stolpec = 0,
             // Msg::Stevka(_) => self.stevilo = 0,
-            Msg::Polje(_, _, _) => {
-                self.mreza.mreza[izracunaj_indeks(self.vrstica, self.stolpec)].stevilo = 0
-            }
+            //Msg::Polje(_, _, _) => {
+            //    self.mreza.mreza[izracunaj_indeks(self.vrstica, self.stolpec)].stevilo = 0;
+            //    self.veljavnost = true
+            //}
         };
         self.mreza
             .napolni_polje(self.vrstica as u8, self.stolpec as u8, self.stevilo as u8);
@@ -124,82 +130,17 @@ impl Application for App {
             [],
             [
                 h1([], [text!("**SUDOKU**")]),
-                // p([], [text!("Števka:")]),
-                // input(
-                //     [
-                //         r#min(1),
-                //         r#max(9),
-                //         r#type("number"),
-                //         on_input(|event: InputEvent| Msg::Stevka(event.value().parse().unwrap())),
-                //     ],
-                //     [],
-                // ),
-                // p([], [text!("Vrstica:")]),
-                // input(
-                //     [
-                //         r#min(1),
-                //         r#max(9),
-                //         r#type("number"),
-                //         on_input(|event: InputEvent| Msg::Vrstica(event.value().parse().unwrap())),
-                //     ],
-                //     [],
-                // ),
-                // p([], [text!("Stolpec:")]),
-                // input(
-                //     [
-                //         r#min(1),
-                //         r#max(9),
-                //         r#type("number"),
-                //         on_input(|event: InputEvent| Msg::Stolpec(event.value().parse().unwrap())),
-                //     ],
-                //     [],
-                // ),
-                // p(
-                //     [],
-                //     [text!(
-                //         "V polje v R{}C{} si napisal število {}.",
-                //         self.vrstica,
-                //         self.stolpec,
-                //         self.stevilo,
-                //     )],
-                // ),
-                p(
-                    [],
-                    [
-                        // text!("sudoku je",),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[0]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[1]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[2]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[3]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[4]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[5]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[6]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[7]),
-                        // br([], []),
-                        // text!("{:?}", self.mreza.sudoku_kot_seznam_samo_vrednosti()[8]),
-                        // br([], []),
-                        // izpisi_sudoku_po_poljih(&self.mreza),
-                        // idk(&self.mreza, 1),
-                        // izpisi_eno_vrstico_polj(&self.mreza, 1),
-                        izpisi_vrstico(&self.mreza),
-                    ],
-                ),
-                div([], [idk9krat(&self.mreza)]),
+                //p([], [izpisi_vrstice(&self.mreza)]),
+                div([], [idk9krat(&self)]),
                 div([], [izpisi_vse_vrstice_polj(&self.mreza)]),
+                //div([], [idk9krat1(&self)]),
             ],
         )
     }
 }
 
-fn izpisi_vrstico(sudoku: &Suduku) -> Node<Msg> {
+fn izpisi_vrstice(sudoku: &Suduku) -> Node<Msg> {
+    //izpiše suduku kot [0,0,0,0,...], [0,0,0,0,...]
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![text!("sudoku je",)];
     for i in 0..9 {
         sez.push(br([], []));
@@ -209,6 +150,7 @@ fn izpisi_vrstico(sudoku: &Suduku) -> Node<Msg> {
 }
 
 fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
+    //izpiše eno vrstiso sudokuja, ampak ne kot seznam, vsaka številka pozna svojo vrstico, stolpec, škatlo
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
     for i in 0..9 {
         sez.push(td(
@@ -226,6 +168,7 @@ fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
 }
 
 fn izpisi_vse_vrstice_polj(sudoku: &Suduku) -> Node<Msg> {
+    //kot vrstica polj amapk napiše vseh 9
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
     for i in 0..9 {
         sez.push(izpisi_eno_vrstico_polj(sudoku, i))
@@ -252,44 +195,154 @@ fn idk(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
 }
 
 fn ustvari_id(vrstica: usize, stolpec: usize) -> String {
+    //naredi string ki je uporabljen kot id za celice sudukuja
     let id = format!("r{}c{}", vrstica.to_string(), stolpec.to_string());
     return id;
 }
 
-fn idk9krat(sudoku: &Suduku) -> Node<Msg> {
+fn idk9krat(sudoku: &App) -> Node<Msg> {
+    //izpiše suduku kot number inpute, če je številka prevelika jo obarva rdeče
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
+    let mut ponovitve = vec![];
+    for j in 0..9 {
+        for i in 0..9{
+            ponovitve.extend(pojavitve_stevila(&sudoku.mreza,&sudoku.mreza.mreza[izracunaj_indeks(j, i)]));
+        }
+    };
+
     for j in 0..9 {
         for i in 0..9 {
-            sez.push(input(
-                [
-                    r#min(1),
-                    r#max(9),
-                    r#type("number"),
-                    r#id(ustvari_id(j, i)),
-                    r#class("celica1"),
-                    // r#on_keypress(Suduku::ali_je_veljavno(sudoku,j, i, event.value().parse().unwrap())),
-                    // value(sudoku.sudoku_kot_seznam_samo_vrednosti()[j][i]),
-                    //on_input(|event: InputEvent| Msg::Stevka(event.value().parse().unwrap())),
-                    on_input(move |event: InputEvent| {
-                        Msg::Polje(j, i, event.value().parse().unwrap())
-                        // let moznosti = sudoku.mreza[9 * j + i].moznosti.clone();
-                        // let string: usize = event.value().parse().unwrap();
-                        // if moznosti.contains(&(string as u8)) {
-                        //     Msg::Polje(j, i, event.value().parse().unwrap())
-                        // }
-                        // else {
-                        //     Msg::Polje(j, i, 3)
+            if sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo < 10 {
+                if  ponovitve.contains(&(j+1,i+1)){
+                    sez.push(input(
+                    [
+                        r#min(1),
+                        r#max(9),
+                        r#type("number"),
+                        r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+                        r#id(ustvari_id(j, i)),
+                        r#class("ponovitev"),
+                        on_input(move |event: InputEvent| {
+                            Msg::Polje(j, i, event.value().parse().unwrap())
+                        }),
+                    ],
+                    [],
+                ))
+                }
+                else{
+                sez.push(input(
+                    [
+                        r#min(1),
+                        r#max(9),
+                        r#type("number"),
+                        r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+                        r#id(ustvari_id(j, i)),
+                        r#class("dobro"),
+                        on_input(move |event: InputEvent| {
+                            Msg::Polje(j, i, event.value().parse().unwrap())
+                        }),
+                    ],
+                    [],
+                ))}
+            } else {
+                sez.push(input(
+                    [
+                        r#min(1),
+                        r#max(9),
+                        r#type("number"),
+                        r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+                        r#id(ustvari_id(j, i)),
+                        r#class("slabo"),
+                        on_input(move |event: InputEvent| {
+                            Msg::Polje(j, i, event.value().parse().unwrap())
+                        }),
+                    ],
+                    [],
+                ))
+            }
 
-                        // }
-
-                        // if sudoku.ali_je_veljavno(j as u8, i as u8, event.value().parse().unwrap()) {Msg::Polje(j, i, event.value().parse().unwrap())}
-                        // else {Msg::Polje(j, i, 0)}
-                    }),
-                ],
-                [],
-            ));
+            //sez.push(input(
+            //    [
+            //        r#min(1),
+            //        r#max(9),
+            //        r#type("number"),
+            //        r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+            //        //r#id(ustvari_id(j, i)),
+            //        //r#class("celica1"),
+            //        on_input(move |event: InputEvent| {
+            //            Msg::Polje(j, i, event.value().parse().unwrap())
+            //        }),
+            //    ],
+            //    [],
+            //));
         }
         sez.push(br([], []))
+    }
+
+    
+    div([], sez)
+}
+
+fn idk9krat1(sudoku: &App) -> Node<Msg> {
+    //izpiše suduku kot number inpute
+    let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
+    if sudoku.veljavnost == true {
+        for j in 0..9 {
+            for i in 0..9 {
+                sez.push(input(
+                    [
+                        r#min(1),
+                        r#max(9),
+                        r#type("number"),
+                        r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+                        //r#id(ustvari_id(j, i)),
+                        r#class("dobro"),
+                        on_input(move |event: InputEvent| {
+                            Msg::Polje(j, i, event.value().parse().unwrap())
+                        }),
+                    ],
+                    [],
+                ));
+            }
+            sez.push(br([], []))
+        }
+    } else {
+        for j in 0..9 {
+            for i in 0..9 {
+                if j == sudoku.vrstica - 1 && i == sudoku.stolpec - 1 {
+                    sez.push(input(
+                        [
+                            r#min(1),
+                            r#max(9),
+                            r#type("number"),
+                            r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+                            //r#id(ustvari_id(j, i)),
+                            r#class("slabo"),
+                            on_input(move |event: InputEvent| {
+                                Msg::Polje(j, i, event.value().parse().unwrap())
+                            }),
+                        ],
+                        [],
+                    ))
+                } else {
+                    sez.push(input(
+                        [
+                            r#min(1),
+                            r#max(9),
+                            r#type("number"),
+                            r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+                            //r#id(ustvari_id(j, i)),
+                            r#class("dobro"),
+                            on_input(move |event: InputEvent| {
+                                Msg::Polje(j, i, event.value().parse().unwrap())
+                            }),
+                        ],
+                        [],
+                    ))
+                }
+            }
+            sez.push(br([], []))
+        }
     }
     div([], sez)
 }

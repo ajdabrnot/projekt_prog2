@@ -1,10 +1,20 @@
 html,
 body {
+
     background-color: lightpink;
+
+    padding: 0;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0 auto;
+
 
 
 }
 
+input {
+    text-align: middle;
+    vertical-align: middle;
+}
 
 tr {
     border-width: 500em;
@@ -40,6 +50,27 @@ td div {
     padding-bottom: 3em;
     height: 0;
     background-color: lightyellow
+}
+
+.dobro {
+    background-color: lightyellow;
+    width: 4em;
+    padding-bottom: 3em;
+    height: 1;
+}
+
+.slabo {
+    background-color: red;
+    width: 4em;
+    padding-bottom: 3em;
+    height: 1;
+}
+
+.ponovitev {
+    background-color: rgb(121, 59, 99);
+    width: 4em;
+    padding-bottom: 3em;
+    height: 1;
 }
 
 #r0c0,
