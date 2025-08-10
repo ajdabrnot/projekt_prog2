@@ -1,8 +1,7 @@
 html,
 body {
 
-    background-color: lightpink;
-
+    background-color: rgb(134, 91, 48);
     padding: 0;
     font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin: 0 auto;
@@ -11,67 +10,78 @@ body {
 
 }
 
-input {
-    text-align: middle;
-    vertical-align: middle;
-}
-
-tr {
-    border-width: 500em;
-    border-color: blueviolet;
+div {
+    text-size-adjust: auto;
+    text-align: center;
 }
 
 
+input::placeholder {
+    text-align: center;
+    font-size: 30px;
 
-
-td {
-    width: 3em;
-    padding-bottom: 3em;
-    height: 3;
-
-
-    background-color: beige;
-    font-size: large;
 }
 
-td div {
-    position: absolute;
-    text-align: middle;
-    vertical-align: middle;
+/* input {
+    text-align: center;
+    font-size: 30px;
+
+    width: 11%;
+    padding-bottom: 3%;
+} */
+
+
+table {
+    position: fixed;
+    left: 15%;
+    right: 15%;
+    width: 70%;
+
 }
 
-.celica1 {
-    text-align: middle;
-    vertical-align: middle;
-    line-height: 5em;
+.osnovna_tabela {
+    width: 50%;
+    border: 8px solid #335e26f1;
+}
 
-    font-size: large;
-    width: 3em;
-    padding-bottom: 3em;
-    height: 0;
-    background-color: lightyellow
+
+#resi {
+    background-color: #5b5387;
+}
+
+#natisni {
+    background-color: #726f85;
+}
+
+.celica {
+    width: 60px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-size: 30px;
+    background-color: #5b5387
 }
 
 .dobro {
-    background-color: lightyellow;
-    width: 4em;
-    padding-bottom: 3em;
-    height: 1;
-}
+    background-color: #726f85;
+    text-align: center;
+    font-size: 30px;
 
-.slabo {
-    background-color: red;
-    width: 4em;
-    padding-bottom: 3em;
-    height: 1;
+    width: 86%;
+    padding-bottom: 15%;
+
+
 }
 
 .ponovitev {
-    background-color: rgb(121, 59, 99);
-    width: 4em;
-    padding-bottom: 3em;
-    height: 1;
+    background-color: #9f301f;
+    text-align: center;
+    font-size: 30px;
+
+    width: 86%;
+    padding-bottom: 15%;
+
 }
+
 
 #r0c0,
 #r0c1,
@@ -82,22 +92,10 @@ td div {
 #r0c6,
 #r0c7,
 #r0c8 {
-    border-top: 8px solid black;
+    border-top: 8px solid #3a3e23;
     ;
 }
 
-#r8c0,
-#r8c1,
-#r8c2,
-#r8c3,
-#r8c4,
-#r8c5,
-#r8c6,
-#r8c7,
-#r8c8 {
-    border-bottom: 8px solid black;
-    ;
-}
 
 
 #r0c0,
@@ -109,7 +107,7 @@ td div {
 #r6c0,
 #r7c0,
 #r8c0 {
-    border-left: 8px solid black;
+    border-left: 8px solid #3a3e23;
     ;
 }
 
@@ -121,11 +119,7 @@ td div {
 #r5c8,
 #r6c8,
 #r7c8,
-#r8c8 {
-    border-right: 8px solid black;
-    ;
-}
-
+#r8c8,
 #r0c2,
 #r1c2,
 #r2c2,
@@ -134,11 +128,7 @@ td div {
 #r5c2,
 #r6c2,
 #r7c2,
-#r8c2 {
-    border-right: 8px solid black;
-    ;
-}
-
+#r8c2,
 #r0c5,
 #r1c5,
 #r2c5,
@@ -148,9 +138,68 @@ td div {
 #r6c5,
 #r7c5,
 #r8c5 {
-    border-right: 8px solid black;
+    border-right: 8px solid #3a3e23;
     ;
 }
+
+#r0c0,
+#r1c0,
+#r2c0,
+#r3c0,
+#r4c0,
+#r5c0,
+#r6c0,
+#r7c0,
+#r8c0,
+#r0c1,
+#r1c1,
+#r2c1,
+#r3c1,
+#r4c1,
+#r5c1,
+#r6c1,
+#r7c1,
+#r8c1,
+#r0c3,
+#r1c3,
+#r2c3,
+#r3c3,
+#r4c3,
+#r5c3,
+#r6c3,
+#r7c3,
+#r8c3,
+#r0c4,
+#r1c4,
+#r2c4,
+#r3c4,
+#r4c4,
+#r5c4,
+#r6c4,
+#r7c4,
+#r8c4,
+#r0c6,
+#r1c6,
+#r2c6,
+#r3c6,
+#r4c6,
+#r5c6,
+#r6c6,
+#r7c6,
+#r8c6,
+#r0c7,
+#r1c7,
+#r2c7,
+#r3c7,
+#r4c7,
+#r5c7,
+#r6c7,
+#r7c7,
+#r8c7 {
+    border-right: 3px solid #3a3e23;
+    ;
+}
+
 
 #r2c0,
 #r2c1,
@@ -160,10 +209,7 @@ td div {
 #r2c5,
 #r2c6,
 #r2c7,
-#r2c8 {
-    border-bottom: 8px solid black;
-}
-
+#r2c8,
 #r5c0,
 #r5c1,
 #r5c2,
@@ -172,14 +218,92 @@ td div {
 #r5c5,
 #r5c6,
 #r5c7,
-#r5c8 {
-    border-bottom: 8px solid black;
+#r5c8,
+#r8c0,
+#r8c1,
+#r8c2,
+#r8c3,
+#r8c4,
+#r8c5,
+#r8c6,
+#r8c7,
+#r8c8 {
+    border-bottom: 8px solid #3a3e23;
 }
+
+
+#r0c0,
+#r0c1,
+#r0c2,
+#r0c3,
+#r0c4,
+#r0c5,
+#r0c6,
+#r0c7,
+#r0c8,
+#r1c0,
+#r1c1,
+#r1c2,
+#r1c3,
+#r1c4,
+#r1c5,
+#r1c6,
+#r1c7,
+#r1c8,
+#r3c0,
+#r3c1,
+#r3c2,
+#r3c3,
+#r3c4,
+#r3c5,
+#r3c6,
+#r3c7,
+#r3c8,
+#r4c0,
+#r4c1,
+#r4c2,
+#r4c3,
+#r4c4,
+#r4c5,
+#r4c6,
+#r4c7,
+#r4c8,
+#r6c0,
+#r6c1,
+#r6c2,
+#r6c3,
+#r6c4,
+#r6c5,
+#r6c6,
+#r6c7,
+#r6c8,
+#r7c0,
+#r7c1,
+#r7c2,
+#r7c3,
+#r7c4,
+#r7c5,
+#r7c6,
+#r7c7,
+#r7c8 {
+    border-bottom: 3px solid #3a3e23;
+}
+
+
+
+
 
 h1 {
     font-style: italic;
-    font-weight: 300;
-    color: darkgreen;
-    text-decoration: wavy, darkgreen;
-    ;
+    font-weight: 5000;
+    font-size: 60px;
+    color: #3a3e23;
+    text-decoration: wavy, #3a3e23;
+
+}
+
+thead {
+    text-align: center;
+    vertical-align: middle;
+
 }
