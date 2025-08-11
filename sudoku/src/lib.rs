@@ -59,11 +59,12 @@ impl Application for App {
                     self.stolpec as u8,
                     self.stevilo as u8,
                 );
+                // do tu je številka vpisana v sudoku.
+
+                // tuki je treba nrdit še, da pogleda ali je zdaj enolična rešitev in da sporoči, če je.
             }
             Msg::Resi=> self.mreza.resi_sudoku(),
-        }; // do tu je številka vpisana v sudoku.
-
-        // tuki je treba nrdit še, da pogleda ali je zdaj enolična rešitev in da sporoči, če je.
+        }; 
 
         return Cmd::none();
     }

@@ -55,16 +55,8 @@ div {
 input::placeholder {
     text-align: center;
     font-size: 30px;
-
 }
 
-/* input {
-    text-align: center;
-    font-size: 30px;
-
-    width: 11%;
-    padding-bottom: 3%;
-} */
 
 
 table {
@@ -117,6 +109,16 @@ table {
     padding-bottom: 15%;
 
 }
+
+
+.dobro:hover {
+    background-color: #696679;
+}
+
+.ponovitev:hover {
+    background-color: #8a2b1c;
+}
+
 
 
 #r0c0,
