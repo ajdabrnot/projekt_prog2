@@ -259,6 +259,17 @@ impl Suduku {
         }
         return nov;
     }
+
+    pub fn resi_sudoku(&mut self) -> () {
+        //zelo očitno zadeva ne reši zares sudokuja, to je le začasno, da lahko usposobim gumb reši
+
+        //for i in 0..80 {
+        //    self.mreza[i].stevilo = 1
+        //}
+        for polje in &mut self.mreza {
+            polje.vpisi(1);
+        }
+    }
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }
 

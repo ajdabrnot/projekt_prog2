@@ -10,6 +10,42 @@ body {
 
 }
 
+/* #overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+} */
+.hide {
+    display: none;
+}
+
+.myDIV:hover+.hide {
+    display: block;
+    color: #335e26f1;
+    font-weight: bold;
+}
+
+
+
+
 div {
     text-size-adjust: auto;
     text-align: center;
@@ -294,11 +330,9 @@ table {
 
 
 h1 {
-    font-style: italic;
     font-weight: 5000;
     font-size: 60px;
     color: #3a3e23;
-    text-decoration: wavy, #3a3e23;
 
 }
 
@@ -306,4 +340,9 @@ thead {
     text-align: center;
     vertical-align: middle;
 
+}
+
+th {
+    margin: 0%;
+    padding: 0%;
 }

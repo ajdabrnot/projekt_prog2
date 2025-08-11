@@ -14,6 +14,7 @@ use crate::strukture::{Polje, Suduku};
 
 pub enum Msg {
     Polje(usize, usize, usize),
+    Resi
 }
 
 pub struct App {
@@ -59,6 +60,7 @@ impl Application for App {
                     self.stevilo as u8,
                 );
             }
+            Msg::Resi=> self.mreza.resi_sudoku(),
         }; // do tu je številka vpisana v sudoku.
 
         // tuki je treba nrdit še, da pogleda ali je zdaj enolična rešitev in da sporoči, če je.
@@ -69,50 +71,71 @@ impl Application for App {
     fn view(&self) -> Node<Msg> {
         div(
             [],
-            [table(
-                [],
-                [
-                    thead(
-                        [],
-                        [tr(
+            [
+                //div(
+                //    [r#id("overlay")],
+                //    [div([r#id("text")], [text("Overlay text")])],
+                //),
+                table(
+                    [],
+                    [
+                        thead(
                             [],
-                            [th([r#colspan("2")], [h1([], [text("**SUDOKU**")])])],
-                        )],
-                    ),
-                    tbody(
-                        [],
-                        [tr(
+                            [tr(
+                                [],
+                                [th([r#colspan("2")], [h1([], [text("**SUDOKU**")])])],
+                            )],
+                        ),
+                        tbody(
+                            [],
+                            [tr(
+                                [],
+                                [td([r#colspan("2")], [div(
+                                [],
+                                [
+                                    div([class("myDIV")], [text("NAVODILA")]),
+                                    div(
+                                        [class("hide")],
+                                        [text(
+                                            "Vpiši številke! Zabavaj se! kako lep je svet sudokuja! noro! obožujem sudoku!!!! wawwww za kosilo sem jedla palačinke! :)",
+                                        )],
+                                    ),
+                                ],
+                            )])],
+                            ),tr(
+                                [],
+                                [
+                                    td([r#class("osnovna_tabela")], [sudoku_inputi(&self)]),
+                                    td(
+                                        [r#class("osnovna_tabela")],
+                                        [izpisi_vse_vrstice_polj(&self.mreza)],
+                                    ),
+                                ],
+                            )],
+                        ),
+                        tr(
                             [],
                             [
-                                td([r#class("osnovna_tabela")], [sudoku_inputi(&self)]),
                                 td(
                                     [r#class("osnovna_tabela")],
-                                    [izpisi_vse_vrstice_polj(&self.mreza)],
+                                    [input(
+                                        [r#type("button"), r#id("natisni"), r#value("NATISNI")],
+                                        [],
+                                    )],
+                                ),
+                                td(
+                                    [r#class("osnovna_tabela")],
+                                    [input(
+                                        [r#type("button"), r#id("resi"), r#value("REŠI SUDOKU"), on_click(|_|{ Msg::Resi})],
+                                        [],
+                                    )],
                                 ),
                             ],
-                        )],
-                    ),
-                    tr(
-                        [],
-                        [
-                            td(
-                                [r#class("osnovna_tabela")],
-                                [input(
-                                    [r#type("button"), r#id("natisni"), r#value("NATISNI")],
-                                    [],
-                                )],
-                            ),
-                            td(
-                                [r#class("osnovna_tabela")],
-                                [input(
-                                    [r#type("button"), r#id("resi"), r#value("REŠI SUDOKU")],
-                                    [],
-                                )],
-                            ),
-                        ],
-                    ),
-                ],
-            )],
+                        ),
+                        
+                    ],
+                ),
+            ],
         )
     }
 }
@@ -220,7 +243,7 @@ fn ustvari_input_polje(
                 r#max(9),
                 r#type("text"),
                 r#maxlength("1"),
-                r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
+                //r#placeholder(sudoku.mreza.mreza[izracunaj_indeks(j, i)].stevilo),
                 r#class(razred),
                 on_input(move |event: InputEvent| {
                     if vec![
