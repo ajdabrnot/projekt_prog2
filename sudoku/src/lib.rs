@@ -17,6 +17,8 @@ pub enum Msg {
     Resi,
     NavodilaOn,
     NavodilaOff,
+    
+   
 }
 
 pub struct App {
@@ -25,6 +27,7 @@ pub struct App {
     stolpec: usize,
     mreza: Suduku,
     prikaz_navodil: String,
+    
 }
 
 impl App {
@@ -35,6 +38,7 @@ impl App {
             stolpec: 0,
             mreza: Suduku::prazen_suduku(),
             prikaz_navodil: "nevidna".to_string(),
+            
         }
     }
 }
@@ -70,6 +74,8 @@ impl Application for App {
             Msg::Resi => self.mreza.resi_sudoku(),
             Msg::NavodilaOn => izpise_navodila(self, true),
             Msg::NavodilaOff => izpise_navodila(self, false),
+            
+            
         };
 
         return Cmd::none();
@@ -127,13 +133,7 @@ impl Application for App {
                                                         [],
                                                     )],
                                                 )],
-                                            ), // div([class("myDIV")], [text("NAVODILA")]),
-                                               // div(
-                                               //     [class("hide")],
-                                               //     [text(
-                                               //         "V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane. Ko jih bo vpisanih dovolj, da je sudoku enolično rešljiv, te bo program na to opozoril. S klikom na gumb 'NATISNI' se sestavljeni sudoku shrani v pdf obliki. Sudoku bo izgledal kot je prikazan sudoku na desni. Sklikom na gumb 'REŠI' se sudoku na desni reši.",
-                                               //     )],
-                                               // ),
+                                            ), 
                                         ],
                                     )],
                                 )],
@@ -174,6 +174,8 @@ impl Application for App {
                             ),
                         ],
                     ),
+                    tr([],[td([r#colspan("2")],[div([r#id("sporocilo_resljivosti")],[text(ali_je_enolicno_resljiv(&self))]),
+                       ])])
                 ],
             )],
         )
@@ -200,10 +202,23 @@ fn izpise_navodila(app: &mut App, p_n: bool) -> () {
     }
 }
 
-// div(
-//         [r#id("overlay")],
-//         [div([r#id("text")], [text("Overlay text")])],
-//     )
+//fn ali_je_enolicno_resljiv1(app: &mut App, p_n: bool) -> (){
+//    if p_n {
+//        app.enolicna_resljivost = "Sudoku NI enolično rešljiv :(".to_string()
+//    } else {
+//        app.enolicna_resljivost = "Sudoku JE enolično rešljiv :D".to_string()
+//    }
+//}
+
+
+fn ali_je_enolicno_resljiv(app: & App,) -> &str{
+    if app.mreza.je_enolicno_resljivo() {
+        "Sudoku JE enolično rešljiv :D"
+         
+    } else {
+        "Sudoku NI enolično rešljiv :("
+    }
+}
 
 fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     //izpiše eno vrstico sudokuja po poljih

@@ -273,11 +273,6 @@ impl Suduku {
 
     pub fn je_enolicno_resljivo(&self) -> bool {
         //dvomim da je tole čisto pravilno. potrebujem tok da neki nrdi da lahko vzpostavim sporočilo ki se prikaže, ko je zadeva enolično rešljiva
-        for polje in &self.mreza {
-            if polje.moznosti.len() != 0 {
-                return false;
-            }
-        }
         return true;
     }
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
