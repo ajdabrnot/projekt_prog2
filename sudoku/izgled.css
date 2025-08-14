@@ -10,7 +10,42 @@ body {
 
 }
 
-/* #overlay {
+#gumb_navodila {
+    background-color: rgb(134, 91, 48);
+    border: 0px;
+    cursor: pointer;
+
+}
+
+#izpisana_navodila {
+    background-color: rgb(134, 91, 48);
+    border: 8px solid #3a3e23;
+    color: #3a3e23;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    height: 300px;
+    cursor: pointer;
+}
+
+#vidna {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+
+}
+
+#nevidna {
     position: fixed;
     display: none;
     width: 100%;
@@ -21,7 +56,7 @@ body {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
-    cursor: pointer;
+
 }
 
 #text {
@@ -32,7 +67,8 @@ body {
     color: white;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-} */
+}
+
 .hide {
     display: none;
 }
@@ -83,10 +119,21 @@ table {
 
 .celica {
     width: 60px;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding-top: 0%;
+    padding-bottom: 2%;
     font-size: 30px;
     background-color: #5b5387
+}
+
+.celica_1 {
+    height: 36px;
+    line-height: 36px;
+}
+
+.naslov {
+    height: 60px;
+    line-height: 60px;
+    padding-bottom: 10px;
 }
 
 .dobro {
@@ -342,9 +389,4 @@ thead {
     text-align: center;
     vertical-align: middle;
 
-}
-
-th {
-    margin: 0%;
-    padding: 0%;
 }

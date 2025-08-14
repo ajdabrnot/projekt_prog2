@@ -14,7 +14,9 @@ use crate::strukture::{Polje, Suduku};
 
 pub enum Msg {
     Polje(usize, usize, usize),
-    Resi
+    Resi,
+    NavodilaOn,
+    NavodilaOff,
 }
 
 pub struct App {
@@ -22,6 +24,7 @@ pub struct App {
     vrstica: usize,
     stolpec: usize,
     mreza: Suduku,
+    prikaz_navodil: String,
 }
 
 impl App {
@@ -31,6 +34,7 @@ impl App {
             vrstica: 0,
             stolpec: 0,
             mreza: Suduku::prazen_suduku(),
+            prikaz_navodil: "nevidna".to_string(),
         }
     }
 }
@@ -63,8 +67,10 @@ impl Application for App {
 
                 // tuki je treba nrdit še, da pogleda ali je zdaj enolična rešitev in da sporoči, če je.
             }
-            Msg::Resi=> self.mreza.resi_sudoku(),
-        }; 
+            Msg::Resi => self.mreza.resi_sudoku(),
+            Msg::NavodilaOn => izpise_navodila(self, true),
+            Msg::NavodilaOff => izpise_navodila(self, false),
+        };
 
         return Cmd::none();
     }
@@ -72,38 +78,67 @@ impl Application for App {
     fn view(&self) -> Node<Msg> {
         div(
             [],
-            [
-                //div(
-                //    [r#id("overlay")],
-                //    [div([r#id("text")], [text("Overlay text")])],
-                //),
-                table(
-                    [],
-                    [
-                        thead(
+            [table(
+                [],
+                [
+                    thead(
+                        [],
+                        [tr(
                             [],
-                            [tr(
-                                [],
-                                [th([r#colspan("2")], [h1([], [text("**SUDOKU**")])])],
+                            [th(
+                                [r#colspan("2")],
+                                [div([r#class("naslov")], [h1([], [text("**SUDOKU**")])])],
                             )],
-                        ),
-                        tbody(
-                            [],
-                            [tr(
+                        )],
+                    ),
+                    tbody(
+                        [],
+                        [
+                            tr(
                                 [],
-                                [td([r#colspan("2")], [div(
-                                [],
-                                [
-                                    div([class("myDIV")], [text("NAVODILA")]),
-                                    div(
-                                        [class("hide")],
-                                        [text(
-                                            "Vpiši številke! Zabavaj se! kako lep je svet sudokuja! noro! obožujem sudoku!!!! wawwww za kosilo sem jedla palačinke! :)",
-                                        )],
-                                    ),
-                                ],
-                            )])],
-                            ),tr(
+                                [td(
+                                    [r#colspan("2")],
+                                    [div(
+                                        [],
+                                        [
+                                            div(
+                                                [],
+                                                [input(
+                                                    [
+                                                        r#id("gumb_navodila"),
+                                                        r#type("button"),
+                                                        r#value("NAVODILA"),
+                                                        on_click(|_| Msg::NavodilaOn),
+                                                    ],
+                                                    [],
+                                                )],
+                                            ),
+                                            div(
+                                                [r#id(&self.prikaz_navodil)],
+                                                [div(
+                                                    [r#id("text")],
+                                                    [input(
+                                                        [
+                                                            r#id("izpisana_navodila"),
+                                                            r#type("button"),
+                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n Ko jih bo vpisanih dovolj, da je sudoku enolično rešljiv, te bo program na to opozoril.\n S klikom na gumb 'NATISNI' se sestavljeni sudoku shrani v pdf obliki.\n Sudoku bo izgledal kot je prikazan sudoku na desni.\n Sklikom na gumb 'REŠI' se sudoku na desni reši."),
+                                                            on_click(|_| Msg::NavodilaOff),
+                                                        ],
+                                                        [],
+                                                    )],
+                                                )],
+                                            ), // div([class("myDIV")], [text("NAVODILA")]),
+                                               // div(
+                                               //     [class("hide")],
+                                               //     [text(
+                                               //         "V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane. Ko jih bo vpisanih dovolj, da je sudoku enolično rešljiv, te bo program na to opozoril. S klikom na gumb 'NATISNI' se sestavljeni sudoku shrani v pdf obliki. Sudoku bo izgledal kot je prikazan sudoku na desni. Sklikom na gumb 'REŠI' se sudoku na desni reši.",
+                                               //     )],
+                                               // ),
+                                        ],
+                                    )],
+                                )],
+                            ),
+                            tr(
                                 [],
                                 [
                                     td([r#class("osnovna_tabela")], [sudoku_inputi(&self)]),
@@ -112,31 +147,35 @@ impl Application for App {
                                         [izpisi_vse_vrstice_polj(&self.mreza)],
                                     ),
                                 ],
-                            )],
-                        ),
-                        tr(
-                            [],
-                            [
-                                td(
-                                    [r#class("osnovna_tabela")],
-                                    [input(
-                                        [r#type("button"), r#id("natisni"), r#value("NATISNI")],
-                                        [],
-                                    )],
-                                ),
-                                td(
-                                    [r#class("osnovna_tabela")],
-                                    [input(
-                                        [r#type("button"), r#id("resi"), r#value("REŠI SUDOKU"), on_click(|_|{ Msg::Resi})],
-                                        [],
-                                    )],
-                                ),
-                            ],
-                        ),
-                        
-                    ],
-                ),
-            ],
+                            ),
+                        ],
+                    ),
+                    tr(
+                        [],
+                        [
+                            td(
+                                [r#class("osnovna_tabela")],
+                                [input(
+                                    [r#type("button"), r#id("natisni"), r#value("NATISNI")],
+                                    [],
+                                )],
+                            ),
+                            td(
+                                [r#class("osnovna_tabela")],
+                                [input(
+                                    [
+                                        r#type("button"),
+                                        r#id("resi"),
+                                        r#value("REŠI SUDOKU"),
+                                        on_click(|_| Msg::Resi),
+                                    ],
+                                    [],
+                                )],
+                            ),
+                        ],
+                    ),
+                ],
+            )],
         )
     }
 }
@@ -153,6 +192,19 @@ fn izpisi_vrstice(sudoku: &Suduku) -> Node<Msg> {
 }
 
 // te funkcije tuki bi se loh dale v posebi datoteko?? da ni tuki tok natlačen??
+fn izpise_navodila(app: &mut App, p_n: bool) -> () {
+    if p_n {
+        app.prikaz_navodil = "vidna".to_string()
+    } else {
+        app.prikaz_navodil = "nevidna".to_string()
+    }
+}
+
+// div(
+//         [r#id("overlay")],
+//         [div([r#id("text")], [text("Overlay text")])],
+//     )
+
 fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     //izpiše eno vrstico sudokuja po poljih
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
@@ -160,12 +212,28 @@ fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
         sez.push(td(
             [r#class("celica"), r#id(ustvari_id(vrstica, i))],
             [div(
-                [],
-                [text(sudoku.sudoku_kot_seznam_samo_vrednosti()[vrstica][i])],
+                [r#class("celica_1")],
+                [text(izpisi_stevilo_polja(sudoku, vrstica, i))],
             )],
         ));
     }
     div([], [tr([], sez)])
+}
+
+fn izpisi_stevilo_polja(sudoku: &Suduku, vrstica: usize, i: usize) -> &str {
+    let st = sudoku.sudoku_kot_seznam_samo_vrednosti()[vrstica][i];
+    match st {
+        1 => "1",
+        2 => "2",
+        3 => "3",
+        4 => "4",
+        5 => "5",
+        6 => "6",
+        7 => "7",
+        8 => "8",
+        9 => "9",
+        _ => "",
+    }
 }
 
 fn izpisi_vse_vrstice_polj(sudoku: &Suduku) -> Node<Msg> {
