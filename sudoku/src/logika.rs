@@ -244,6 +244,7 @@ impl Suduku {
             }
         }
     }
+    
 
     pub fn sudoku_kot_seznam_samo_vrednosti(&self) -> Vec<Vec<u8>> {
         let mut nov = vec![];
@@ -262,21 +263,40 @@ impl Suduku {
 
     pub fn resi_sudoku(&mut self) -> () {
         //zelo očitno zadeva ne reši zares sudokuja, to je le začasno, da lahko usposobim gumb reši
-
-        //for i in 0..80 {
-        //    self.mreza[i].stevilo = 1
-        //}
+        //to je zdej isto kot vpisi enolicno dolocena st
+    
         for polje in &mut self.mreza {
-            polje.vpisi(1);
+            if polje.moznosti.len() == 1 && polje.stevilo == 0 {polje.vpisi(polje.moznosti[0]);}
+    
         }
+        
+        // if self.je_enolicno_resljivo() {
+        //     self.vpisi_enolicno_dolocena_stevila();
+        // }}
+        // else {for polje in &mut self.mreza {
+        //     polje.vpisi(0);
+        // }}
+        
     }
 
     pub fn je_enolicno_resljivo(&self) -> bool {
+        let mut resnicnost = true;
+        for celica in &self.mreza {
+            if celica.stevilo == 0 {
+                if celica.moznosti.len() != 1 && celica.moznosti.len() != 0 {
+                    resnicnost = false
+                }};
+            if !&celica.ali_je_vrstica_okej(&self) {resnicnost = false};
+            if !&celica.ali_je_stolpec_okej(&self) {resnicnost = false};
+            if !&celica.ali_je_skatla_okej(&self) {resnicnost = false};
+        }
+        return resnicnost
         //dvomim da je tole čisto pravilno. potrebujem tok da neki nrdi da lahko vzpostavim sporočilo ki se prikaže, ko je zadeva enolično rešljiva
-        return true;
+    
     }
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }
+
 
 use std::fmt::Display;
 use std::fmt::Formatter;
