@@ -155,7 +155,7 @@ impl Polje {
         }
         return self.stolpec > 0 && self.stolpec < 10 && resnicnost;
     }
-    pub fn ugotovi_moznosti(&mut self, suduku: Suduku) -> () {
+    pub fn ugotovi_moznosti(&mut self, suduku:&mut Suduku) -> () {
         let vrstica = ugotovi_stevila_v_vrstici(self.vrstica, &suduku);
         let stolpec = ugotovi_stevila_v_stolpcu(self.stolpec, &suduku);
         let skatla = ugotovi_stevila_v_skatli(self.ugotovi_skatlo(), &suduku);
@@ -166,12 +166,26 @@ impl Polje {
             }
         }
     }
+    pub fn ugotovi_moznosti_in_vrni_nov_sudoku(&mut self, suduku: Suduku) -> Suduku {
+        let nov_sudoku = suduku.kopiraj_sudoku();
+        let vrstica = ugotovi_stevila_v_vrstici(self.vrstica, &nov_sudoku);
+        let stolpec = ugotovi_stevila_v_stolpcu(self.stolpec, &nov_sudoku);
+        let skatla = ugotovi_stevila_v_skatli(self.ugotovi_skatlo(), &nov_sudoku);
+        for i in vrstica {
+            if stolpec.contains(&i) && skatla.contains(&i) {
+                self.moznosti.push(i)
+            } else {
+            }
+        }
+        return nov_sudoku
+    }
 
     pub fn vpisi(&mut self, stevilo: u8) -> () {
         if self.moznosti.contains(&stevilo) {
             self.stevilo = stevilo;
             self.moznosti = vec![]
         };
+        
     }
 
     pub fn prazno_polje(vrst: u8, stolp: u8) -> Polje {
@@ -214,6 +228,9 @@ impl Suduku {
             self.mreza[indeks] = polje
         } else {
         }
+        // for polje in &self.mreza {
+        //     polje.ugotovi_moznosti(self)
+        // }
     }
 
     // pub fn spremeni_moznosti(&mut self) -> () {
@@ -224,6 +241,12 @@ impl Suduku {
     //         }
     //     }
     // }
+    pub fn kopiraj_sudoku(&self) -> Suduku {
+        Suduku {
+            mreza: self.mreza.clone(),
+            trenutno_polje: 0,
+        }
+    }
 
     pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
         let polje = Polje {
@@ -261,11 +284,30 @@ impl Suduku {
         return nov;
     }
 
+    // pub fn ugotovi_moznosti_celega_sudokuja_enkrat(&mut self) -> () {
+    //     //gre enkrat cez sudoku
+    //     for mut polje in &self.mreza {
+    //         let vrstica = ugotovi_stevila_v_vrstici(polje.vrstica, &self);
+    //         let stolpec = ugotovi_stevila_v_stolpcu(polje.stolpec, &self);
+    //         let skatla = ugotovi_stevila_v_skatli(polje.ugotovi_skatlo(), &self);
+        
+    //     for i in vrstica {
+    //         if stolpec.contains(&i) && skatla.contains(&i) {
+    //             polje.moznosti.push(i)
+    //         } else {
+    //         }
+    //     }}
+        
+    // } 
+    // ne dela :(
+
     pub fn resi_sudoku(&mut self) -> () {
         //zelo očitno zadeva ne reši zares sudokuja, to je le začasno, da lahko usposobim gumb reši
         //to je zdej isto kot vpisi enolicno dolocena st
-    
+
+        //self.ugotovi_moznosti_celega_sudokuja_enkrat();
         for polje in &mut self.mreza {
+            polje.ugotovi_moznosti(self);
             if polje.moznosti.len() == 1 && polje.stevilo == 0 {polje.vpisi(polje.moznosti[0]);}
     
         }
