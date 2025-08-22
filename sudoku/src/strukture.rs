@@ -8,7 +8,22 @@ pub struct Polje {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Suduku {
     pub mreza: Vec<Polje>,
-    pub trenutno_polje: usize, //kao indeks v seznamu
+    //pub trenutno_polje: usize, //kao indeks v seznamu
+}
+
+pub enum Msg {
+    Polje(usize, usize, usize),
+    Resi,
+    NavodilaOn,
+    NavodilaOff,
+}
+
+pub struct App {
+    pub stevilo: usize,
+    pub vrstica: usize,
+    pub stolpec: usize,
+    pub mreza: Suduku,
+    pub prikaz_navodil: String,
 }
 
 #[derive(PartialEq, Debug, Clone)]
