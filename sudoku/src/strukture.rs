@@ -11,17 +11,8 @@ pub struct Suduku {
     pub trenutno_polje: usize, //kao indeks v seznamu
 }
 
-pub enum Msg {
-    Polje(usize, usize, usize),
-    Resi,
-    NavodilaOn,
-    NavodilaOff,
-}
-
-pub struct App {
-    pub stevilo: usize,
-    pub vrstica: usize,
-    pub stolpec: usize,
-    pub mreza: Suduku,
-    pub prikaz_navodil: String,
+#[derive(PartialEq, Debug, Clone)]
+pub enum Obstoj {
+    Prazno,
+    Polno(u8),
 }
