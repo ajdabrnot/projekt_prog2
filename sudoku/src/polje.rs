@@ -1,9 +1,7 @@
 //implementacije za struct Polje
 
-use crate::logika::{
-    ugotovi_stevila_v_skatli, ugotovi_stevila_v_stolpcu, ugotovi_stevila_v_vrstici,
-};
 use crate::strukture::{Polje, Suduku};
+//use crate::suduku::*;
 impl Polje {
     pub fn ugotovi_skatlo(&self) -> u8 {
         match self.vrstica {
@@ -70,9 +68,9 @@ impl Polje {
         return self.stolpec > 0 && self.stolpec < 10 && resnicnost;
     }
     pub fn ugotovi_moznosti(&mut self, suduku: &mut Suduku) -> () {
-        let vrstica = ugotovi_stevila_v_vrstici(self.vrstica, &suduku);
-        let stolpec = ugotovi_stevila_v_stolpcu(self.stolpec, &suduku);
-        let skatla = ugotovi_stevila_v_skatli(self.ugotovi_skatlo(), &suduku);
+        let vrstica = suduku.ugotovi_stevila_v_vrstici(self.vrstica);
+        let stolpec = suduku.ugotovi_stevila_v_stolpcu(self.stolpec);
+        let skatla = suduku.ugotovi_stevila_v_skatli(self.ugotovi_skatlo());
         for i in vrstica {
             if stolpec.contains(&i) && skatla.contains(&i) {
                 self.moznosti.push(i)
@@ -82,9 +80,9 @@ impl Polje {
     }
     pub fn ugotovi_moznosti_in_vrni_nov_sudoku(&mut self, suduku: Suduku) -> Suduku {
         let nov_sudoku = suduku.kopiraj_sudoku();
-        let vrstica = ugotovi_stevila_v_vrstici(self.vrstica, &nov_sudoku);
-        let stolpec = ugotovi_stevila_v_stolpcu(self.stolpec, &nov_sudoku);
-        let skatla = ugotovi_stevila_v_skatli(self.ugotovi_skatlo(), &nov_sudoku);
+        let vrstica = suduku.ugotovi_stevila_v_vrstici(self.vrstica);
+        let stolpec = suduku.ugotovi_stevila_v_stolpcu(self.stolpec);
+        let skatla = suduku.ugotovi_stevila_v_skatli(self.ugotovi_skatlo());
         for i in vrstica {
             if stolpec.contains(&i) && skatla.contains(&i) {
                 self.moznosti.push(i)
