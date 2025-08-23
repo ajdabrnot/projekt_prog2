@@ -10,6 +10,7 @@ pub mod polje;
 pub mod sauron_funkcije;
 pub mod strukture;
 pub mod suduku;
+pub mod resevanje;
 use crate::logika::pojavitve_stevila;
 use crate::strukture::{App, Msg, Polje, Suduku};
 

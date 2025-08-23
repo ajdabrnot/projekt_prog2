@@ -14,6 +14,11 @@ impl Polje {
             moznosti: vec![1, 2, 3, 4, 5, 6, 7, 8, 9],
         }
     }
+    
+    pub fn izbrisi_stevilo(&mut self) -> () {
+        self.stevilo = 0
+        }
+    
 
     pub fn vpisi(&mut self, stevilo: u8) -> () {
         //če je števka veljavna izbira, jo vpiše v polje
@@ -72,6 +77,14 @@ impl Polje {
         //}
         //return self.stolpec > 0 && self.stolpec < 10 && resnicnost;
     }
+
+    pub fn ali_je_veljavno(&self, suduku: &Suduku) -> bool {
+        self.ali_je_vrstica_okej(suduku) &&
+        self.ali_je_stolpec_okej(suduku) &&
+        self.ali_je_skatla_okej(suduku)
+    }
+
+
     pub fn ugotovi_moznosti(&mut self, suduku: &Suduku) -> () {
         //spremeni možnosti polja
         let vrstica = suduku.manjkajoca_v_vrstici(self.vrstica);

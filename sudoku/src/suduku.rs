@@ -1,6 +1,6 @@
 //implementacije za struct Suduku
 
-use crate::strukture::{Polje, Suduku};
+use crate::strukture::{Polje, Resevanje, Suduku};
 
 impl Suduku {
     pub fn prazen_suduku() -> Suduku {
@@ -218,9 +218,19 @@ impl Suduku {
 
     pub fn resi_sudoku(&mut self) -> () {
         //self.resi_sudoku_rekurzivna()
+        // for polje in &mut self.mreza {
+        //     if polje.stevilo == 0 {polje.stevilo = 6}}
+
+        let mut resen = Resevanje::nov_za_resevanje(self);
+        if resen.resi() {
+            self.mreza = resen.sudoku_za_resevanje.mreza.clone();
+            for polje in &mut self.mreza {
+                if polje.stevilo == 0 {polje.stevilo = 6}
+        }};
         for polje in &mut self.mreza {
-            polje.stevilo = 6
+                if polje.stevilo == 0 {polje.stevilo = 6}
         }
+    
     }
 
     //pub fn resi_sudoku_rekurzivna_1(&mut self) -> bool {

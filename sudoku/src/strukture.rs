@@ -26,3 +26,8 @@ pub struct App {
     pub mreza: Suduku,
     pub prikaz_navodil: String,
 }
+
+pub struct Resevanje<'a> {
+     //tale 'a vrjetno nrdi da se poj zbrise ane????
+    pub sudoku_za_resevanje: &'a mut Suduku
+}
