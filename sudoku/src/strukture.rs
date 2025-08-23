@@ -2,6 +2,7 @@
 pub struct Polje {
     pub vrstica: u8,
     pub stolpec: u8,
+    pub skatla: u8,
     pub stevilo: u8,
     pub moznosti: Vec<u8>,
 }
@@ -24,10 +25,4 @@ pub struct App {
     pub stolpec: usize,
     pub mreza: Suduku,
     pub prikaz_navodil: String,
-}
-
-#[derive(PartialEq, Debug, Clone)]
-pub enum Obstoj {
-    Prazno,
-    Polno(u8),
 }

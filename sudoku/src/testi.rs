@@ -1,11 +1,10 @@
-use crate::logika;
-use crate::strukture::{Obstoj, Polje, Suduku};
-
 #[cfg(test)]
 mod tests {
     use crate::{
-        testi::{Polje, Suduku},
-        ustvari_id,
+        logika::ugotovi_skatlo,
+        polje::*,
+        sauron_funkcije::ustvari_id,
+        strukture::{Polje, Suduku},
     };
 
     #[test]
@@ -21,6 +20,7 @@ mod tests {
         let zeljeno = Polje {
             vrstica: 2,
             stolpec: 3,
+            skatla: ugotovi_skatlo(2, 3),
             stevilo: 0,
             moznosti: vec![1, 2, 3, 4, 5, 6, 7, 8, 9],
         };

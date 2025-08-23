@@ -16,7 +16,6 @@ pub fn izpisi_vrstice(sudoku: &Suduku) -> Node<Msg> {
     div([], sez)
 }
 
-// te funkcije tuki bi se loh dale v posebi datoteko?? da ni tuki tok natlačen??
 pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
     if p_n {
         app.prikaz_navodil = "vidna".to_string()

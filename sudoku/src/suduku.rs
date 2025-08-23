@@ -4,6 +4,7 @@ use crate::strukture::{Polje, Suduku};
 
 impl Suduku {
     pub fn prazen_suduku() -> Suduku {
+        //ustvari prazen sudoku
         let mut tabela = vec![];
         for i in 1..=9 {
             for j in 1..10 {
@@ -17,12 +18,12 @@ impl Suduku {
         }
     }
 
-    pub fn ugotovi_stevila_v_skatli(&self, skatla: u8) -> Vec<u8> {
+    pub fn manjkajoca_v_skatli(&self, skatla: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v škatli
         let mut ze_vpisana_st = vec![];
         let mut ni_v_skatli = vec![];
         for polje in &self.mreza {
-            if polje.ugotovi_skatlo() == skatla {
+            if polje.skatla == skatla {
                 match polje.stevilo {
                     0 => {}
                     i => ze_vpisana_st.push(i),
@@ -38,7 +39,7 @@ impl Suduku {
         return ni_v_skatli;
     }
 
-    pub fn ugotovi_stevila_v_stolpcu(&self, stolp: u8) -> Vec<u8> {
+    pub fn manjkajoca_v_stolpcu(&self, stolp: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v stolpcu
         let mut ze_vpisana_st = vec![];
         let mut ni_v_stolpcu = vec![];
@@ -59,7 +60,7 @@ impl Suduku {
         return ni_v_stolpcu;
     }
 
-    pub fn ugotovi_stevila_v_vrstici(&self, vrst: u8) -> Vec<u8> {
+    pub fn manjkajoca_v_vrstici(&self, vrst: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v vrstici
         let mut ze_vpisana_st = vec![];
         let mut ni_v_vrstici = vec![];
@@ -82,18 +83,25 @@ impl Suduku {
 
     pub fn napolni_polje(&mut self, vrst: u8, stolp: u8, st: u8) -> () {
         let indeks = (vrst as usize - 1) * 9 + (stolp as usize) - 1;
-        let polje = Polje {
-            vrstica: vrst,
-            stolpec: stolp,
-            stevilo: st,
-            moznosti: vec![],
-        };
-        let v_vrstici = polje.ali_je_vrstica_okej(self);
-        let v_stolpcu = polje.ali_je_stolpec_okej(self);
-        let v_skatli = polje.ali_je_skatla_okej(self);
-        if v_vrstici && v_stolpcu && v_skatli {
+        let mut polje = Polje::prazno_polje(vrst, stolp);
+        polje.vpisi(st);
+        ////let polje1 = Polje {
+        ////    vrstica: vrst,
+        ////    stolpec: stolp,
+        ////    skatla: ugotovi_skatlo(vrst, stolp),
+        ////    stevilo: st,
+        ////    moznosti: vec![],
+        ////};
+        //let v_vrstici = polje.ali_je_vrstica_okej(self);
+        //let v_stolpcu = polje.ali_je_stolpec_okej(self);
+        //let v_skatli = polje.ali_je_skatla_okej(self);
+        //if v_vrstici && v_stolpcu && v_skatli {
+        //    self.mreza[indeks] = polje
+        //} else {
+        //}
+
+        if self.ali_je_veljavno(vrst, stolp, st) {
             self.mreza[indeks] = polje
-        } else {
         }
         // for polje in &self.mreza {
         //     polje.ugotovi_moznosti(self)
@@ -116,18 +124,27 @@ impl Suduku {
     }
 
     pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
-        let polje = Polje {
-            vrstica: vrst,
-            stolpec: stolp,
-            stevilo: st,
-            moznosti: vec![],
-        };
-        return polje.ali_je_vrstica_okej(self)
-            && polje.ali_je_stolpec_okej(self)
-            && polje.ali_je_skatla_okej(self);
+        //preveri, ali je izbrana stecka veljavna izbira za to polje
+
+        //let polje = Polje {
+        //    vrstica: vrst,
+        //    stolpec: stolp,
+        //    skatla: ugotovi_skatlo(vrst, stolp),
+        //    stevilo: st,
+        //    moznosti: vec![],
+        //};
+
+        let mut polje = Polje::prazno_polje(vrst, stolp);
+        polje.ugotovi_moznosti(self);
+        return polje.moznosti.contains(&st);
+        //polje.vpisi(st);
+        //return polje.ali_je_vrstica_okej(self)
+        //    && polje.ali_je_stolpec_okej(self)
+        //    && polje.ali_je_skatla_okej(self);
     }
 
     fn vpisi_enolicno_dolocena_stevila(&mut self) -> () {
+        //zapolni polja katerih rešitev je že enolično določena
         for mut polje in self.mreza.clone() {
             if polje.moznosti.len() == 1 {
                 polje.vpisi(polje.moznosti[0]);
@@ -136,6 +153,17 @@ impl Suduku {
     }
 
     pub fn sudoku_kot_seznam_samo_vrednosti(&self) -> Vec<Vec<u8>> {
+        //vrne mrežo zapisano kot
+        //[[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0],
+        //[0,0,0,0,0,0,0,0,0]];
+        //kjer so namesto ničel zapisane uztrezne števke
         let mut nov = vec![];
         let mut manjsi_sez = vec![];
         for i in 0..81 {
@@ -155,7 +183,7 @@ impl Suduku {
     //     for mut polje in &self.mreza {
     //         let vrstica = ugotovi_stevila_v_vrstici(polje.vrstica, &self);
     //         let stolpec = ugotovi_stevila_v_stolpcu(polje.stolpec, &self);
-    //         let skatla = ugotovi_stevila_v_skatli(polje.ugotovi_skatlo(), &self);
+    //         let skatla = manjkajoca_v_skatli(polje.ugotovi_skatlo(), &self);
 
     //     for i in vrstica {
     //         if stolpec.contains(&i) && skatla.contains(&i) {
