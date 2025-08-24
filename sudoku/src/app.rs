@@ -45,8 +45,25 @@ impl Application for App {
             Msg::Resi => self.mreza.resi_sudoku(),
             Msg::NavodilaOn => izpise_navodila(self, true),
             Msg::NavodilaOff => izpise_navodila(self, false),
-            
-            
+
+            //tole bo zdej tut novo!!
+            // Msg::ShraniPdf => {
+            // // pokliče JS funkcijo iz index.html
+            //     sauron::wasm_bindgen::JsCast::unchecked_into::<js_sys::Function>(
+            //         js_sys::Reflect::get(
+            //             &web_sys::window().unwrap(),
+            //             &"shraniSudokuKotPDF".into(),
+            //         )
+            //         .unwrap(),
+            //     )
+            //     .call0(&JsValue::NULL)
+            //     .unwrap();
+            // }
+
+            Msg::ShraniPdf => {
+                poklici_shrani_pdf();
+            }
+
         };
 
         return Cmd::none();
@@ -146,7 +163,14 @@ impl Application for App {
                         ],
                     ),
                     tr([],[td([r#colspan("2")],[div([r#id("sporocilo_resljivosti")],[text(ali_je_enolicno_resljiv(&self))]),
-                       ])])
+                       ])]
+                    ),
+
+                    //tole zdej je novo!!
+                    button(
+                        [on_click(|_| Msg::ShraniPdf)],
+                        [text("Shrani kot PDF")],
+                    ),
                 ],
             )],
         )

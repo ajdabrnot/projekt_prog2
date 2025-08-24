@@ -12,11 +12,13 @@ pub struct Suduku {
     //pub trenutno_polje: usize, //kao indeks v seznamu
 }
 
+#[derive(Debug, Clone)]
 pub enum Msg {
     Polje(usize, usize, usize),
     Resi,
     NavodilaOn,
     NavodilaOff,
+    ShraniPdf,
 }
 
 pub struct App {

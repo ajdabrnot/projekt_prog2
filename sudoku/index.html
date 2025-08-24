@@ -12,6 +12,18 @@
 </head>
 
 <body>
+  <!-- tole je zdej na novo, probavam za pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    function shraniSudokuKotPDF() {
+      const element = document.getElementById("sudoku"); // tu naj bo tvoj Sudoku
+      html2pdf().from(element).save("sudoku.pdf");
+    }
+  </script>
+  <!-- <button onclick="shraniSudokuKotPDF()">Shrani kot PDF</button> -->
+   <!-- tale stvar nastav gumb v zgorn lev kot pa glih tko ne dela -->
+
+
 </body>
 
 </html>

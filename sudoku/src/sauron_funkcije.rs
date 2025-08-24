@@ -5,6 +5,24 @@ use sauron::html::text;
 use sauron::prelude::*;
 use sauron::{node, Cmd, Component, Node, Program};
 
+use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
+use web_sys::window;
+
+
+//novo????!!!!
+pub fn poklici_shrani_pdf() {
+    let window = window().unwrap();
+    let func = js_sys::Reflect::get(
+        &window,
+        &JsValue::from_str("shraniSudokuKotPDF")
+    ).unwrap();
+
+    let func = func.dyn_into::<js_sys::Function>().unwrap();
+    func.call0(&JsValue::NULL).unwrap();
+}
+
+
 pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
     if p_n {
         app.prikaz_navodil = "vidna".to_string()
