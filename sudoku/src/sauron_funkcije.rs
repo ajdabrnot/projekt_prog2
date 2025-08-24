@@ -20,6 +20,13 @@ pub fn ali_je_enolicno_resljiv(app: &App) -> &str {
         "Sudoku NI enolično rešljiv :("
     }
 }
+pub fn ali_je_sploh_resljiv(app: &App) -> &str {
+    if app.mreza.ali_je_sudoku_resljiv() {
+        "Obstaja vsaj ena rešitev za sudoku :D"
+    } else {
+        "Sudoku NI več rešljiv. Izbriši kakšno od vpisanih števil in poskusi s kakšno drugo! :("
+    }
+}
 
 pub fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     //izpiše eno vrstico sudokuja po poljih

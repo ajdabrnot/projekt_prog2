@@ -234,18 +234,50 @@ impl Suduku {
         let mut resen = Resevanje::nov_za_resevanje(self);
         if resen.resi() {
             self.mreza = resen.sudoku_za_resevanje.mreza.clone();
-            for polje in &mut self.mreza {
-                if polje.stevilo == 0 {
-                    polje.stevilo = 6
-                }
-            }
         };
-        for polje in &mut self.mreza {
-            if polje.stevilo == 0 {
-                polje.stevilo = 6
-            }
-        }
+        // for polje in &mut self.mreza {
+        //     if polje.stevilo == 0 {
+        //         polje.stevilo = 6
+        //     }
+        // }
     }
+    pub fn je_enolicno_resljivo(&self) -> bool {
+        let mut kopirani_sudoku_prvic = self.kopiraj_sudoku();
+        let mut kopirani_sudoku_drugic = self.kopiraj_sudoku();
+        let mut resen_prvic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_prvic);
+        let mut resen_drugic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_drugic);
+        if resen_prvic.resi() && resen_drugic.resi_se_enkrat() {
+            return resen_prvic.sudoku_za_resevanje.mreza == resen_drugic.sudoku_za_resevanje.mreza
+        }
+        return false
+        // let mut resnicnost = true;
+        // for celica in &self.mreza {
+        //     if celica.stevilo == 0 {
+        //         if celica.moznosti.len() != 1 && celica.moznosti.len() != 0 {
+        //             resnicnost = false
+        //         }
+        //     };
+        //     if !&celica.ali_je_vrstica_okej(&self) {
+        //         resnicnost = false
+        //     };
+        //     if !&celica.ali_je_stolpec_okej(&self) {
+        //         resnicnost = false
+        //     };
+        //     if !&celica.ali_je_skatla_okej(&self) {
+        //         resnicnost = false
+        //     };
+        // }
+        // return resnicnost;
+        //dvomim da je tole čisto pravilno. potrebujem tok da neki nrdi da lahko vzpostavim sporočilo ki se prikaže, ko je zadeva enolično rešljiva
+    }
+
+    pub fn ali_je_sudoku_resljiv(&self) -> bool {
+        let mut kopirani_sudoku = self.kopiraj_sudoku();
+        let mut resen = Resevanje::nov_za_resevanje(&mut kopirani_sudoku);
+        return resen.resi() 
+    }
+
+    
 
     //pub fn resi_sudoku_rekurzivna_1(&mut self) -> bool {
     //    //zapolni že enolično določena polja
@@ -295,26 +327,6 @@ impl Suduku {
     //    return true; //smo prišli čez vsa polja??? in je vse rešeno
     //}
 
-    pub fn je_enolicno_resljivo(&self) -> bool {
-        let mut resnicnost = true;
-        for celica in &self.mreza {
-            if celica.stevilo == 0 {
-                if celica.moznosti.len() != 1 && celica.moznosti.len() != 0 {
-                    resnicnost = false
-                }
-            };
-            if !&celica.ali_je_vrstica_okej(&self) {
-                resnicnost = false
-            };
-            if !&celica.ali_je_stolpec_okej(&self) {
-                resnicnost = false
-            };
-            if !&celica.ali_je_skatla_okej(&self) {
-                resnicnost = false
-            };
-        }
-        return resnicnost;
-        //dvomim da je tole čisto pravilno. potrebujem tok da neki nrdi da lahko vzpostavim sporočilo ki se prikaže, ko je zadeva enolično rešljiva
-    }
+    
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }

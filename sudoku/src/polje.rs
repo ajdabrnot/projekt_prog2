@@ -18,6 +18,9 @@ impl Polje {
     pub fn izbrisi_stevilo(&mut self) -> () {
         //izbrise stevko, toda napačno nastavi možnosti!
         self.stevilo = 0;
+        // for st in 1..=9 {
+        //     if self.ali_je_veljavno(suduku)
+        // }
         self.moznosti = vec![1, 2, 3, 4, 5, 6, 7, 8, 9]
     }
 
@@ -34,22 +37,39 @@ impl Polje {
         let zadovoljive = suduku.manjkajoca_v_vrstici(self.vrstica);
         return zadovoljive.contains(&self.stevilo);
     }
+    pub fn ali_bi_bila_st_veljavna_v_vrstici(&self, suduku: &Suduku, st: u8) -> bool {
+        let zadovoljive = suduku.manjkajoca_v_vrstici(self.vrstica);
+        return zadovoljive.contains(&st);
+    }
 
     pub fn ali_je_skatla_okej(&self, suduku: &Suduku) -> bool {
         //preveri, da se števka, ki smo jo vpisali v izbrano polje, še ni pojavila v tej škatli
         let zadovoljive = suduku.manjkajoca_v_skatli(self.skatla);
         return zadovoljive.contains(&self.stevilo);
     }
+    pub fn ali_bi_bila_st_veljavna_v_skatli(&self, suduku: &Suduku, st: u8) -> bool {
+        let zadovoljive = suduku.manjkajoca_v_skatli(self.skatla);
+        return zadovoljive.contains(&st);
+    }
     pub fn ali_je_stolpec_okej(&self, suduku: &Suduku) -> bool {
         //preveri, da se števka, ki smo jo vpisali v izbrano polje, še ni pojavila v tem stolpcu
         let zadovoljive = suduku.manjkajoca_v_stolpcu(self.stolpec);
         return zadovoljive.contains(&self.stevilo);
+    }
+    pub fn ali_bi_bila_st_veljavna_v_stolpcu(&self, suduku: &Suduku, st: u8) -> bool {
+        let zadovoljive = suduku.manjkajoca_v_stolpcu(self.stolpec);
+        return zadovoljive.contains(&st);
     }
 
     pub fn ali_je_veljavno(&self, suduku: &Suduku) -> bool {
         self.ali_je_vrstica_okej(suduku)
             && self.ali_je_stolpec_okej(suduku)
             && self.ali_je_skatla_okej(suduku)
+    }
+    pub fn ali_bi_bilo_veljavno(&self, suduku: &Suduku, st: u8) -> bool {
+        self.ali_bi_bila_st_veljavna_v_vrstici(suduku, st)
+            && self.ali_bi_bila_st_veljavna_v_stolpcu(suduku, st)
+            && self.ali_bi_bila_st_veljavna_v_skatli(suduku, st)
     }
 
     pub fn ugotovi_moznosti(&mut self, suduku: &Suduku) -> () {
