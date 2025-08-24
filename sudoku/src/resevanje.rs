@@ -1,13 +1,13 @@
 use crate::sauron_funkcije::sudoku_inputi;
 
 use super::Suduku;
-use crate::strukture::{Resevanje};
+use crate::strukture::Resevanje;
 
-
-impl <'a>Resevanje<'a> {
-
+impl<'a> Resevanje<'a> {
     pub fn nov_za_resevanje(sudoku: &'a mut Suduku) -> Self {
-        Resevanje { sudoku_za_resevanje: sudoku }
+        Resevanje {
+            sudoku_za_resevanje: sudoku,
+        }
     }
 
     pub fn resi(&mut self) -> bool {
@@ -18,16 +18,17 @@ impl <'a>Resevanje<'a> {
         // poisce prazne celice
         if let Some(indeks) = self.sudoku_za_resevanje.prvo_prazno_polje() {
             for st in 1..=9 {
-                if self.sudoku_za_resevanje.mreza[indeks].ali_je_veljavno(self.sudoku_za_resevanje) {
+                if self.sudoku_za_resevanje.mreza[indeks].ali_je_veljavno(self.sudoku_za_resevanje)
+                {
                     self.sudoku_za_resevanje.mreza[indeks].vpisi(st as u8);
                     if self.resi() {
-                        return true
+                        return true;
                     }
                     self.sudoku_za_resevanje.mreza[indeks].izbrisi_stevilo()
                 }
-            }   
+            }
             return false;
         }
-        true // If there are no empty cells left, the puzzle is solved
+        true
     }
 }

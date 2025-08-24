@@ -108,6 +108,15 @@ impl Suduku {
         // }
     }
 
+    pub fn napolni_polja(&mut self, sez: Vec<(u8, u8, u8)>) -> () {
+        //napolne več polj hkrati
+        for elt in sez {
+            match elt {
+                (a, b, c) => self.napolni_polje(a, b, c),
+            }
+        }
+    }
+
     // pub fn spremeni_moznosti(&mut self) -> () {
     //     for i in 0..9 {
     //         for j in 0..9 {
@@ -124,7 +133,7 @@ impl Suduku {
     }
 
     pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
-        //preveri, ali je izbrana stecka veljavna izbira za to polje
+        //preveri, ali je izbrana stevka veljavna izbira za to polje
 
         //let polje = Polje {
         //    vrstica: vrst,
@@ -137,6 +146,7 @@ impl Suduku {
         let mut polje = Polje::prazno_polje(vrst, stolp);
         polje.ugotovi_moznosti(self);
         return polje.moznosti.contains(&st);
+
         //polje.vpisi(st);
         //return polje.ali_je_vrstica_okej(self)
         //    && polje.ali_je_stolpec_okej(self)
@@ -225,12 +235,16 @@ impl Suduku {
         if resen.resi() {
             self.mreza = resen.sudoku_za_resevanje.mreza.clone();
             for polje in &mut self.mreza {
-                if polje.stevilo == 0 {polje.stevilo = 6}
-        }};
+                if polje.stevilo == 0 {
+                    polje.stevilo = 6
+                }
+            }
+        };
         for polje in &mut self.mreza {
-                if polje.stevilo == 0 {polje.stevilo = 6}
+            if polje.stevilo == 0 {
+                polje.stevilo = 6
+            }
         }
-    
     }
 
     //pub fn resi_sudoku_rekurzivna_1(&mut self) -> bool {

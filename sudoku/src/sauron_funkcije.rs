@@ -5,17 +5,6 @@ use sauron::html::text;
 use sauron::prelude::*;
 use sauron::{node, Cmd, Component, Node, Program};
 
-pub fn izpisi_vrstice(sudoku: &Suduku) -> Node<Msg> {
-    //neuporabljena, čaka na izbris
-    //izpiše suduku kot [0,0,0,0,...], [0,0,0,0,...]
-    let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![text!("sudoku je",)];
-    for i in 0..9 {
-        sez.push(br([], []));
-        sez.push(text!("{:?}", sudoku.sudoku_kot_seznam_samo_vrednosti()[i]));
-    }
-    div([], sez)
-}
-
 pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
     if p_n {
         app.prikaz_navodil = "vidna".to_string()
@@ -23,14 +12,6 @@ pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
         app.prikaz_navodil = "nevidna".to_string()
     }
 }
-
-//fn ali_je_enolicno_resljiv1(app: &mut App, p_n: bool) -> (){
-//    if p_n {
-//        app.enolicna_resljivost = "Sudoku NI enolično rešljiv :(".to_string()
-//    } else {
-//        app.enolicna_resljivost = "Sudoku JE enolično rešljiv :D".to_string()
-//    }
-//}
 
 pub fn ali_je_enolicno_resljiv(app: &App) -> &str {
     if app.mreza.je_enolicno_resljivo() {
@@ -76,25 +57,6 @@ pub fn izpisi_vse_vrstice_polj(sudoku: &Suduku) -> Node<Msg> {
     let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
     for i in 0..9 {
         sez.push(tr([], [izpisi_eno_vrstico_polj(sudoku, i)]))
-    }
-    div([], sez)
-}
-pub fn idk(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
-    //sploh ne vem kaj to nrdi ampak ni nikoli uporabljena --> izbris
-    let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![];
-    for i in 0..9 {
-        sez.push(input(
-            [
-                r#min(1),
-                r#max(9),
-                r#type("number"),
-                value(sudoku.sudoku_kot_seznam_samo_vrednosti()[vrstica][i]),
-                on_input(move |event: InputEvent| {
-                    Msg::Polje(vrstica, i, event.value().parse().unwrap())
-                }),
-            ],
-            [],
-        ));
     }
     div([], sez)
 }
@@ -177,54 +139,3 @@ pub fn ustvari_input_polje(
     ));
     return sez;
 }
-
-//ahah je mnogo zakomentirane kode, ki si jo želim izbrisat.
-fn ahah() -> () {
-    // fn sudoku_inputi(sudoku: &Suduku) -> Node<Msg> {
-    //     let mut sez: Vec<Node<Msg>> = vec![];
-
-    //     for j in 0..9 {
-    //         for i in 0..9 {
-    //             let vrednost = sudoku.sudoku_kot_seznam_samo_vrednosti()[j][i];
-    //             let moznosti = sudoku.mreza[9 * j + i].moznosti.clone(); // Potreben za move v closure
-
-    //             sez.push(input(
-    //                 [
-    //                     r#min(1),
-    //                     r#max(9),
-    //                     r#type("number"),
-    //                     value(vrednost.to_string()),
-    //                     on_input(move |event: InputEvent| {
-    //                         // Poskusimo razparsati število
-    //                         if let Ok(vnos) = event.value().parse::<u8>() {
-    //                             // Če je med dovoljenimi možnostmi
-    //                             if moznosti.contains(&vnos) {
-    //                                 Msg::Polje(j, i, vnos as usize)
-    //                             } else {
-    //                                 Msg::Ignoriraj // Ali pa definiraš nekaj, kar ne spremeni stanja
-    //                             }
-    //                         } else {
-    //                             Msg::Ignoriraj // Če ni število (prazno ali invalid)
-    //                         }
-    //                     }),
-    //                 ],
-    //                 [],
-    //             ));
-    //         }
-    //         sez.push(br([], [])); // Nova vrstica
-    //     }
-
-    //     div([], sez)
-    // }}
-}
-
-pub fn izpisi_sudoku_po_poljih(sudoku: &Suduku) -> Node<Msg> {
-    //idk kaj je fora, nikoli ni rabljeno
-    let mut sez: std::vec::Vec<sauron::Node<Msg>> = vec![text!("sudoku je",)];
-    for i in 0..9 {
-        sez.push(br([], []));
-        sez.push(text!("{:?}", izpisi_eno_vrstico_polj(sudoku, i)));
-    }
-    div([], sez)
-}
-//vpisi st naj ima kar div notri z devetimi inputi al neki
