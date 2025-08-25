@@ -9,19 +9,58 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::window;
 
-
 //novo????!!!!
 pub fn poklici_shrani_pdf() {
     let window = window().unwrap();
-    let func = js_sys::Reflect::get(
-        &window,
-        &JsValue::from_str("shraniSudokuKotPDF")
-    ).unwrap();
+    let func = js_sys::Reflect::get(&window, &JsValue::from_str("shraniSudokuKotPDF")).unwrap();
 
     let func = func.dyn_into::<js_sys::Function>().unwrap();
     func.call0(&JsValue::NULL).unwrap();
 }
 
+pub fn gumb_resi(app: &App) -> sauron::Node<Msg> {
+    let mut zapolnjena = 0;
+    for i in 0..81 {
+        if app.mreza.mreza[i].stevilo != 0 {
+            zapolnjena = zapolnjena + 1
+        }
+    }
+    if zapolnjena > 16 {
+        if app.mreza.ali_je_sudoku_resljiv() {
+            input(
+                [
+                    r#type("button"),
+                    r#id("resi"),
+                    r#value("REŠI SUDOKU"),
+                    on_click(|_| Msg::Resi),
+                ],
+                [],
+            )
+        } else {
+            input(
+                [
+                    r#type("button"),
+                    r#id("resi"),
+                    r#disabled(true),
+                    r#value("REŠI SUDOKU"),
+                    on_click(|_| Msg::Resi),
+                ],
+                [],
+            )
+        }
+    } else {
+        input(
+            [
+                r#type("button"),
+                r#id("resi"),
+                r#disabled(true),
+                r#value("REŠI SUDOKU"),
+                on_click(|_| Msg::Resi),
+            ],
+            [],
+        )
+    }
+}
 
 pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
     if p_n {
@@ -31,13 +70,35 @@ pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
     }
 }
 
-pub fn ali_je_enolicno_resljiv(app: &App) -> &str {
+pub fn ali_je_enolicno_resljiv1(app: &App) -> &str {
     if app.mreza.je_enolicno_resljivo() {
         "Sudoku JE enolično rešljiv :D"
     } else {
         "Sudoku NI enolično rešljiv :("
     }
 }
+pub fn ali_je_sploh_oz_enolicno_resljiv(app: &App) -> &str {
+    let mut zapolnjena = 0;
+    for i in 0..81 {
+        if app.mreza.mreza[i].stevilo != 0 {
+            zapolnjena = zapolnjena + 1
+        }
+    }
+    if zapolnjena > 16 {
+        if app.mreza.ali_je_sudoku_resljiv() {
+            if app.mreza.je_enolicno_resljivo() {
+                "Sudoku JE enolično rešljiv :D"
+            } else {
+                "Sudoku NI enolično rešljiv :("
+            }
+        } else {
+            "Sudoku NI več rešljiv. >:| \nIzbriši kakšno od vpisanih števil in poskusi znova! "
+        }
+    } else {
+        "Sudoku NI enolično rešljiv :("
+    }
+}
+
 pub fn ali_je_sploh_resljiv(app: &App) -> &str {
     if app.mreza.ali_je_sudoku_resljiv() {
         "Obstaja vsaj ena rešitev za sudoku :D"

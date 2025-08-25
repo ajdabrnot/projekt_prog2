@@ -19,6 +19,9 @@ pub enum Msg {
     NavodilaOn,
     NavodilaOff,
     ShraniPdf,
+    KorakNazaj,
+    KorakNaprej,
+    ZacniZnova,
 }
 
 pub struct App {
@@ -27,9 +30,11 @@ pub struct App {
     pub stolpec: usize,
     pub mreza: Suduku,
     pub prikaz_navodil: String,
+    pub stare_mreze: Vec<Suduku>,
+    pub trenutna_mreza: usize,
 }
 
 pub struct Resevanje<'a> {
-     //tale 'a vrjetno nrdi da se poj zbrise ane????
-    pub sudoku_za_resevanje: &'a mut Suduku
+    //tale 'a vrjetno nrdi da se poj zbrise ane????
+    pub sudoku_za_resevanje: &'a mut Suduku,
 }

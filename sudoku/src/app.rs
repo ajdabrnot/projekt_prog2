@@ -17,6 +17,8 @@ impl App {
             stolpec: 0,
             mreza: Suduku::prazen_suduku(),
             prikaz_navodil: "nevidna".to_string(),
+            stare_mreze: vec![Suduku::prazen_suduku()],
+            trenutna_mreza: 0,
         }
     }
 }
@@ -33,18 +35,43 @@ impl Application for App {
                 self.stolpec = c + 1;
                 self.stevilo = a;
 
+                self.stare_mreze.push(self.mreza.kopiraj_sudoku());
+                self.trenutna_mreza = self.trenutna_mreza +1;
+                
+                //if self.stare_mreze.len() > 6 { //si zapomne do 5 korakov nazaj
+                //    self.stare_mreze.remove(0);
+                //}
                 self.mreza.napolni_polje(
                     self.vrstica as u8,
                     self.stolpec as u8,
                     self.stevilo as u8,
                 );
-                // do tu je številka vpisana v sudoku.
-
-                // tuki je treba nrdit še, da pogleda ali je zdaj enolična rešitev in da sporoči, če je.
+                
             }
             Msg::Resi => self.mreza.resi_sudoku(),
             Msg::NavodilaOn => izpise_navodila(self, true),
             Msg::NavodilaOff => izpise_navodila(self, false),
+            Msg::KorakNazaj => {
+                if self.trenutna_mreza > 0 {
+                    self.mreza = self.stare_mreze[self.trenutna_mreza -1].clone();
+                    self.trenutna_mreza = self.trenutna_mreza -1;
+                }else{}
+                
+                
+            },
+            Msg::KorakNaprej =>{
+                if self.trenutna_mreza < self.stare_mreze.len() - 1{
+                    self.mreza = self.stare_mreze[self.trenutna_mreza +1].clone();
+                    self.trenutna_mreza = self.trenutna_mreza +1;
+                }else {}
+                
+            },
+            Msg::ZacniZnova => {
+                self.mreza = Suduku::prazen_suduku();
+                self.stare_mreze = vec![ Suduku::prazen_suduku()];
+                self.trenutna_mreza = 0
+            },
+            
 
             //tole bo zdej tut novo!!
             // Msg::ShraniPdf => {
@@ -115,7 +142,7 @@ impl Application for App {
                                                         [
                                                             r#id("izpisana_navodila"),
                                                             r#type("button"),
-                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n Ko jih bo vpisanih dovolj, da je sudoku enolično rešljiv, te bo program na to opozoril.\n S klikom na gumb 'NATISNI' se sestavljeni sudoku shrani v pdf obliki.\n Sudoku bo izgledal kot je prikazan sudoku na desni.\n Sklikom na gumb 'REŠI' se sudoku na desni reši."),
+                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n V spodnji vrstici program sproti opozarja,\n ali je sudoku enolično oziroma sploh rešljiv.\n S klikom na gumb 'NATISNI' se sestavljeni sudoku shrani v pdf obliki.\n Sklikom na gumb 'REŠI' se sudoku na desni reši.\n Ta gumb je omogočen, ko je sudoku enoličo rešljiv.\n Zabavaj se!"),
                                                             on_click(|_| Msg::NavodilaOff),
                                                         ],
                                                         [],
@@ -143,26 +170,31 @@ impl Application for App {
                         [
                             td(
                                 [r#class("osnovna_tabela")],
-                                [input(
-                                    [r#type("button"), r#id("natisni"), r#value("NATISNI")],
-                                    [],
-                                )],
+                                [input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("<--"), on_click(|_| Msg::KorakNazaj)], []),input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("ZAČNI ZNOVA"), on_click(|_| Msg::ZacniZnova)], []),input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("-->"), on_click(|_| Msg::KorakNaprej)], [])//input(
+                                    //[r#type("button"), r#id("natisni"), r#value("NATISNI")],
+                                    //[],
+                                //)
+                                ],
                             ),
                             td(
                                 [r#class("osnovna_tabela")],
-                                [input(
+                                [//input([r#type("button"),r#value("<--"), on_click(|_| Msg::KorakNazaj)], []),
+                                input(
                                     [
                                         r#type("button"),
                                         r#id("resi"),
+                                        r#disabled(!(self.mreza.ali_je_sudoku_resljiv() && self.mreza.je_enolicno_resljivo())),
                                         r#value("REŠI SUDOKU"),
                                         on_click(|_| Msg::Resi),
                                     ],
                                     [],
-                                )],
+                                ),
+                                //input([r#type("button"),r#value("-->"), on_click(|_| Msg::KorakNaprej)], [])
+                                ],
                             ),
                         ],
                     ),
-                    tr([],[td([r#colspan("2")],[div([r#id("sporocilo_resljivosti")],[text(ali_je_enolicno_resljiv(&self))]),
+                    tr([],[td([r#colspan("2")],[div([r#id("sporocilo_resljivosti")],[text(ali_je_sploh_oz_enolicno_resljiv(&self))]),
                        ])]
                     ),
 
