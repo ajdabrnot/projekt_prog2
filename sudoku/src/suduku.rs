@@ -192,6 +192,17 @@ impl Suduku {
         let mut niz = "".to_string();
         for i in 0..81 {
             match self.mreza[i].stevilo {
+                1 => niz.push('1'),
+                2 => niz.push('2'),
+                3 => niz.push('3'),
+                4 => niz.push('4'),
+                5 => niz.push('5'),
+                6 => niz.push('6'),
+                7 => niz.push('7'),
+                8 => niz.push('8'),
+                9 => niz.push('9'),
+                0 => niz.push('0'),
+
                 a => niz.push('a'),
             }
         }
@@ -236,34 +247,73 @@ impl Suduku {
         return None;
     }
 
-    //pub fn hitro_resi_sudoku(&mut self) -> () {
-    //    use sudoku::Sudoku;
-    //    let stevila = self.sudoku_kot_niz_vrednosti();
-    //    let sudoku = Sudoku::from_str_line(&stevila).unwrap();
-    //
-    //    match sudoku.solution() {
-    //        Some(resitev) => {
-    //            let mut niz = format!("{}", resitev);
-    //            for i in 0..81 {
-    //                match niz.pop() {
-    //                    Some('1') => self.mreza[80 - i].vpisi(1),
-    //                    Some('2') => self.mreza[80 - i].vpisi(2),
-    //                    Some('3') => self.mreza[80 - i].vpisi(3),
-    //                    Some('4') => self.mreza[80 - i].vpisi(4),
-    //                    Some('5') => self.mreza[80 - i].vpisi(5),
-    //                    Some('6') => self.mreza[80 - i].vpisi(6),
-    //                    Some('7') => self.mreza[80 - i].vpisi(7),
-    //                    Some('8') => self.mreza[80 - i].vpisi(8),
-    //                    Some('9') => self.mreza[80 - i].vpisi(9),
-    //                    Some(_a) => {}
-    //
-    //                    None => {}
-    //                }
-    //            }
-    //        }
-    //        None => {}
-    //    }
-    //}
+    pub fn ali_je_resljiv_hitro(&self) -> bool {
+        use sudoku::Sudoku;
+        let stevila = self.sudoku_kot_niz_vrednosti();
+        let sudoku = Sudoku::from_str_line(&stevila).unwrap();
+        match sudoku.some_solution() {
+            Some(_a) => true,
+            None => false,
+        }
+    }
+    pub fn hitro_resi_sudoku(&mut self) -> bool {
+        use sudoku::Sudoku;
+        let stevila = self.sudoku_kot_niz_vrednosti();
+        let sudoku = Sudoku::from_str_line(&stevila).unwrap();
+
+        match sudoku.solution() {
+            Some(resitev) => {
+                let mut niz = format!("{}", resitev);
+                for i in 0..81 {
+                    match niz.pop() {
+                        Some('1') => self.mreza[80 - i].vpisi(1),
+                        Some('2') => self.mreza[80 - i].vpisi(2),
+                        Some('3') => self.mreza[80 - i].vpisi(3),
+                        Some('4') => self.mreza[80 - i].vpisi(4),
+                        Some('5') => self.mreza[80 - i].vpisi(5),
+                        Some('6') => self.mreza[80 - i].vpisi(6),
+                        Some('7') => self.mreza[80 - i].vpisi(7),
+                        Some('8') => self.mreza[80 - i].vpisi(8),
+                        Some('9') => self.mreza[80 - i].vpisi(9),
+                        Some(_a) => {}
+
+                        None => return false,
+                    }
+                }
+                return true;
+            }
+            None => return false,
+        }
+    }
+
+    pub fn hitro_resi_sudoku_1(&mut self) -> () {
+        use sudoku::Sudoku;
+        let stevila = self.sudoku_kot_niz_vrednosti();
+        let sudoku = Sudoku::from_str_line(&stevila).unwrap();
+
+        match sudoku.solution() {
+            Some(resitev) => {
+                let mut niz = format!("{}", resitev);
+                for i in 0..81 {
+                    match niz.pop() {
+                        Some('1') => self.mreza[80 - i].vpisi(1),
+                        Some('2') => self.mreza[80 - i].vpisi(2),
+                        Some('3') => self.mreza[80 - i].vpisi(3),
+                        Some('4') => self.mreza[80 - i].vpisi(4),
+                        Some('5') => self.mreza[80 - i].vpisi(5),
+                        Some('6') => self.mreza[80 - i].vpisi(6),
+                        Some('7') => self.mreza[80 - i].vpisi(7),
+                        Some('8') => self.mreza[80 - i].vpisi(8),
+                        Some('9') => self.mreza[80 - i].vpisi(9),
+                        Some(_a) => {}
+
+                        None => {}
+                    }
+                }
+            }
+            None => {}
+        }
+    }
 
     pub fn resi_sudoku(&mut self) -> () {
         //self.resi_sudoku_rekurzivna()
@@ -280,6 +330,14 @@ impl Suduku {
         //     }
         // }
     }
+
+    pub fn je_enolicno_resljivo_hitra(&self) -> bool {
+        use sudoku::Sudoku;
+        let stevila = self.sudoku_kot_niz_vrednosti();
+        let sudoku = Sudoku::from_str_line(&stevila).unwrap();
+        return sudoku.is_uniquely_solvable();
+    }
+
     pub fn je_enolicno_resljivo(&self) -> bool {
         let mut kopirani_sudoku_prvic = self.kopiraj_sudoku();
         let mut kopirani_sudoku_drugic = self.kopiraj_sudoku();
@@ -289,6 +347,7 @@ impl Suduku {
             return resen_prvic.sudoku_za_resevanje.mreza == resen_drugic.sudoku_za_resevanje.mreza;
         }
         return false;
+
         // let mut resnicnost = true;
         // for celica in &self.mreza {
         //     if celica.stevilo == 0 {

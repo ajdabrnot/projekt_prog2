@@ -19,26 +19,30 @@
 
 // sudoku::strukture::Suduku;
 
-// fn main() {
-//     use sudoku::Sudoku;
+fn main() {
+    use sudoku::Sudoku;
 
-//     // Sudokus can be created from &str's in both block or line formats or directly from bytes.
-//     // here, an example in line format
-//     let sudoku_line1 =
-//         "...2...633....54.1..1..398........9....538....3........263..5..5.37....847...1...";
+    // Sudokus can be created from &str's in both block or line formats or directly from bytes.
+    // here, an example in line format
+    let sudoku_line1 =
+        "...2...633....54.1..1..398........9....538....3........263..5..5.37....847...1...";
 
-//     let sudoku_line =
-//         "000200063300005401001003980000000090000538000030000000026300500503700008470001000";
+    let sudoku_line =
+        "000200063300005401001003980000000090000538000030000000026300500503700008470001000";
 
-//     let sudoku = Sudoku::from_str_line(sudoku_line).unwrap();
+    let sudoku = Sudoku::from_str_line(sudoku_line).unwrap();
 
-//     // Solve, print or convert the sudoku to another format
-//     if let Some(solution) = sudoku.solution() {
-//         // print the solution in line format
-//         println!("{}", solution);
+    // Solve, print or convert the sudoku to another format
+    if let Some(solution) = sudoku.solution() {
+        // print the solution in line format
+        println!("{}", solution);
 
-//         // or return it as a byte array
-//         let cell_contents: [u8; 81] = solution.to_bytes();
-//     }
+        // or return it as a byte array
+        let cell_contents: [u8; 81] = solution.to_bytes();
+    }
 
-// }
+    //let mut sudoku = Suduku::prazen_suduku();
+    //sudoku.napolni_polja(vec![(1, 1, 1), (1, 2, 3), (1, 3, 4)]);
+    //let result = sudoku.sudoku_kot_niz_vrednosti();
+    //println!("{}", result)
+}

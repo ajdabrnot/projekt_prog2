@@ -47,14 +47,18 @@ impl Application for App {
                 );
                 
             }
-            Msg::Resi => self.mreza.resi_sudoku(),
-            //Msg::Resi => self.mreza.hitro_resi_sudoku(),
+            //Msg::Resi => self.mreza.resi_sudoku(),
+            Msg::Resi => {
+                self.mreza.hitro_resi_sudoku_1();
+                self.stare_mreze.push(self.mreza.kopiraj_sudoku());
+                self.trenutna_mreza += 1
+            },
             Msg::NavodilaOn => izpise_navodila(self, true),
             Msg::NavodilaOff => izpise_navodila(self, false),
             Msg::KorakNazaj => {
                 if self.trenutna_mreza > 0 {
                     self.mreza = self.stare_mreze[self.trenutna_mreza -1].clone();
-                    self.trenutna_mreza = self.trenutna_mreza -1;
+                    self.trenutna_mreza -= 1;
                 }else{}
                 
                 
@@ -62,7 +66,7 @@ impl Application for App {
             Msg::KorakNaprej =>{
                 if self.trenutna_mreza < self.stare_mreze.len() - 1{
                     self.mreza = self.stare_mreze[self.trenutna_mreza +1].clone();
-                    self.trenutna_mreza = self.trenutna_mreza +1;
+                    self.trenutna_mreza += 1;
                 }else {}
                 
             },
@@ -183,7 +187,7 @@ impl Application for App {
                                     [
                                         r#type("button"),
                                         r#id("resi"),
-                                        r#disabled(!(self.mreza.ali_je_sudoku_resljiv() && self.mreza.je_enolicno_resljivo())),
+                                        r#disabled(!(self.mreza.ali_je_resljiv_hitro() && self.mreza.je_enolicno_resljivo_hitra())),
                                         r#value("REŠI SUDOKU"),
                                         on_click(|_| Msg::Resi),
                                     ],
