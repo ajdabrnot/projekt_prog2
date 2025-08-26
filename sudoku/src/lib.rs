@@ -1,8 +1,7 @@
 mod testi;
 
-use sauron::html::text;
 use sauron::prelude::*;
-use sauron::{node, Cmd, Component, Node, Program};
+use sauron::Program;
 
 pub mod app;
 pub mod logika;
@@ -12,8 +11,7 @@ pub mod resevanje;
 pub mod sauron_funkcije;
 pub mod strukture;
 pub mod suduku;
-use crate::logika::pojavitve_stevila;
-use crate::strukture::{App, Msg, Polje, Suduku};
+use crate::strukture::{App, Suduku};
 
 #[wasm_bindgen(start)]
 pub fn main() {

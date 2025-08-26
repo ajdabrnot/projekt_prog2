@@ -1,11 +1,9 @@
 use crate::logika::*;
-use crate::strukture::*;
-use crate::strukture::{App, Msg, Polje, Suduku};
+use crate::strukture::{App, Msg, Suduku};
 use sauron::html::text;
 use sauron::prelude::*;
-use sauron::{node, Cmd, Component, Node, Program};
+use sauron::Node;
 
-use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::window;
 

@@ -1,9 +1,8 @@
-use crate::strukture::*;
 use sauron::html::text;
 use sauron::prelude::*;
-use sauron::{node, Cmd, Component, Node, Program};
+use sauron::{Cmd, Node};
 use crate::logika::*;
-use crate::strukture::{App, Msg, Polje, Suduku};
+use crate::strukture::{App, Msg, Suduku};
 use crate::sauron_funkcije::*;
 
 
