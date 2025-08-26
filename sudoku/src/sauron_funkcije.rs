@@ -4,8 +4,22 @@ use sauron::html::text;
 use sauron::prelude::*;
 use sauron::Node;
 
+
+use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::window;
+// Uporabite wasm_bindgen da pokličete JavaScript funkcijo
+// #[wasm_bindgen]
+// extern "C" {
+//     #[wasm_bindgen(js_namespace = window)]
+//     fn shraniSudokuKotPDF();
+// }
+
+// pub fn poklici_shrani_pdf() {
+//     // Pokliče globalno JavaScript funkcijo
+//     shraniSudokuKotPDF();
+// }
+
 
 //novo????!!!!
 pub fn poklici_shrani_pdf() {

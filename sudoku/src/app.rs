@@ -77,20 +77,6 @@ impl Application for App {
             },
             
 
-            //tole bo zdej tut novo!!
-            // Msg::ShraniPdf => {
-            // // pokliče JS funkcijo iz index.html
-            //     sauron::wasm_bindgen::JsCast::unchecked_into::<js_sys::Function>(
-            //         js_sys::Reflect::get(
-            //             &web_sys::window().unwrap(),
-            //             &"shraniSudokuKotPDF".into(),
-            //         )
-            //         .unwrap(),
-            //     )
-            //     .call0(&JsValue::NULL)
-            //     .unwrap();
-            // }
-
             Msg::ShraniPdf => {
                 poklici_shrani_pdf();
             }
