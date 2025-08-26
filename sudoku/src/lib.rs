@@ -6,6 +6,7 @@ use sauron::{node, Cmd, Component, Node, Program};
 
 pub mod app;
 pub mod logika;
+pub mod mainm;
 pub mod polje;
 pub mod resevanje;
 pub mod sauron_funkcije;

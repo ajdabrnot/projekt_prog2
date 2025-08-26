@@ -188,6 +188,16 @@ impl Suduku {
         return nov;
     }
 
+    pub fn sudoku_kot_niz_vrednosti(&self) -> String {
+        let mut niz = "".to_string();
+        for i in 0..81 {
+            match self.mreza[i].stevilo {
+                a => niz.push('a'),
+            }
+        }
+        return niz;
+    }
+
     // pub fn ugotovi_moznosti_celega_sudokuja_enkrat(&mut self) -> () {
     //     //gre enkrat cez sudoku
     //     for mut polje in &self.mreza {
@@ -203,7 +213,7 @@ impl Suduku {
     //     }}
 
     // }
-    // ne dela :(
+    // ne dela
 
     pub fn prazna_polja(&self) -> Vec<usize> {
         //vrne indekse praznih polj
@@ -226,6 +236,35 @@ impl Suduku {
         return None;
     }
 
+    //pub fn hitro_resi_sudoku(&mut self) -> () {
+    //    use sudoku::Sudoku;
+    //    let stevila = self.sudoku_kot_niz_vrednosti();
+    //    let sudoku = Sudoku::from_str_line(&stevila).unwrap();
+    //
+    //    match sudoku.solution() {
+    //        Some(resitev) => {
+    //            let mut niz = format!("{}", resitev);
+    //            for i in 0..81 {
+    //                match niz.pop() {
+    //                    Some('1') => self.mreza[80 - i].vpisi(1),
+    //                    Some('2') => self.mreza[80 - i].vpisi(2),
+    //                    Some('3') => self.mreza[80 - i].vpisi(3),
+    //                    Some('4') => self.mreza[80 - i].vpisi(4),
+    //                    Some('5') => self.mreza[80 - i].vpisi(5),
+    //                    Some('6') => self.mreza[80 - i].vpisi(6),
+    //                    Some('7') => self.mreza[80 - i].vpisi(7),
+    //                    Some('8') => self.mreza[80 - i].vpisi(8),
+    //                    Some('9') => self.mreza[80 - i].vpisi(9),
+    //                    Some(_a) => {}
+    //
+    //                    None => {}
+    //                }
+    //            }
+    //        }
+    //        None => {}
+    //    }
+    //}
+
     pub fn resi_sudoku(&mut self) -> () {
         //self.resi_sudoku_rekurzivna()
         // for polje in &mut self.mreza {
@@ -247,9 +286,9 @@ impl Suduku {
         let mut resen_prvic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_prvic);
         let mut resen_drugic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_drugic);
         if resen_prvic.resi() && resen_drugic.resi_se_enkrat() {
-            return resen_prvic.sudoku_za_resevanje.mreza == resen_drugic.sudoku_za_resevanje.mreza
+            return resen_prvic.sudoku_za_resevanje.mreza == resen_drugic.sudoku_za_resevanje.mreza;
         }
-        return false
+        return false;
         // let mut resnicnost = true;
         // for celica in &self.mreza {
         //     if celica.stevilo == 0 {
@@ -274,10 +313,8 @@ impl Suduku {
     pub fn ali_je_sudoku_resljiv(&self) -> bool {
         let mut kopirani_sudoku = self.kopiraj_sudoku();
         let mut resen = Resevanje::nov_za_resevanje(&mut kopirani_sudoku);
-        return resen.resi() 
+        return resen.resi();
     }
-
-    
 
     //pub fn resi_sudoku_rekurzivna_1(&mut self) -> bool {
     //    //zapolni že enolično določena polja
@@ -327,6 +364,5 @@ impl Suduku {
     //    return true; //smo prišli čez vsa polja??? in je vse rešeno
     //}
 
-    
     //fn delno_resi() -> vec![Suduku] {} //doda samo tista števila, ki so enolično določena
 }

@@ -49,6 +49,7 @@ impl Application for App {
                 
             }
             Msg::Resi => self.mreza.resi_sudoku(),
+            //Msg::Resi => self.mreza.hitro_resi_sudoku(),
             Msg::NavodilaOn => izpise_navodila(self, true),
             Msg::NavodilaOff => izpise_navodila(self, false),
             Msg::KorakNazaj => {
