@@ -18,6 +18,8 @@ impl App {
             prikaz_navodil: "nevidna".to_string(),
             stare_mreze: vec![Suduku::prazen_suduku()],
             trenutna_mreza: 0,
+            barvne_sheme: vec!["oranzna_zelena_vijola".to_string(), "bolece_oci".to_string(), "crno_bela".to_string()],
+            trenutna_barvna_shema: 0
         }
     }
 }
@@ -37,9 +39,6 @@ impl Application for App {
                 self.stare_mreze.push(self.mreza.kopiraj_sudoku());
                 self.trenutna_mreza = self.trenutna_mreza +1;
                 
-                //if self.stare_mreze.len() > 6 { //si zapomne do 5 korakov nazaj
-                //    self.stare_mreze.remove(0);
-                //}
                 self.mreza.napolni_polje(
                     self.vrstica as u8,
                     self.stolpec as u8,
@@ -47,7 +46,6 @@ impl Application for App {
                 );
                 
             }
-            //Msg::Resi => self.mreza.resi_sudoku(),
             Msg::Resi => {
                 self.mreza.hitro_resi_sudoku_1();
                 self.stare_mreze.push(self.mreza.kopiraj_sudoku());
@@ -79,6 +77,14 @@ impl Application for App {
 
             Msg::ShraniPdf => {
                 poklici_shrani_pdf();
+            },
+
+            Msg::Barve => {
+                if self.trenutna_barvna_shema == self.barvne_sheme.len() -1 {
+                    self.trenutna_barvna_shema = 0
+                } else{
+                    self.trenutna_barvna_shema += 1
+                }
             }
 
         };
@@ -88,8 +94,9 @@ impl Application for App {
 
     fn view(&self) -> Node<Msg> {
         div(
-            [],
-            [table(
+            [r#class(&self.barvne_sheme[self.trenutna_barvna_shema])],
+            [
+                table(
                 [],
                 [
                     thead(
@@ -116,13 +123,14 @@ impl Application for App {
                                                 [],
                                                 [input(
                                                     [
-                                                        r#id("gumb_navodila"),
+                                                        r#class("gumb_navodila"),
                                                         r#type("button"),
                                                         r#value("NAVODILA"),
                                                         on_click(|_| Msg::NavodilaOn),
                                                     ],
                                                     [],
-                                                )],
+                                                ), 
+                                                ],
                                             ),
                                             div(
                                                 [r#id(&self.prikaz_navodil)],
@@ -132,7 +140,7 @@ impl Application for App {
                                                         [
                                                             r#id("izpisana_navodila"),
                                                             r#type("button"),
-                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n V spodnji vrstici program sproti opozarja,\n ali je sudoku enolično oziroma sploh rešljiv.\n S klikom na gumb 'NATISNI' se sestavljeni sudoku shrani v pdf obliki.\n Sklikom na gumb 'REŠI' se sudoku na desni reši.\n Ta gumb je omogočen, ko je sudoku enoličo rešljiv.\n Zabavaj se!"),
+                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n V spodnji vrstici program sproti opozarja, ali je sudoku enolično oziroma sploh\n rešljiv. Sklikom na gumb 'REŠI' se sudoku na desni reši. Ta gumb je omogočen, ko\n je sudoku enoličo rešljiv. S klikom na gumb 'SHRANI PDF' se sestavljeni\n sudoku in rešitve shranijo v pdf obliki. \nZabavaj se!"),
                                                             on_click(|_| Msg::NavodilaOff),
                                                         ],
                                                         [],
@@ -160,38 +168,38 @@ impl Application for App {
                         [
                             td(
                                 [r#class("osnovna_tabela")],
-                                [input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("<--"), on_click(|_| Msg::KorakNazaj)], []),input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("ZAČNI ZNOVA"), on_click(|_| Msg::ZacniZnova)], []),input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("-->"), on_click(|_| Msg::KorakNaprej)], [])//input(
-                                    //[r#type("button"), r#id("natisni"), r#value("NATISNI")],
-                                    //[],
-                                //)
+                                [input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("<--"), on_click(|_| Msg::KorakNazaj)], []),input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("ZAČNI ZNOVA"), on_click(|_| Msg::ZacniZnova)], []),input([r#type("button"),r#class("gumb_naprej_nazaj"),r#value("-->"), on_click(|_| Msg::KorakNaprej)], [])
                                 ],
                             ),
                             td(
                                 [r#class("osnovna_tabela")],
-                                [//input([r#type("button"),r#value("<--"), on_click(|_| Msg::KorakNazaj)], []),
+                                [
                                 input(
                                     [
                                         r#type("button"),
-                                        r#id("resi"),
-                                        r#disabled(!(self.mreza.ali_je_resljiv_hitro() && self.mreza.je_enolicno_resljivo_hitra())),
+                                        r#class("resi_shrani_barve"),
+                                        r#disabled(!(
+                                            self.mreza.ali_je_resljiv_hitro() && self.mreza.je_enolicno_resljivo_hitra()
+                                            //self.mreza.ali_je_sudoku_resljiv()&&self.mreza.je_enolicno_resljivo_pocasi()
+                                        )),
                                         r#value("REŠI SUDOKU"),
                                         on_click(|_| Msg::Resi),
                                     ],
                                     [],
                                 ),
-                                //input([r#type("button"),r#value("-->"), on_click(|_| Msg::KorakNaprej)], [])
+                                input([r#class("resi_shrani_barve"),r#type("button"),r#value("SHRANI PDF"), on_click(|_| Msg::ShraniPdf)], []),
+                                input(
+                                    [
+                                        r#class("resi_shrani_barve"), r#type("button"), r#value("BARVE"),on_click(|_| Msg::Barve)
+                                    ],
+                                     []
+                                )
                                 ],
                             ),
                         ],
                     ),
                     tr([],[td([r#colspan("2")],[div([r#id("sporocilo_resljivosti")],[text(ali_je_sploh_oz_enolicno_resljiv(&self))]),
                        ])]
-                    ),
-
-                    //tole zdej je novo!!
-                    button(
-                        [on_click(|_| Msg::ShraniPdf)],
-                        [text("Shrani kot PDF")],
                     ),
                 ],
             )],

@@ -22,10 +22,6 @@ pub fn main() {
 
 //Če ne dela 0.0.0.0 spremeni v localhost
 
-//zakaj dovoli dve isti števili v enem stolpcu???
-//x-wing preveri
-//škatle v debele obrobe css
-
 // wasm-pack build --target web --release
 // basic-http-server -a 0.0.0.0:4000
 // puscica gor dol za zgodovino v teminalu

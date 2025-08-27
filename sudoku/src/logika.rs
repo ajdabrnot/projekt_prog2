@@ -30,7 +30,7 @@ pub fn ugotovi_skatlo(vrst: u8, stolp: u8) -> u8 {
     }
 }
 
-pub fn pojavitve_stevila(sudoku: &Suduku, polje: &Polje) -> Vec<(usize, usize)> {
+pub fn ponovitve_stevila(sudoku: &Suduku, polje: &Polje) -> Vec<(usize, usize)> {
     //vrne polja ki so v istem stolpcu/vrstici/škatli in imajo isto število
     //uporabljeno pri končnem izgledu sudokuja (da se celice s ponovitvami obarvajo)
     let mut odg = vec![];
@@ -65,7 +65,6 @@ pub fn pojavitve_stevila(sudoku: &Suduku, polje: &Polje) -> Vec<(usize, usize)> 
 
 use std::fmt::Display;
 use std::fmt::Formatter;
-//use std::string;
 
 impl Display for Suduku {
     fn fmt(&self, fmt: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {

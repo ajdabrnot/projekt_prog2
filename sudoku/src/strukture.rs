@@ -9,7 +9,6 @@ pub struct Polje {
 #[derive(Debug, PartialEq, Clone)]
 pub struct Suduku {
     pub mreza: Vec<Polje>,
-    //pub trenutno_polje: usize, //kao indeks v seznamu
 }
 
 #[derive(Debug, Clone)]
@@ -22,6 +21,7 @@ pub enum Msg {
     KorakNazaj,
     KorakNaprej,
     ZacniZnova,
+    Barve,
 }
 
 pub struct App {
@@ -32,9 +32,10 @@ pub struct App {
     pub prikaz_navodil: String,
     pub stare_mreze: Vec<Suduku>,
     pub trenutna_mreza: usize,
+    pub barvne_sheme: Vec<String>,
+    pub trenutna_barvna_shema: usize,
 }
 
 pub struct Resevanje<'a> {
-    //tale 'a vrjetno nrdi da se poj zbrise ane????
     pub sudoku_za_resevanje: &'a mut Suduku,
 }

@@ -3,56 +3,15 @@ use crate::strukture::{App, Msg, Suduku};
 use sauron::html::text;
 use sauron::prelude::*;
 use sauron::Node;
-
-
-use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use web_sys::window;
-// Uporabite wasm_bindgen da pokličete JavaScript funkcijo
-// #[wasm_bindgen]
-// extern "C" {
-//     #[wasm_bindgen(js_namespace = window)]
-//     fn shraniSudokuKotPDF();
-// }
 
-// pub fn poklici_shrani_pdf() {
-//     // Pokliče globalno JavaScript funkcijo
-//     shraniSudokuKotPDF();
-// }
-
-
-//novo????!!!!
 pub fn poklici_shrani_pdf() {
     let window = window().unwrap();
     let func = js_sys::Reflect::get(&window, &JsValue::from_str("shraniSudokuKotPDF")).unwrap();
 
     let func = func.dyn_into::<js_sys::Function>().unwrap();
     func.call0(&JsValue::NULL).unwrap();
-}
-
-pub fn gumb_resi(app: &App) -> sauron::Node<Msg> {
-    if app.mreza.ali_je_sudoku_resljiv() {
-        input(
-            [
-                r#type("button"),
-                r#id("resi"),
-                r#value("REŠI SUDOKU"),
-                on_click(|_| Msg::Resi),
-            ],
-            [],
-        )
-    } else {
-        input(
-            [
-                r#type("button"),
-                r#id("resi"),
-                r#disabled(true),
-                r#value("REŠI SUDOKU"),
-                on_click(|_| Msg::Resi),
-            ],
-            [],
-        )
-    }
 }
 
 pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
@@ -62,16 +21,18 @@ pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
         app.prikaz_navodil = "nevidna".to_string()
     }
 }
-
-pub fn ali_je_enolicno_resljiv1(app: &App) -> &str {
-    if app.mreza.je_enolicno_resljivo() {
-        "Sudoku JE enolično rešljiv :D"
-    } else {
-        "Sudoku NI enolično rešljiv :("
-    }
-}
+//
+//pub fn ali_je_enolicno_resljiv1(app: &App) -> &str {
+//    if app.mreza.je_enolicno_resljivo() {
+//        "Sudoku JE enolično rešljiv :D"
+//    } else {
+//        "Sudoku NI enolično rešljiv :("
+//    }
+//}
 pub fn ali_je_sploh_oz_enolicno_resljiv(app: &App) -> &str {
+    //if app.mreza.ali_je_sudoku_resljiv() {
     if app.mreza.ali_je_resljiv_hitro() {
+        //if app.mreza.je_enolicno_resljivo_pocasi() {
         if app.mreza.je_enolicno_resljivo_hitra() {
             "Sudoku JE enolično rešljiv :D"
         } else {
@@ -82,13 +43,13 @@ pub fn ali_je_sploh_oz_enolicno_resljiv(app: &App) -> &str {
     }
 }
 
-pub fn ali_je_sploh_resljiv(app: &App) -> &str {
-    if app.mreza.ali_je_sudoku_resljiv() {
-        "Obstaja vsaj ena rešitev za sudoku :D"
-    } else {
-        "Sudoku NI več rešljiv. Izbriši kakšno od vpisanih števil in poskusi s kakšno drugo! :("
-    }
-}
+//pub fn ali_je_sploh_resljiv(app: &App) -> &str {
+//    if app.mreza.ali_je_sudoku_resljiv() {
+//        "Obstaja vsaj ena rešitev za sudoku :D"
+//    } else {
+//        "Sudoku NI več rešljiv. Izbriši kakšno od vpisanih števil in poskusi s kakšno drugo! :("
+//    }
+//}
 
 pub fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     //izpiše eno vrstico sudokuja po poljih
@@ -142,7 +103,7 @@ pub fn sudoku_inputi(sudoku: &App) -> Node<Msg> {
     let mut ponovitve = vec![];
     for j in 0..9 {
         for i in 0..9 {
-            ponovitve.extend(pojavitve_stevila(
+            ponovitve.extend(ponovitve_stevila(
                 &sudoku.mreza,
                 &sudoku.mreza.mreza[izracunaj_indeks(j, i)],
             ));
@@ -169,7 +130,7 @@ pub fn ustvari_input_polje(
     j: usize,
     i: usize,
 ) -> Vec<Node<Msg>> {
-    //ustvari j-i-to input polje. trenutno dovoli vpis črk, a se te ne vpišejo v dejanski sudoku
+    //ustvari j-i-to input polje. dovoli vpis črk, a se te ne vpišejo v dejanski sudoku
     sez.push(td(
         [r#id(ustvari_id(j, i))],
         [input(
@@ -182,7 +143,6 @@ pub fn ustvari_input_polje(
                 r#class(razred),
                 on_input(move |event: InputEvent| {
                     if vec![
-                        //a se da to lepše preverit ne pa vsakiš to_string()???
                         "0".to_string(),
                         "1".to_string(),
                         "2".to_string(),

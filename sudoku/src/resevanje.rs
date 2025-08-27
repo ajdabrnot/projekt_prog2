@@ -1,4 +1,3 @@
-
 use super::Suduku;
 use crate::strukture::Resevanje;
 
@@ -18,14 +17,14 @@ impl<'a> Resevanje<'a> {
         if let Some(indeks) = self.sudoku_za_resevanje.prvo_prazno_polje() {
             for st in 1..=9 {
                 //self.sudoku_za_resevanje.mreza[indeks].vpisi(st as u8);
-                if self.sudoku_za_resevanje.mreza[indeks].ali_bi_bilo_veljavno(self.sudoku_za_resevanje, st)
+                if self.sudoku_za_resevanje.mreza[indeks]
+                    .ali_bi_bilo_veljavno(self.sudoku_za_resevanje, st)
                 {
-                    self.sudoku_za_resevanje.mreza[indeks].vpisi(st as u8);
+                    self.sudoku_za_resevanje.mreza[indeks].vpisi_stevilo(st as u8);
                     if self.resi() {
                         return true;
                     }
                     self.sudoku_za_resevanje.mreza[indeks].izbrisi_stevilo()
-                    
                 }
                 //else {self.sudoku_za_resevanje.mreza[indeks].izbrisi_stevilo()}
             }
@@ -33,7 +32,7 @@ impl<'a> Resevanje<'a> {
         }
         true
     }
-    
+
     pub fn resi_se_enkrat(&mut self) -> bool {
         self.resi_rekurzivno_se_enkrat()
     }
@@ -43,14 +42,14 @@ impl<'a> Resevanje<'a> {
         if let Some(indeks) = self.sudoku_za_resevanje.prvo_prazno_polje() {
             for st in (1..=9).rev() {
                 //self.sudoku_za_resevanje.mreza[indeks].vpisi(st as u8);
-                if self.sudoku_za_resevanje.mreza[indeks].ali_bi_bilo_veljavno(self.sudoku_za_resevanje, st)
+                if self.sudoku_za_resevanje.mreza[indeks]
+                    .ali_bi_bilo_veljavno(self.sudoku_za_resevanje, st)
                 {
-                    self.sudoku_za_resevanje.mreza[indeks].vpisi(st as u8);
+                    self.sudoku_za_resevanje.mreza[indeks].vpisi_stevilo(st as u8);
                     if self.resi_se_enkrat() {
                         return true;
                     }
                     self.sudoku_za_resevanje.mreza[indeks].izbrisi_stevilo()
-                    
                 }
                 //else {self.sudoku_za_resevanje.mreza[indeks].izbrisi_stevilo()}
             }
@@ -58,5 +57,4 @@ impl<'a> Resevanje<'a> {
         }
         true
     }
-
 }
