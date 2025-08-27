@@ -1,7 +1,7 @@
 html,
 
 .oranzna_zelena_vijola {
-    --odzadje: rgb(150, 100, 50);
+    --ozadje: rgb(150, 100, 50);
     --tekst_in_obrobe: #3a3e23;
     --levi_sudoku: #726f85;
     --desni_sudoku: #5b5387;
@@ -14,7 +14,7 @@ html,
 }
 
 .bolece_oci {
-    --odzadje: rgb(50, 150, 98);
+    --ozadje: rgb(50, 150, 98);
     --tekst_in_obrobe: #a12b49;
     --levi_sudoku: #726f85;
     --desni_sudoku: #6a8753;
@@ -27,7 +27,7 @@ html,
 }
 
 .crno_bela {
-    --odzadje: white;
+    --ozadje: white;
     --tekst_in_obrobe: black;
     --levi_sudoku: white;
     --desni_sudoku: #white;
@@ -38,6 +38,44 @@ html,
     --ponovitev_hover: #8a2b1c;
     --disabled_resi: rgba(235, 234, 240, 0.6);
 }
+
+.taka_natural {
+    --ozadje: rgb(248, 189, 189);
+    --tekst_in_obrobe: black;
+    --levi_sudoku: rgb(210, 248, 178);
+    --desni_sudoku: #white;
+    --rob_tebele: rgb(119, 182, 158);
+    --navodila: rgb(109, 148, 119);
+    --ponovitev: #ee1212;
+    --levi_sudoku_hover: #346e9e;
+    --ponovitev_hover: #b62d81;
+    --disabled_resi: rgba(235, 234, 240, 0.6);
+}
+.pastelna_mesanca {
+    --ozadje: rgb(248, 189, 189);
+    --tekst_in_obrobe: rgb(155, 121, 247);
+    --levi_sudoku: rgb(197, 212, 245);
+    --desni_sudoku: #white;
+    --rob_tebele: rgb(240, 184, 212);
+    --navodila: rgb(175, 223, 245);
+    --ponovitev: #eb9090;
+    --levi_sudoku_hover: #98c9f1;
+    --ponovitev_hover: #b62d81;
+    --disabled_resi: rgba(235, 234, 240, 0.6);
+}
+.pinky {
+    --ozadje: rgb(248, 189, 189);
+    --tekst_in_obrobe: rgb(105, 15, 60);
+    --levi_sudoku: rgb(230, 173, 185);
+    --desni_sudoku: #white;
+    --rob_tebele: rgb(173, 24, 116);
+    --navodila: rgb(228, 129, 206);
+    --ponovitev: #ee1212;
+    --levi_sudoku_hover: #611b38;
+    --ponovitev_hover: #b62d81;
+    --disabled_resi: rgba(235, 234, 240, 0.6);
+}
+
 
 body {
     background-color: var(--odzadje);
@@ -120,6 +158,14 @@ thead {
     -ms-transform: translate(-50%, -50%);
 }
 
+#ogromen_pravokotnik {
+    z-index: -100;
+    background-color: var(--ozadje);
+    width: 100%;
+    height: 100%;
+    padding-top: 500px;
+    position: absolute;
+}
 
 #sporocilo_resljivosti {
     font-weight: bold;

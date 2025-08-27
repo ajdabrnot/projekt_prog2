@@ -11,6 +11,7 @@ pub mod resevanje;
 pub mod sauron_funkcije;
 pub mod strukture;
 pub mod suduku;
+pub mod se_neuporabljene_funkcije;
 use crate::strukture::{App, Suduku};
 
 #[wasm_bindgen(start)]

@@ -77,6 +77,13 @@ impl Suduku {
         }
         return ni_v_vrstici;
     }
+    pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
+        //preveri, ali je izbrana stevka veljavna izbira za to polje
+
+        let mut polje = Polje::prazno_polje(vrst, stolp);
+        polje.ugotovi_moznosti(self);
+        return polje.moznosti.contains(&st);
+    }
 
     pub fn napolni_polje(&mut self, vrst: u8, stolp: u8, st: u8) -> () {
         let indeks = (vrst as usize - 1) * 9 + (stolp as usize) - 1;
@@ -102,24 +109,6 @@ impl Suduku {
             mreza: self.mreza.clone(),
         }
     }
-
-    pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
-        //preveri, ali je izbrana stevka veljavna izbira za to polje
-
-        let mut polje = Polje::prazno_polje(vrst, stolp);
-        polje.ugotovi_moznosti(self);
-        return polje.moznosti.contains(&st);
-    }
-
-    fn vpisi_enolicno_dolocena_stevila(&mut self) -> () {
-        //zapolni polja katerih rešitev je že enolično določena
-        for mut polje in self.mreza.clone() {
-            if polje.moznosti.len() == 1 {
-                polje.vpisi_stevilo(polje.moznosti[0]);
-            }
-        }
-    }
-
     pub fn sudoku_kot_seznam_samo_vrednosti(&self) -> Vec<Vec<u8>> {
         //vrne mrežo zapisano kot
         //[[0,0,0,0,0,0,0,0,0],
@@ -170,16 +159,6 @@ impl Suduku {
         return niz;
     }
 
-    //pub fn prazna_polja(&self) -> Vec<usize> {
-    //    //vrne indekse praznih polj
-    //    let mut prazna = vec![];
-    //    for i in 0..81 {
-    //        if self.mreza[i].stevilo == 0 {
-    //            prazna.push(i);
-    //        }
-    //    }
-    //    return prazna;
-    //}
 
     pub fn prvo_prazno_polje(&self) -> Option<usize> {
         //vrne indeks prvega praznega polja

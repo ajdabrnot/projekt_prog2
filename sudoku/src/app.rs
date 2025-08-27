@@ -18,7 +18,7 @@ impl App {
             prikaz_navodil: "nevidna".to_string(),
             stare_mreze: vec![Suduku::prazen_suduku()],
             trenutna_mreza: 0,
-            barvne_sheme: vec!["oranzna_zelena_vijola".to_string(), "bolece_oci".to_string(), "crno_bela".to_string()],
+            barvne_sheme: vec!["oranzna_zelena_vijola".to_string(), "bolece_oci".to_string(), "crno_bela".to_string(), "taka_natural".to_string(), "pastelna_mesanca".to_string(), "pinky".to_string()],
             trenutna_barvna_shema: 0
         }
     }
