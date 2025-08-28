@@ -1,6 +1,5 @@
 //implementacije za struct Polje
-
-use crate::logika::ugotovi_skatlo;
+use crate::pomozne_funkcije::*;
 use crate::strukture::{Polje, Suduku};
 
 impl Polje {
@@ -30,17 +29,19 @@ impl Polje {
     }
 
     pub fn ali_bi_bila_st_veljavna_v_vrstici(&self, suduku: &Suduku, st: u8) -> bool {
+        //preveri, da se števka, ki jo želimo vpisati v izbrano polje, še ni pojavila v tej vrstici
         let zadovoljive = suduku.manjkajoca_v_vrstici(self.vrstica);
         return zadovoljive.contains(&st);
     }
 
-
     pub fn ali_bi_bila_st_veljavna_v_skatli(&self, suduku: &Suduku, st: u8) -> bool {
+        //preveri, da se števka, ki jo želimo vpisati v izbrano polje, še ni pojavila v tej škatli
         let zadovoljive = suduku.manjkajoca_v_skatli(self.skatla);
         return zadovoljive.contains(&st);
     }
-   
+
     pub fn ali_bi_bila_st_veljavna_v_stolpcu(&self, suduku: &Suduku, st: u8) -> bool {
+        //preveri, da se števka, ki jo želimo vpisati v izbrano polje, še ni pojavila v tem stolpcu
         let zadovoljive = suduku.manjkajoca_v_stolpcu(self.stolpec);
         return zadovoljive.contains(&st);
     }
@@ -63,6 +64,4 @@ impl Polje {
             }
         }
     }
-    
-
 }

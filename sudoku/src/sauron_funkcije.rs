@@ -1,4 +1,4 @@
-use crate::logika::*;
+use crate::pomozne_funkcije::*;
 use crate::strukture::{App, Msg, Suduku};
 use sauron::html::text;
 use sauron::prelude::*;
@@ -21,14 +21,7 @@ pub fn izpise_navodila(app: &mut App, p_n: bool) -> () {
         app.prikaz_navodil = "nevidna".to_string()
     }
 }
-//
-//pub fn ali_je_enolicno_resljiv1(app: &App) -> &str {
-//    if app.mreza.je_enolicno_resljivo() {
-//        "Sudoku JE enolično rešljiv :D"
-//    } else {
-//        "Sudoku NI enolično rešljiv :("
-//    }
-//}
+
 pub fn ali_je_sploh_oz_enolicno_resljiv(app: &App) -> &str {
     //if app.mreza.ali_je_sudoku_resljiv() {
     if app.mreza.ali_je_resljiv_hitro() {
@@ -42,14 +35,6 @@ pub fn ali_je_sploh_oz_enolicno_resljiv(app: &App) -> &str {
         "Sudoku NI več rešljiv. >:| Izbriši kakšno od vpisanih števil in poskusi znova! "
     }
 }
-
-//pub fn ali_je_sploh_resljiv(app: &App) -> &str {
-//    if app.mreza.ali_je_sudoku_resljiv() {
-//        "Obstaja vsaj ena rešitev za sudoku :D"
-//    } else {
-//        "Sudoku NI več rešljiv. Izbriši kakšno od vpisanih števil in poskusi s kakšno drugo! :("
-//    }
-//}
 
 pub fn izpisi_eno_vrstico_polj(sudoku: &Suduku, vrstica: usize) -> Node<Msg> {
     //izpiše eno vrstico sudokuja po poljih
@@ -126,7 +111,7 @@ pub fn sudoku_inputi(sudoku: &App) -> Node<Msg> {
 pub fn ustvari_input_polje(
     mut sez: Vec<Node<Msg>>,
     razred: String,
-    sudoku: &App,
+    _sudoku: &App,
     j: usize,
     i: usize,
 ) -> Vec<Node<Msg>> {

@@ -51,23 +51,26 @@ html,
     --ponovitev_hover: #b62d81;
     --disabled_resi: rgba(235, 234, 240, 0.6);
 }
+
 .pastelna_mesanca {
     --ozadje: rgb(248, 189, 189);
     --tekst_in_obrobe: rgb(155, 121, 247);
     --levi_sudoku: rgb(197, 212, 245);
     --desni_sudoku: #white;
-    --rob_tebele: rgb(240, 184, 212);
+    --rob_tebele: rgb(248, 189, 189);
+    /* --rob_tebele: rgb(240, 184, 212); */
     --navodila: rgb(175, 223, 245);
     --ponovitev: #eb9090;
     --levi_sudoku_hover: #98c9f1;
     --ponovitev_hover: #b62d81;
     --disabled_resi: rgba(235, 234, 240, 0.6);
 }
+
 .pinky {
     --ozadje: rgb(248, 189, 189);
     --tekst_in_obrobe: rgb(105, 15, 60);
     --levi_sudoku: rgb(230, 173, 185);
-    --desni_sudoku: #white;
+    --desni_sudoku: white;
     --rob_tebele: rgb(173, 24, 116);
     --navodila: rgb(228, 129, 206);
     --ponovitev: #ee1212;
@@ -75,6 +78,59 @@ html,
     --ponovitev_hover: #b62d81;
     --disabled_resi: rgba(235, 234, 240, 0.6);
 }
+
+.dark {
+    --ozadje: rgb(24, 20, 80);
+    --tekst_in_obrobe: #2f4e50;
+    --levi_sudoku: #461c66;
+    --desni_sudoku: #1f544a;
+    --rob_tebele: #28441ff1;
+    --navodila: rgb(36, 39, 86);
+    --ponovitev: #9f301f;
+    --levi_sudoku_hover: #522178;
+    --ponovitev_hover: #8a2b1c;
+    --disabled_resi: #1f544a86;
+}
+
+.dark_2 {
+    --ozadje: rgb(80, 20, 25);
+    --tekst_in_obrobe: black;
+    --levi_sudoku: #7d7a2a;
+    --desni_sudoku: #7d642a;
+    --rob_tebele: rgb(80, 20, 25);
+    --navodila: rgb(86, 28, 33);
+    --ponovitev: #9f301f;
+    --levi_sudoku_hover: #8f8b30;
+    --ponovitev_hover: #8a2b1c;
+    --disabled_resi: #7d642a94;
+}
+
+.roza {
+    --ozadje: rgb(180, 116, 154);
+    --tekst_in_obrobe: rgb(86, 31, 64);
+    --levi_sudoku: rgb(166, 72, 128);
+    --desni_sudoku: rgb(140, 61, 108);
+    --rob_tebele: rgb(86, 31, 64);
+    --navodila: rgb(180, 116, 154);
+    --ponovitev: #9f301f;
+    --levi_sudoku_hover: rgb(156, 66, 120);
+    --ponovitev_hover: #8a2b1c;
+    --disabled_resi: rgb(126, 55, 97);
+}
+
+.jacaster {
+    --ozadje: #c4a105;
+    --tekst_in_obrobe: #471f20;
+    --levi_sudoku: #3a583f;
+    --desni_sudoku: #3a583f;
+    --rob_tebele: #c4a105;
+    --navodila: #bb9a07;
+    --ponovitev: #76191f;
+    --levi_sudoku_hover: #4a4a3c;
+    --ponovitev_hover: #69171d;
+    --disabled_resi: #5c5c50a2;
+}
+
 
 
 body {
@@ -173,31 +229,10 @@ thead {
     color: var(--tekst_in_obrobe);
 }
 
-/* .hide {
-    display: none;
-}
-
-.myDIV:hover+.hide {
-    display: block;
-    color: #335e26f1;
-    font-weight: bold;
-} */
-
-
-
-
 div {
     text-size-adjust: auto;
     text-align: center;
 }
-
-
-/* input::placeholder {
-    text-align: center;
-    font-size: 30px;
-} */
-
-
 
 table {
     position: fixed;
@@ -230,15 +265,6 @@ table {
     color: var(--tekst_in_obrobe);
     cursor: not-allowed;
 }
-
-/* #natisni {
-    background-color: #726f85;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 12px;
-    color: var(--tekst_in_obrobe);
-} */
-
 
 .gumb_naprej_nazaj {
     background-color: var(--levi_sudoku);

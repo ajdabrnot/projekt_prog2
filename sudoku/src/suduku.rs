@@ -79,7 +79,6 @@ impl Suduku {
     }
     pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
         //preveri, ali je izbrana stevka veljavna izbira za to polje
-
         let mut polje = Polje::prazno_polje(vrst, stolp);
         polje.ugotovi_moznosti(self);
         return polje.moznosti.contains(&st);
@@ -109,6 +108,7 @@ impl Suduku {
             mreza: self.mreza.clone(),
         }
     }
+
     pub fn sudoku_kot_seznam_samo_vrednosti(&self) -> Vec<Vec<u8>> {
         //vrne mrežo zapisano kot
         //[[0,0,0,0,0,0,0,0,0],
@@ -159,7 +159,6 @@ impl Suduku {
         return niz;
     }
 
-
     pub fn prvo_prazno_polje(&self) -> Option<usize> {
         //vrne indeks prvega praznega polja
         for i in 0..81 {
@@ -170,46 +169,7 @@ impl Suduku {
         return None;
     }
 
-    pub fn ali_je_resljiv_hitro(&self) -> bool {
-        use sudoku::Sudoku;
-        let stevila = self.sudoku_kot_niz_vrednosti();
-        let sudoku = Sudoku::from_str_line(&stevila).unwrap();
-        match sudoku.some_solution() {
-            Some(_a) => true,
-            None => false,
-        }
-    }
-    //pub fn hitro_resi_sudoku(&mut self) -> bool {
-    //    use sudoku::Sudoku;
-    //    let stevila = self.sudoku_kot_niz_vrednosti();
-    //    let sudoku = Sudoku::from_str_line(&stevila).unwrap();
-    //
-    //    match sudoku.solution() {
-    //        Some(resitev) => {
-    //            let mut niz = format!("{}", resitev);
-    //            for i in 0..81 {
-    //                match niz.pop() {
-    //                    Some('1') => self.mreza[80 - i].vpisi(1),
-    //                    Some('2') => self.mreza[80 - i].vpisi(2),
-    //                    Some('3') => self.mreza[80 - i].vpisi(3),
-    //                    Some('4') => self.mreza[80 - i].vpisi(4),
-    //                    Some('5') => self.mreza[80 - i].vpisi(5),
-    //                    Some('6') => self.mreza[80 - i].vpisi(6),
-    //                    Some('7') => self.mreza[80 - i].vpisi(7),
-    //                    Some('8') => self.mreza[80 - i].vpisi(8),
-    //                    Some('9') => self.mreza[80 - i].vpisi(9),
-    //                    Some(_a) => {}
-    //
-    //                    None => return false,
-    //                }
-    //            }
-    //            return true;
-    //        }
-    //        None => return false,
-    //    }
-    //}
-
-    pub fn hitro_resi_sudoku_1(&mut self) -> () {
+    pub fn hitro_resi_sudoku(&mut self) -> () {
         use sudoku::Sudoku;
         let stevila = self.sudoku_kot_niz_vrednosti();
         let sudoku = Sudoku::from_str_line(&stevila).unwrap();
@@ -263,7 +223,17 @@ impl Suduku {
         return false;
     }
 
-    pub fn ali_je_sudoku_resljiv(&self) -> bool {
+    pub fn ali_je_resljiv_hitro(&self) -> bool {
+        use sudoku::Sudoku;
+        let stevila = self.sudoku_kot_niz_vrednosti();
+        let sudoku = Sudoku::from_str_line(&stevila).unwrap();
+        match sudoku.some_solution() {
+            Some(_a) => true,
+            None => false,
+        }
+    }
+
+    pub fn ali_je_sudoku_resljiv_pocasi(&self) -> bool {
         let mut kopirani_sudoku = self.kopiraj_sudoku();
         let mut resen = Resevanje::nov_za_resevanje(&mut kopirani_sudoku);
         return resen.resi();

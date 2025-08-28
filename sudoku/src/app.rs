@@ -1,7 +1,7 @@
 use sauron::html::text;
 use sauron::prelude::*;
 use sauron::{Cmd, Node};
-use crate::logika::*;
+use crate::pomozne_funkcije::*;
 use crate::strukture::{App, Msg, Suduku};
 use crate::sauron_funkcije::*;
 
@@ -18,7 +18,7 @@ impl App {
             prikaz_navodil: "nevidna".to_string(),
             stare_mreze: vec![Suduku::prazen_suduku()],
             trenutna_mreza: 0,
-            barvne_sheme: vec!["oranzna_zelena_vijola".to_string(), "bolece_oci".to_string(), "crno_bela".to_string(), "taka_natural".to_string(), "pastelna_mesanca".to_string(), "pinky".to_string()],
+            barvne_sheme: vec!["crno_bela".to_string(), "oranzna_zelena_vijola".to_string(), "jacaster".to_string(), "bolece_oci".to_string(),  "taka_natural".to_string(), "pastelna_mesanca".to_string(), "pinky".to_string(),"roza".to_string(), "dark".to_string(),"dark_2".to_string()],
             trenutna_barvna_shema: 0
         }
     }
@@ -47,7 +47,7 @@ impl Application for App {
                 
             }
             Msg::Resi => {
-                self.mreza.hitro_resi_sudoku_1();
+                self.mreza.hitro_resi_sudoku();
                 self.stare_mreze.push(self.mreza.kopiraj_sudoku());
                 self.trenutna_mreza += 1
             },
@@ -73,12 +73,9 @@ impl Application for App {
                 self.stare_mreze = vec![ Suduku::prazen_suduku()];
                 self.trenutna_mreza = 0
             },
-            
-
             Msg::ShraniPdf => {
                 poklici_shrani_pdf();
             },
-
             Msg::Barve => {
                 if self.trenutna_barvna_shema == self.barvne_sheme.len() -1 {
                     self.trenutna_barvna_shema = 0
@@ -92,10 +89,12 @@ impl Application for App {
         return Cmd::none();
     }
 
+
+    
     fn view(&self) -> Node<Msg> {
-        div(
+        body(
             [r#class(&self.barvne_sheme[self.trenutna_barvna_shema])],
-            [
+            [div([r#class(&self.barvne_sheme[self.trenutna_barvna_shema])],[div([ r#id("ogromen_pravokotnik")],[text("")]),
                 table(
                 [],
                 [
@@ -140,7 +139,7 @@ impl Application for App {
                                                         [
                                                             r#id("izpisana_navodila"),
                                                             r#type("button"),
-                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n V spodnji vrstici program sproti opozarja, ali je sudoku enolično oziroma sploh\n rešljiv. Sklikom na gumb 'REŠI' se sudoku na desni reši. Ta gumb je omogočen, ko\n je sudoku enoličo rešljiv. S klikom na gumb 'SHRANI PDF' se sestavljeni\n sudoku in rešitve shranijo v pdf obliki. \nZabavaj se!"),
+                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n V spodnji vrstici program sproti opozarja, ali je sudoku enolično oziroma sploh\n rešljiv. Sklikom na gumb 'REŠI SUDOKU' se sudoku na desni reši. Ta gumb je omogočen, ko\n je sudoku enoličo rešljiv. S klikom na gumb 'SHRANI PDF' se sestavljeni\n sudoku in rešitve shranijo v pdf obliki. \nZabavaj se! \np.s. Ne bodi dolgočasna. Obarvaj si življanje!"),
                                                             on_click(|_| Msg::NavodilaOff),
                                                         ],
                                                         [],
@@ -202,7 +201,7 @@ impl Application for App {
                        ])]
                     ),
                 ],
-            )],
+            )])],
         )
     }
 }

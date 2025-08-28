@@ -4,14 +4,14 @@ use sauron::prelude::*;
 use sauron::Program;
 
 pub mod app;
-pub mod logika;
 pub mod mainm;
 pub mod polje;
+pub mod pomozne_funkcije;
 pub mod resevanje;
 pub mod sauron_funkcije;
 pub mod strukture;
 pub mod suduku;
-pub mod se_neuporabljene_funkcije;
+//pub mod se_neuporabljene_funkcije;
 use crate::strukture::{App, Suduku};
 
 #[wasm_bindgen(start)]

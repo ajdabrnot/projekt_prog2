@@ -1,9 +1,8 @@
 #[cfg(test)]
 mod tests {
-    use std::result;
 
     use crate::{
-        logika::ugotovi_skatlo,
+        pomozne_funkcije::ugotovi_skatlo,
         sauron_funkcije::ustvari_id,
         strukture::{Polje, Suduku},
     };
@@ -44,7 +43,6 @@ mod tests {
 
     #[test]
     fn izbris_stevila() {
-        //ta funkcija je nekoliko vprašljiva?
         let mut result = Polje::prazno_polje(3, 4);
         result.vpisi_stevilo(9);
         result.izbrisi_stevilo();
@@ -303,17 +301,6 @@ mod tests {
         let sudoku = Suduku::prazen_suduku();
         assert_eq!(sudoku.ali_je_resljiv_hitro(), true)
     }
-    // #[test]
-    // fn sez_praznih_polj() {
-    //     let mut sudoku = Suduku::prazen_suduku();
-    //     sudoku.napolni_polja(vec![(1, 1, 1), (1, 2, 3), (1, 3, 4)]);
-    //     let result = sudoku.prazna_polja();
-    //     let mut iskano = vec![];
-    //     for i in 3..81 {
-    //         iskano.push(i)
-    //     }
-    //     assert_eq!(iskano, result)
-    // }
 
     #[test]
     fn prvo_prazno_polje_sudokuja() {
@@ -328,44 +315,22 @@ mod tests {
     fn manjkajoca_stevila() {
         let mut sudoku = Suduku::prazen_suduku();
         sudoku.napolni_polja(vec![
-            (1, 1, 5),
-            (1, 2, 6),
             (1, 6, 7),
             (2, 2, 9),
             (2, 4, 6),
             (2, 5, 8),
             (2, 6, 3),
             (2, 9, 4),
-            (3, 2, 4),
-            (3, 5, 1),
             (3, 6, 5),
-            (3, 8, 8),
-            (3, 9, 7),
-            (4, 1, 6),
             (4, 6, 2),
-            (4, 8, 7),
-            (4, 9, 9),
-            (5, 2, 3),
-            (5, 7, 1),
-            (5, 9, 2),
-            (6, 4, 7),
-            (6, 5, 6),
             (6, 6, 4),
-            (6, 8, 3),
-            (7, 1, 9),
-            (7, 2, 2),
             (7, 4, 8),
             (7, 6, 1),
-            (8, 1, 4),
-            (8, 3, 3),
             (8, 4, 2),
             (8, 5, 5),
             (8, 6, 6),
-            (8, 9, 1),
-            (9, 1, 8),
             (9, 5, 4),
             (9, 6, 9),
-            (9, 8, 2),
         ]);
         let result_skatla = sudoku.manjkajoca_v_skatli(8);
         let iskano_skatla = vec![3, 7];
@@ -378,60 +343,58 @@ mod tests {
         assert_eq!(result, iskano)
     }
 
-    // #[test]
-    // fn ali_je_vrsticaskatlapolje_okej() {
-    //     //preverjeno za true in false variante
-    //     let mut polje = Polje::prazno_polje(1, 9);
-    //     polje.vpisi(4);
-    //     let mut sudoku = Suduku::prazen_suduku();
-    //     sudoku.napolni_polja(vec![
-    //         (1, 1, 5),
-    //         (1, 2, 6),
-    //         (1, 6, 7),
-    //         (2, 9, 4),
-    //         (3, 8, 8),
-    //         (3, 9, 7),
-    //         (4, 1, 6),
-    //         (4, 6, 2),
-    //         (4, 8, 7),
-    //         (4, 9, 9),
-    //         (5, 9, 2),
-    //         (8, 9, 1),
-    //     ]);
-    //     let result_vrstica = polje.ali_je_vrstica_okej(&sudoku);
-    //     let result_stolpec = polje.ali_je_stolpec_okej(&sudoku);
-    //     let result_skatla = polje.ali_je_skatla_okej(&sudoku);
-    //     let iskano_vrstica = true;
-    //     let iskano_stolpec = false;
-    //     let iskano_skatla = false;
-    //     let result = (result_skatla, result_stolpec, result_vrstica);
-    //     let iskano = (iskano_skatla, iskano_stolpec, iskano_vrstica);
-    //     assert_eq!(result, iskano)
-    // }
+    #[test]
+    fn ali_je_vrsticaskatlapolje_okej() {
+        //preverjeno za true in false variante
+        let polje = Polje::prazno_polje(1, 9);
+        let mut sudoku = Suduku::prazen_suduku();
+        sudoku.napolni_polja(vec![
+            (1, 1, 5),
+            (1, 2, 6),
+            (1, 6, 7),
+            (2, 9, 4),
+            (3, 8, 8),
+            (3, 9, 7),
+            (4, 1, 6),
+            (4, 6, 2),
+            (4, 8, 7),
+            (4, 9, 9),
+            (5, 9, 2),
+            (8, 9, 1),
+        ]);
+        let result_vrstica = polje.ali_bi_bila_st_veljavna_v_vrstici(&sudoku, 4);
+        let result_stolpec = polje.ali_bi_bila_st_veljavna_v_stolpcu(&sudoku, 4);
+        let result_skatla = polje.ali_bi_bila_st_veljavna_v_skatli(&sudoku, 4);
+        let iskano_vrstica = true;
+        let iskano_stolpec = false;
+        let iskano_skatla = false;
+        let result = (result_skatla, result_stolpec, result_vrstica);
+        let iskano = (iskano_skatla, iskano_stolpec, iskano_vrstica);
+        assert_eq!(result, iskano)
+    }
 
-    // #[test]
-    // fn veljavnost_polja() {
-    //     let mut polje = Polje::prazno_polje(1, 9);
-    //     polje.vpisi(4);
-    //     let mut sudoku = Suduku::prazen_suduku();
-    //     sudoku.napolni_polja(vec![
-    //         (1, 1, 5),
-    //         (1, 2, 6),
-    //         (1, 6, 7),
-    //         (2, 9, 4),
-    //         (3, 8, 8),
-    //         (3, 9, 7),
-    //         (4, 1, 6),
-    //         (4, 6, 2),
-    //         (4, 8, 7),
-    //         (4, 9, 9),
-    //         (5, 9, 2),
-    //         (8, 9, 1),
-    //     ]);
-    //     let result = polje.ali_je_veljavno(&sudoku);
-    //     let iskano = false;
-    //     assert_eq!(iskano, result)
-    // }
+    #[test]
+    fn veljavnost_polja() {
+        let polje = Polje::prazno_polje(1, 9);
+        let mut sudoku = Suduku::prazen_suduku();
+        sudoku.napolni_polja(vec![
+            (1, 1, 5),
+            (1, 2, 6),
+            (1, 6, 7),
+            (2, 9, 4),
+            (3, 8, 8),
+            (3, 9, 7),
+            (4, 1, 6),
+            (4, 6, 2),
+            (4, 8, 7),
+            (4, 9, 9),
+            (5, 9, 2),
+            (8, 9, 1),
+        ]);
+        let result = polje.ali_bi_bilo_veljavno(&sudoku, 4);
+        let iskano = false;
+        assert_eq!(iskano, result)
+    }
 
     #[test]
     fn ugotavljanje_moznosti_polja() {
@@ -442,7 +405,6 @@ mod tests {
             (1, 2, 6),
             (1, 6, 7),
             (2, 9, 4),
-            //(3, 8, 8),
             (3, 9, 7),
             (4, 1, 6),
             (4, 6, 2),
