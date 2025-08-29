@@ -1,4 +1,5 @@
-# projekt_prog2
+# Ustvari svoj sudoku
+## Projektna naloga pri predmetu Programiranje 2
 Za projektno nalogo pri predmetu Programiranje 2 sva sestavili program, ki omogoči uporabniku, da sestavi svoj sudoku, ki ga potem program reši. 
 
 Kdor želi program preizkusiti, naj najprej klonira git repozitorij in ga odpre v VSC. Nato naj se v terminalu z ukazom `cd sudoku` premakne v mapo sudoku. Tu naj zažene ukaza
