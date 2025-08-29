@@ -139,7 +139,7 @@ impl Application for App {
                                                         [
                                                             r#id("izpisana_navodila"),
                                                             r#type("button"),
-                                                            r#value("V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n V spodnji vrstici program sproti opozarja, ali je sudoku enolično oziroma sploh\n rešljiv. Sklikom na gumb 'REŠI SUDOKU' se sudoku na desni reši. Ta gumb je omogočen, ko\n je sudoku enoličo rešljiv. S klikom na gumb 'SHRANI PDF' se sestavljeni\n sudoku in rešitve shranijo v pdf obliki. \nZabavaj se! \np.s. Ne bodi dolgočasna. Obarvaj si življanje!"),
+                                                            r#value("Cilj je sestaviti svojo nalogo sudoku. \n V levi sudoku vpisuj števke, za katere želiš, da so v sudokuju podane.\n Če bo ista številka v isti vrstici/stolpcu/škatli vpisana večkrat, se bodo polja obarvala rdeče.\n V spodnji vrstici program sproti opozarja, ali je sudoku enolično oziroma sploh\n rešljiv. Sklikom na gumb 'REŠI SUDOKU' se sudoku na desni reši. Ta gumb je omogočen, ko\n je sudoku enoličo rešljiv. S klikom na gumb 'SHRANI PDF' se sestavljeni\n sudoku in rešitve shranijo v pdf obliki. \nZabavaj se! \np.s. Ne bodi dolgočasna. Obarvaj si življanje!"),
                                                             on_click(|_| Msg::NavodilaOff),
                                                         ],
                                                         [],

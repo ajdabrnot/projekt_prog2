@@ -40,7 +40,7 @@ html,
 }
 
 .taka_natural {
-    --ozadje: rgb(248, 189, 189);
+    --ozadje: rgb(197, 146, 150);
     --tekst_in_obrobe: black;
     --levi_sudoku: rgb(210, 248, 178);
     --desni_sudoku: #white;
@@ -53,7 +53,7 @@ html,
 }
 
 .pastelna_mesanca {
-    --ozadje: rgb(248, 189, 189);
+    --ozadje: rgb(188, 236, 194);
     --tekst_in_obrobe: rgb(155, 121, 247);
     --levi_sudoku: rgb(197, 212, 245);
     --desni_sudoku: #white;

@@ -10,8 +10,6 @@
 
 <body>
   <div id="app"></div>
-  
-  <!-- Globalna PDF funkcija - BREZ type="module" -->
   <script>
     window.shraniSudokuKotPDF = function() {
       console.log("Shranjujem PDF...");
@@ -21,185 +19,199 @@
           const sudokuTabele = document.querySelectorAll(".osnovna_tabela");
           
           if (sudokuTabele.length < 2) {
-            console.error("Ne najdem obeh sudoku tabel");
+            console.error("Prišlo je do napake, poskusi še enkrat.");
             return;
           }
           
           const sudokuLevo = sudokuTabele[0]; // input mreža
           const sudokuDesno = sudokuTabele[1]; // rešena mreža
 
-          // === PRVA STRAN - NALOGA ===
+          // Funkcija za styling sudoku tabele
+          function styleSudokuTable(tabela, containerColor) {
+            // Osnovni styling tabele
+            tabela.style.borderCollapse = 'collapse';
+            tabela.style.margin = '0 auto';
+            tabela.style.backgroundColor = 'white';
+            tabela.style.border = `3px solid ${containerColor}`;
+            
+            // Najdi vse vrstice
+            const vrstice = tabela.querySelectorAll('tr');
+            
+            vrstice.forEach((vrstica, rowIndex) => {
+              const celice = vrstica.querySelectorAll('td, th');
+              
+              celice.forEach((celica, colIndex) => {
+                // Osnovni styling celice
+                celica.style.width = '40px';
+                celica.style.height = '40px';
+                celica.style.textAlign = 'center';
+                celica.style.fontSize = '18px';
+                celica.style.fontWeight = 'bold';
+                celica.style.color = '#2c3e50';
+                celica.style.backgroundColor = 'white';
+                celica.style.padding = '8px';
+                celica.style.boxSizing = 'border-box';
+                
+                // Osnovne tanke črte
+                celica.style.border = '1px solid #bdc3c7';
+                
+                // Debele črte za 3x3 bloke
+                // Desne debele črte (po 3. in 6. stolpcu)
+                if (colIndex === 2 || colIndex === 5) {
+                  celica.style.borderRight = '3px solid #34495e';
+                }
+                
+                // Spodnje debele črte (po 3. in 6. vrstici)
+                if (rowIndex === 2 || rowIndex === 5) {
+                  celica.style.borderBottom = '3px solid #34495e';
+                }
+                
+                // Če je celica input element, nastavi styling
+                const input = celica.querySelector('input');
+                if (input) {
+                  input.style.border = 'none';
+                  input.style.outline = 'none';
+                  input.style.backgroundColor = 'transparent';
+                  input.style.textAlign = 'center';
+                  input.style.fontSize = '18px';
+                  input.style.fontWeight = 'bold';
+                  input.style.color = '#2c3e50';
+                  input.style.width = '100%';
+                  input.style.height = '100%';
+                }
+              });
+            });
+          }
+
+          // Naloga 
           const firstPage = document.createElement("div");
           firstPage.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
-          firstPage.style.padding = "40px";
+          firstPage.style.padding = "30px";
           firstPage.style.textAlign = "center";
-          firstPage.style.minHeight = "100vh";
+          firstPage.style.height = "100vh";
           firstPage.style.display = "flex";
           firstPage.style.flexDirection = "column";
           firstPage.style.justifyContent = "center";
           firstPage.style.alignItems = "center";
-          firstPage.style.backgroundColor = "#fafafa";
+          firstPage.style.backgroundColor = "#ffffff";
+          firstPage.style.boxSizing = "border-box";
 
           // Glavni naslov
           const glavniNaslov = document.createElement("h1");
           glavniNaslov.textContent = "🧩 SUDOKU IZZIV";
-          glavniNaslov.style.fontSize = "36px";
+          glavniNaslov.style.fontSize = "28px";
           glavniNaslov.style.color = "#2c3e50";
-          glavniNaslov.style.marginBottom = "20px";
+          glavniNaslov.style.marginBottom = "15px";
           glavniNaslov.style.fontWeight = "bold";
-          glavniNaslov.style.textShadow = "2px 2px 4px rgba(0,0,0,0.1)";
+          glavniNaslov.style.margin = "0 0 15px 0";
           firstPage.appendChild(glavniNaslov);
 
           // Podnaslov
           const podnaslov = document.createElement("h2");
           podnaslov.textContent = "NALOGA";
-          podnaslov.style.fontSize = "24px";
+          podnaslov.style.fontSize = "20px";
           podnaslov.style.color = "#34495e";
-          podnaslov.style.marginBottom = "30px";
+          podnaslov.style.marginBottom = "25px";
           podnaslov.style.letterSpacing = "2px";
+          podnaslov.style.margin = "0 0 25px 0";
           firstPage.appendChild(podnaslov);
 
-          // Naloga sudoku
-          const nalamaContainer = document.createElement("div");
-          nalamaContainer.style.backgroundColor = "white";
-          nalamaContainer.style.padding = "30px";
-          nalamaContainer.style.borderRadius = "15px";
-          nalamaContainer.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
-          nalamaContainer.style.border = "3px solid #3498db";
+          // Naloga sudoku 
+          const nalogeContainer = document.createElement("div");
+          nalogeContainer.style.backgroundColor = "white";
+          nalogeContainer.style.padding = "20px";
+          nalogeContainer.style.borderRadius = "10px";
+          nalogeContainer.style.boxShadow = "0 5px 15px rgba(0,0,0,0.1)";
+          nalogeContainer.style.border = "2px solid #3498db";
+          nalogeContainer.style.display = "inline-block";
           
           const levoKlon = sudokuLevo.cloneNode(true);
-          nalamaContainer.appendChild(levoKlon);
-          firstPage.appendChild(nalamaContainer);
-
-          // // Navodila
-          // const navodila = document.createElement("div");
-          // navodila.style.marginTop = "30px";
-          // navodila.style.padding = "20px";
-          // navodila.style.backgroundColor = "#ecf0f1";
-          // navodila.style.borderRadius = "10px";
-          // navodila.style.maxWidth = "500px";
           
-          // const navodilaText = document.createElement("p");
-          // navodilaText.innerHTML = "<strong>Navodila:</strong><br>Izpolnite mrežo tako, da vsaka vrstica, stolpec in 3×3 kvadrat vsebuje števila od 1 do 9, vsako natanko enkrat.";
-          // navodilaText.style.fontSize = "14px";
-          // navodilaText.style.lineHeight = "1.5";
-          // navodilaText.style.color = "#2c3e50";
-          // navodila.appendChild(navodilaText);
-          // firstPage.appendChild(navodila);
+          // Pobriši gumbe 
+          const gumbiLevo = levoKlon.querySelectorAll('input[type="button"], button');
+          gumbiLevo.forEach(gumb => gumb.remove());
+          
+          styleSudokuTable(levoKlon, '#3498db');
+          nalogeContainer.appendChild(levoKlon);
+          firstPage.appendChild(nalogeContainer);
 
-          // === DRUGA STRAN - REŠITEV ===
+          // Rešitev 
           const secondPage = document.createElement("div");
           secondPage.style.fontFamily = "'Helvetica Neue', Arial, sans-serif";
-          secondPage.style.padding = "40px";
+          secondPage.style.padding = "30px";
           secondPage.style.textAlign = "center";
-          secondPage.style.minHeight = "100vh";
+          secondPage.style.height = "100vh";
           secondPage.style.display = "flex";
           secondPage.style.flexDirection = "column";
           secondPage.style.justifyContent = "center";
           secondPage.style.alignItems = "center";
-          secondPage.style.backgroundColor = "#f8f9fa";
-          secondPage.style.pageBreakBefore = "always"; // NOVA STRAN!
+          secondPage.style.backgroundColor = "#ffffff";
+          secondPage.style.pageBreakBefore = "always";
+          secondPage.style.boxSizing = "border-box";
 
           // Naslov rešitve
           const resitevNaslov = document.createElement("h1");
           resitevNaslov.textContent = "✅ REŠITEV";
-          resitevNaslov.style.fontSize = "36px";
+          resitevNaslov.style.fontSize = "28px";
           resitevNaslov.style.color = "#27ae60";
-          resitevNaslov.style.marginBottom = "40px";
+          resitevNaslov.style.marginBottom = "25px";
           resitevNaslov.style.fontWeight = "bold";
-          resitevNaslov.style.textShadow = "2px 2px 4px rgba(0,0,0,0.1)";
+          resitevNaslov.style.margin = "0 0 25px 0";
           secondPage.appendChild(resitevNaslov);
 
-          // Rešitev sudoku
+          // Rešitev sudokuja 
           const resitevContainer = document.createElement("div");
           resitevContainer.style.backgroundColor = "white";
-          resitevContainer.style.padding = "30px";
-          resitevContainer.style.borderRadius = "15px";
-          resitevContainer.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
-          resitevContainer.style.border = "3px solid #27ae60";
+          resitevContainer.style.padding = "20px";
+          resitevContainer.style.borderRadius = "10px";
+          resitevContainer.style.boxShadow = "0 5px 15px rgba(0,0,0,0.1)";
+          resitevContainer.style.border = "2px solid #27ae60";
+          resitevContainer.style.display = "inline-block";
           
           const desnoKlon = sudokuDesno.cloneNode(true);
+          
+          // Pobriši gumbe 
+          const gumbiDesno = desnoKlon.querySelectorAll('input[type="button"], button');
+          gumbiDesno.forEach(gumb => gumb.remove());
+          
+          styleSudokuTable(desnoKlon, '#27ae60');
           resitevContainer.appendChild(desnoKlon);
           secondPage.appendChild(resitevContainer);
-
-          // // Čestitke
-          // const cestitke = document.createElement("div");
-          // cestitke.style.marginTop = "30px";
-          // cestitke.style.padding = "20px";
-          // cestitke.style.backgroundColor = "#d5f4e6";
-          // cestitke.style.borderRadius = "10px";
-          // cestitke.style.maxWidth = "400px";
-          
-          // const cestitkeText = document.createElement("p");
-          // cestitkeText.innerHTML = "🎉 <strong>Odlično delo!</strong><br>Uspešno ste rešili sudoku!";
-          // cestitkeText.style.fontSize = "16px";
-          // cestitkeText.style.lineHeight = "1.5";
-          // cestitkeText.style.color = "#27ae60";
-          // cestitke.appendChild(cestitkeText);
-          // secondPage.appendChild(cestitke);
 
           // Kombinacija obeh strani
           const pdfContent = document.createElement("div");
           pdfContent.appendChild(firstPage);
           pdfContent.appendChild(secondPage);
 
-          // Pobriši vse gumbe in inpute
-          const vsiGumbi = pdfContent.querySelectorAll('input[type="button"], button');
-          vsiGumbi.forEach(gumb => gumb.remove());
-          
-          // Styling za tabele
-          const tabele = pdfContent.querySelectorAll('table');
-          tabele.forEach(tabela => {
-            tabela.style.border = '3px solid #2c3e50';
-            tabela.style.borderCollapse = 'collapse';
-            tabela.style.margin = '0 auto';
-            tabela.style.borderRadius = '8px';
-            tabela.style.overflow = 'hidden';
-          });
-          
-          const celice = pdfContent.querySelectorAll('td, th');
-          celice.forEach((celica, index) => {
-            celica.style.border = '1px solid #7f8c8d';
-            celica.style.padding = '12px';
-            celica.style.textAlign = 'center';
-            celica.style.fontSize = '16px';
-            celica.style.fontWeight = 'bold';
-            celica.style.color = '#2c3e50';
-            
-            // Različne barve za različne 3x3 bloke
-            const row = Math.floor(index / 9);
-            const col = index % 9;
-            const blockRow = Math.floor(row / 3);
-            const blockCol = Math.floor(col / 3);
-            const blockIndex = blockRow * 3 + blockCol;
-            
-            if (blockIndex % 2 === 0) {
-              celica.style.backgroundColor = '#ecf0f1';
-            } else {
-              celica.style.backgroundColor = '#ffffff';
-            }
-          });
+          // debugging
+          console.log("Prva stran HTML:", firstPage.outerHTML.substring(0, 200));
+          console.log("Druga stran HTML:", secondPage.outerHTML.substring(0, 200));
+          console.log("Kombiniran PDF content:", pdfContent.children.length, "strani");
 
-          // Generiraj PDF
+          // PDF opcije z boljšimi nastavitvami
           const opt = {
             margin: 10,
             filename: 'sudoku_izziv.pdf',
-            image: { type: 'jpeg', quality: 0.95 },
+            image: { 
+              type: 'jpeg', 
+              quality: 0.95 
+            },
             html2canvas: { 
               scale: 1.5,
               useCORS: true,
               allowTaint: true,
-              backgroundColor: null
+              backgroundColor: '#ffffff'
             },
             jsPDF: { 
               unit: 'mm', 
               format: 'a4', 
-              orientation: 'portrait' // pokončno za lepši izgled
+              orientation: 'portrait'
             }
           };
 
+          // Generiraj PDF
           html2pdf().set(opt).from(pdfContent).save().then(() => {
-            console.log("🎉 Lep PDF uspešno shranjen!");
+            console.log("PDF uspešno shranjen!");
           }).catch((error) => {
             console.error("Napaka pri shranjevanju PDF:", error);
           });
@@ -211,7 +223,6 @@
     };
   </script>
 
-  <!-- WASM inicializacija - mora biti ZADNJA -->
   <script type="module">
     import init from './pkg/sudoku.js';
     await init().catch(console.error);
