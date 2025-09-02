@@ -130,6 +130,31 @@ html,
     --ponovitev_hover: #69171d;
     --disabled_resi: #5c5c50a2;
 }
+.modra {
+    --ozadje: #b7dcf0;
+    --tekst_in_obrobe: #2211ba;
+    --levi_sudoku: #8081c2;
+    --desni_sudoku: #a8ace4;
+    --rob_tebele: #101294;
+    --navodila: #07059a;
+    --ponovitev: #ba434b;
+    --levi_sudoku_hover: #e1bafc;
+    --ponovitev_hover: #e977c7;
+    --disabled_resi: #b9aafca2;
+}
+
+.zelena {
+    --ozadje: #b2f1d1;
+    --tekst_in_obrobe: #048652;
+    --levi_sudoku: #6cc57a;
+    --desni_sudoku: #9ce0a5;
+    --rob_tebele: #05701c;
+    --navodila: #0aa06b;
+    --ponovitev: #a42b33;
+    --levi_sudoku_hover: #81efab;
+    --ponovitev_hover: #70f1bd;
+    --disabled_resi: #caf0dda2;
+}
 
 
 
