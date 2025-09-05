@@ -158,6 +158,55 @@ fn main() {
     sudoku.je_enolicno_resljivo_hitra();
     let elapsed = now.elapsed();
     println!("enolično rešljiv hitro: {:.2?}", elapsed);
+
+    ////testiranje novih funkcij
+    let zacetek = Instant::now();
+    sudoku.manjkajoca_v_skatli(3);
+    let cas_prva = zacetek.elapsed();
+    let zacetek = Instant::now();
+    sudoku.manjkajoca_v_skatli_boljsi_nacin(3);
+    let cas_druga = zacetek.elapsed();
+    println!("Funkcija manjkajoca v skatli stara: {:?}", cas_prva);
+    println!("Funkcija manjkajoca v skatli nova: {:?}", cas_druga);
+    if cas_prva < cas_druga {
+        println!("Stara funkcija je hitrejša za {:.2}x", 
+                 cas_druga.as_nanos() as f64 / cas_prva.as_nanos() as f64);
+    } else {
+        println!("Nova funkcija je hitrejša za {:.2}x", 
+                 cas_prva.as_nanos() as f64 / cas_druga.as_nanos() as f64);
+    }
+
+    let zacetek = Instant::now();
+    sudoku.manjkajoca_v_vrstici(3);
+    let cas_prva = zacetek.elapsed();
+    let zacetek = Instant::now();
+    sudoku.manjkajoca_v_vrstici_boljsi_nacin(3);
+    let cas_druga = zacetek.elapsed();
+    println!("Funkcija manjkajoca v vrstici stara: {:?}", cas_prva);
+    println!("Funkcija manjkajoca v vrstici nova: {:?}", cas_druga);
+    if cas_prva < cas_druga {
+        println!("Stara funkcija je hitrejša za {:.2}x", 
+                 cas_druga.as_nanos() as f64 / cas_prva.as_nanos() as f64);
+    } else {
+        println!("Nova funkcija je hitrejša za {:.2}x", 
+                 cas_prva.as_nanos() as f64 / cas_druga.as_nanos() as f64);
+    }
+
+    let zacetek = Instant::now();
+    sudoku.manjkajoca_v_stolpcu(3);
+    let cas_prva = zacetek.elapsed();
+    let zacetek = Instant::now();
+    sudoku.manjkajoca_v_stolpcu_boljsi_nacin(3);
+    let cas_druga = zacetek.elapsed();
+    println!("Funkcija manjkajoca v stolpcu stara: {:?}", cas_prva);
+    println!("Funkcija manjkajoca v stolpcu nova: {:?}", cas_druga);
+    if cas_prva < cas_druga {
+        println!("Stara funkcija je hitrejša za {:.2}x", 
+                 cas_druga.as_nanos() as f64 / cas_prva.as_nanos() as f64);
+    } else {
+        println!("Nova funkcija je hitrejša za {:.2}x", 
+                 cas_prva.as_nanos() as f64 / cas_druga.as_nanos() as f64);
+    }
 }
 
 //časi za težek sudoku:
@@ -167,6 +216,15 @@ fn main() {
 // ali je rešljiv hitro: 85.10µs
 // enolično rešljiv počasi: 49.80µs
 // enolično rešljiv hitro: 60.70µs
+// Funkcija manjkajoca v skatli stara: 6.1µs
+// Funkcija manjkajoca v skatli nova: 3.4µs
+// Nova funkcija je hitrejša za 1.79x
+// Funkcija manjkajoca v vrstici stara: 5.5µs
+// Funkcija manjkajoca v vrstici nova: 2.7µs
+// Nova funkcija je hitrejša za 2.04x
+// Funkcija manjkajoca v stolpcu stara: 7.4µs
+// Funkcija manjkajoca v stolpcu nova: 3.1µs
+// Nova funkcija je hitrejša za 2.39x
 
 //časi za sudoku s 17 namigi:
 // resi_pocasi: 15.28s
@@ -175,6 +233,15 @@ fn main() {
 // ali je rešljiv hitro: 32.60µs
 // enolično rešljiv počasi: 24.50µs
 // enolično rešljiv hitro: 23.70µs
+// Funkcija manjkajoca v skatli stara: 6.8µs
+// Funkcija manjkajoca v skatli nova: 3.9µs
+// Nova funkcija je hitrejša za 1.74x
+// Funkcija manjkajoca v vrstici stara: 9.1µs
+// Funkcija manjkajoca v vrstici nova: 3.1µs
+// Nova funkcija je hitrejša za 2.94x
+// Funkcija manjkajoca v stolpcu stara: 7.9µs
+// Funkcija manjkajoca v stolpcu nova: 3µs
+// Nova funkcija je hitrejša za 2.63x
 
 //časi za (allegedly) ekstremno težek sudoku
 //resi_pocasi: 263.03ms
@@ -183,6 +250,15 @@ fn main() {
 //ali je rešljiv hitro: 44.50µs
 //enolično rešljiv počasi: 23.20µs
 //enolično rešljiv hitro: 37.90µs
+// Funkcija manjkajoca v skatli stara: 9.4µs
+// Funkcija manjkajoca v skatli nova: 5.7µs
+// Nova funkcija je hitrejša za 1.65x
+// Funkcija manjkajoca v vrstici stara: 10.8µs
+// Funkcija manjkajoca v vrstici nova: 3.3µs
+// Nova funkcija je hitrejša za 3.27x
+// Funkcija manjkajoca v stolpcu stara: 11.5µs
+// Funkcija manjkajoca v stolpcu nova: 3.5µs
+// Nova funkcija je hitrejša za 3.29x
 
 //časi za lahek sudoku:
 // resi_pocasi: 1.54ms
@@ -191,3 +267,12 @@ fn main() {
 // ali je rešljiv hitro: 31.10µs
 // enolično rešljiv počasi: 22.90µs
 // enolično rešljiv hitro: 25.40µs
+// Funkcija manjkajoca v skatli stara: 7.6µs
+// Funkcija manjkajoca v skatli nova: 3.7µs
+// Nova funkcija je hitrejša za 2.05x
+// Funkcija manjkajoca v vrstici stara: 6.8µs
+// Funkcija manjkajoca v vrstici nova: 2.9µs
+// Nova funkcija je hitrejša za 2.34x
+// Funkcija manjkajoca v stolpcu stara: 6.8µs
+// Funkcija manjkajoca v stolpcu nova: 3.3µs
+// Nova funkcija je hitrejša za 2.06x

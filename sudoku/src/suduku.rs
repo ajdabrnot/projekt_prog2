@@ -15,26 +15,26 @@ impl Suduku {
         Suduku { mreza: tabela }
     }
 
-    // pub fn manjkajoca_v_skatli(&self, skatla: u8) -> Vec<u8> {
-    //     //vrne števila, ki jih še ni v škatli
-    //     let mut ze_vpisana_st = vec![];
-    //     let mut ni_v_skatli = vec![];
-    //     for polje in &self.mreza {
-    //         if polje.skatla == skatla {
-    //             match polje.stevilo {
-    //                 0 => {}
-    //                 i => ze_vpisana_st.push(i),
-    //             }
-    //         }
-    //     }
-    //     for i in 1..=9 {
-    //         if ze_vpisana_st.contains(&i) {
-    //         } else {
-    //             ni_v_skatli.push(i)
-    //         }
-    //     }
-    //     return ni_v_skatli;
-    // }
+    pub fn manjkajoca_v_skatli(&self, skatla: u8) -> Vec<u8> {
+        //vrne števila, ki jih še ni v škatli
+        let mut ze_vpisana_st = vec![];
+        let mut ni_v_skatli = vec![];
+        for polje in &self.mreza {
+            if polje.skatla == skatla {
+                match polje.stevilo {
+                    0 => {}
+                    i => ze_vpisana_st.push(i),
+                }
+            }
+        }
+        for i in 1..=9 {
+            if ze_vpisana_st.contains(&i) {
+            } else {
+                ni_v_skatli.push(i)
+            }
+        }
+        return ni_v_skatli;
+    }
 
     pub fn manjkajoca_v_skatli_boljsi_nacin(&self, skatla: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v škatli
@@ -57,26 +57,26 @@ impl Suduku {
     }
     
 
-    // pub fn manjkajoca_v_stolpcu(&self, stolp: u8) -> Vec<u8> {
-    //     //vrne števila, ki jih še ni v stolpcu
-    //     let mut ze_vpisana_st = vec![];
-    //     let mut ni_v_stolpcu = vec![];
-    //     for polje in &self.mreza {
-    //         if polje.stolpec == stolp {
-    //             match polje.stevilo {
-    //                 0 => {}
-    //                 i => ze_vpisana_st.push(i),
-    //             }
-    //         }
-    //     }
-    //     for i in 1..=9 {
-    //         if ze_vpisana_st.contains(&i) {
-    //         } else {
-    //             ni_v_stolpcu.push(i)
-    //         }
-    //     }
-    //     return ni_v_stolpcu;
-    // }
+    pub fn manjkajoca_v_stolpcu(&self, stolp: u8) -> Vec<u8> {
+        //vrne števila, ki jih še ni v stolpcu
+        let mut ze_vpisana_st = vec![];
+        let mut ni_v_stolpcu = vec![];
+        for polje in &self.mreza {
+            if polje.stolpec == stolp {
+                match polje.stevilo {
+                    0 => {}
+                    i => ze_vpisana_st.push(i),
+                }
+            }
+        }
+        for i in 1..=9 {
+            if ze_vpisana_st.contains(&i) {
+            } else {
+                ni_v_stolpcu.push(i)
+            }
+        }
+        return ni_v_stolpcu;
+    }
 
     pub fn manjkajoca_v_stolpcu_boljsi_nacin(&self, stolp: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v stolpcu
@@ -98,35 +98,35 @@ impl Suduku {
     }
 
 
-    // pub fn manjkajoca_v_vrstici(&self, vrst: u8) -> Vec<u8> {
-    //     //vrne števila, ki jih še ni v vrstici
-    //     let mut ze_vpisana_st = vec![];
-    //     let mut ni_v_vrstici = vec![];
-    //     for polje in &self.mreza {
-    //         if polje.vrstica == vrst {
-    //             match polje.stevilo {
-    //                 0 => {}
-    //                 i => ze_vpisana_st.push(i),
-    //             }
-    //         }
-    //     }
-    //     for i in 1..=9 {
-    //         if ze_vpisana_st.contains(&i) {
-    //         } else {
-    //             ni_v_vrstici.push(i)
-    //         }
-    //     }
-    //     return ni_v_vrstici;
-    // }
+    pub fn manjkajoca_v_vrstici(&self, vrst: u8) -> Vec<u8> {
+        //vrne števila, ki jih še ni v vrstici
+        let mut ze_vpisana_st = vec![];
+        let mut ni_v_vrstici = vec![];
+        for polje in &self.mreza {
+            if polje.vrstica == vrst {
+                match polje.stevilo {
+                    0 => {}
+                    i => ze_vpisana_st.push(i),
+                }
+            }
+        }
+        for i in 1..=9 {
+            if ze_vpisana_st.contains(&i) {
+            } else {
+                ni_v_vrstici.push(i)
+            }
+        }
+        return ni_v_vrstici;
+    }
 
     pub fn manjkajoca_v_vrstici_boljsi_nacin(&self, vrst: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v vrstici
         let mut ze_vpisana_st = vec![];
         let mut ni_v_vrstici = vec![];
-        let indeks_zacetka_vrstice = (vrst - 1) * 9;
-        let indeks_konca_vrstice = (vrst - 1) * 9 + 9;
-        for i in indeks_zacetka_vrstice..indeks_konca_vrstice {
-            match self.mreza[i as usize].stevilo {
+        // let indeks_zacetka_vrstice = (vrst - 1) * 9;
+        // let indeks_konca_vrstice = (vrst - 1) * 9 + 9;
+        for i in 0..9 {
+            match self.mreza[(vrst as usize - 1) * 9 + i].stevilo {
                 0 => {}
                 i => ze_vpisana_st.push(i),
             }
