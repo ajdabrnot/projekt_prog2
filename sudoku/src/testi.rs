@@ -332,11 +332,11 @@ mod tests {
             (9, 5, 4),
             (9, 6, 9),
         ]);
-        let result_skatla = sudoku.manjkajoca_v_skatli(8);
+        let result_skatla = sudoku.manjkajoca_v_skatli_boljsi_nacin(8);
         let iskano_skatla = vec![3, 7];
-        let result_stolpec = sudoku.manjkajoca_v_stolpcu(6);
+        let result_stolpec = sudoku.manjkajoca_v_stolpcu_boljsi_nacin(6);
         let iskano_stolpec = vec![8];
-        let result_vrstica = sudoku.manjkajoca_v_vrstici(2);
+        let result_vrstica = sudoku.manjkajoca_v_vrstici_boljsi_nacin(2);
         let iskano_vrstica = vec![1, 2, 5, 7];
         let result = (result_skatla, result_stolpec, result_vrstica);
         let iskano = (iskano_skatla, iskano_stolpec, iskano_vrstica);

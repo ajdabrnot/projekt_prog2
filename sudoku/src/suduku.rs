@@ -1,6 +1,6 @@
 //implementacije za struct Suduku
 
-use crate::strukture::{Polje, Resevanje, Suduku};
+use crate::{pomozne_funkcije::povezi_skatlo_z_indeksi, strukture::{Polje, Resevanje, Suduku}};
 
 impl Suduku {
     pub fn prazen_suduku() -> Suduku {
@@ -15,16 +15,36 @@ impl Suduku {
         Suduku { mreza: tabela }
     }
 
-    pub fn manjkajoca_v_skatli(&self, skatla: u8) -> Vec<u8> {
+    // pub fn manjkajoca_v_skatli(&self, skatla: u8) -> Vec<u8> {
+    //     //vrne števila, ki jih še ni v škatli
+    //     let mut ze_vpisana_st = vec![];
+    //     let mut ni_v_skatli = vec![];
+    //     for polje in &self.mreza {
+    //         if polje.skatla == skatla {
+    //             match polje.stevilo {
+    //                 0 => {}
+    //                 i => ze_vpisana_st.push(i),
+    //             }
+    //         }
+    //     }
+    //     for i in 1..=9 {
+    //         if ze_vpisana_st.contains(&i) {
+    //         } else {
+    //             ni_v_skatli.push(i)
+    //         }
+    //     }
+    //     return ni_v_skatli;
+    // }
+
+    pub fn manjkajoca_v_skatli_boljsi_nacin(&self, skatla: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v škatli
         let mut ze_vpisana_st = vec![];
         let mut ni_v_skatli = vec![];
-        for polje in &self.mreza {
-            if polje.skatla == skatla {
-                match polje.stevilo {
-                    0 => {}
-                    i => ze_vpisana_st.push(i),
-                }
+        let seznam_indeksov = povezi_skatlo_z_indeksi(skatla);
+        for i in seznam_indeksov {
+            match self.mreza[i as usize].stevilo {
+                0 => {}
+                i => ze_vpisana_st.push(i),
             }
         }
         for i in 1..=9 {
@@ -35,17 +55,37 @@ impl Suduku {
         }
         return ni_v_skatli;
     }
+    
 
-    pub fn manjkajoca_v_stolpcu(&self, stolp: u8) -> Vec<u8> {
+    // pub fn manjkajoca_v_stolpcu(&self, stolp: u8) -> Vec<u8> {
+    //     //vrne števila, ki jih še ni v stolpcu
+    //     let mut ze_vpisana_st = vec![];
+    //     let mut ni_v_stolpcu = vec![];
+    //     for polje in &self.mreza {
+    //         if polje.stolpec == stolp {
+    //             match polje.stevilo {
+    //                 0 => {}
+    //                 i => ze_vpisana_st.push(i),
+    //             }
+    //         }
+    //     }
+    //     for i in 1..=9 {
+    //         if ze_vpisana_st.contains(&i) {
+    //         } else {
+    //             ni_v_stolpcu.push(i)
+    //         }
+    //     }
+    //     return ni_v_stolpcu;
+    // }
+
+    pub fn manjkajoca_v_stolpcu_boljsi_nacin(&self, stolp: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v stolpcu
         let mut ze_vpisana_st = vec![];
         let mut ni_v_stolpcu = vec![];
-        for polje in &self.mreza {
-            if polje.stolpec == stolp {
-                match polje.stevilo {
-                    0 => {}
-                    i => ze_vpisana_st.push(i),
-                }
+        for i in 0..9 {
+            match self.mreza[i * 9 + stolp as usize - 1].stevilo {
+                0 => {}
+                i => ze_vpisana_st.push(i),
             }
         }
         for i in 1..=9 {
@@ -57,26 +97,49 @@ impl Suduku {
         return ni_v_stolpcu;
     }
 
-    pub fn manjkajoca_v_vrstici(&self, vrst: u8) -> Vec<u8> {
+
+    // pub fn manjkajoca_v_vrstici(&self, vrst: u8) -> Vec<u8> {
+    //     //vrne števila, ki jih še ni v vrstici
+    //     let mut ze_vpisana_st = vec![];
+    //     let mut ni_v_vrstici = vec![];
+    //     for polje in &self.mreza {
+    //         if polje.vrstica == vrst {
+    //             match polje.stevilo {
+    //                 0 => {}
+    //                 i => ze_vpisana_st.push(i),
+    //             }
+    //         }
+    //     }
+    //     for i in 1..=9 {
+    //         if ze_vpisana_st.contains(&i) {
+    //         } else {
+    //             ni_v_vrstici.push(i)
+    //         }
+    //     }
+    //     return ni_v_vrstici;
+    // }
+
+    pub fn manjkajoca_v_vrstici_boljsi_nacin(&self, vrst: u8) -> Vec<u8> {
         //vrne števila, ki jih še ni v vrstici
         let mut ze_vpisana_st = vec![];
         let mut ni_v_vrstici = vec![];
-        for polje in &self.mreza {
-            if polje.vrstica == vrst {
-                match polje.stevilo {
-                    0 => {}
-                    i => ze_vpisana_st.push(i),
-                }
+        let indeks_zacetka_vrstice = (vrst - 1) * 9;
+        let indeks_konca_vrstice = (vrst - 1) * 9 + 9;
+        for i in indeks_zacetka_vrstice..indeks_konca_vrstice {
+            match self.mreza[i as usize].stevilo {
+                0 => {}
+                i => ze_vpisana_st.push(i),
             }
         }
-        for i in 1..=9 {
-            if ze_vpisana_st.contains(&i) {
+        for st in 1..=9 {
+            if ze_vpisana_st.contains(&st) {
             } else {
-                ni_v_vrstici.push(i)
+                ni_v_vrstici.push(st)
             }
         }
         return ni_v_vrstici;
     }
+
     pub fn ali_je_veljavno(&self, vrst: u8, stolp: u8, st: u8) -> bool {
         //preveri, ali je izbrana stevka veljavna izbira za to polje
         let mut polje = Polje::prazno_polje(vrst, stolp);
@@ -200,7 +263,7 @@ impl Suduku {
 
     pub fn resi_sudoku_pocasi(&mut self) -> () {
         let mut resen = Resevanje::nov_za_resevanje(self);
-        if resen.resi() {
+        if resen.resi(true) {
             self.mreza = resen.sudoku_za_resevanje.mreza.clone();
         };
     }
@@ -212,12 +275,22 @@ impl Suduku {
         return sudoku.is_uniquely_solvable();
     }
 
+    // pub fn je_enolicno_resljivo_pocasi(&self) -> bool {
+    //     let mut kopirani_sudoku_prvic = self.kopiraj_sudoku();
+    //     let mut kopirani_sudoku_drugic = self.kopiraj_sudoku();
+    //     let mut resen_prvic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_prvic);
+    //     let mut resen_drugic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_drugic);
+    //     if resen_prvic.resi(true) && resen_drugic.resi_se_enkrat() {
+    //         return resen_prvic.sudoku_za_resevanje.mreza == resen_drugic.sudoku_za_resevanje.mreza;
+    //     }
+    //     return false;
+    // }
     pub fn je_enolicno_resljivo_pocasi(&self) -> bool {
         let mut kopirani_sudoku_prvic = self.kopiraj_sudoku();
         let mut kopirani_sudoku_drugic = self.kopiraj_sudoku();
         let mut resen_prvic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_prvic);
         let mut resen_drugic = Resevanje::nov_za_resevanje(&mut kopirani_sudoku_drugic);
-        if resen_prvic.resi() && resen_drugic.resi_se_enkrat() {
+        if resen_prvic.resi(true) && resen_drugic.resi(false) {
             return resen_prvic.sudoku_za_resevanje.mreza == resen_drugic.sudoku_za_resevanje.mreza;
         }
         return false;
@@ -236,6 +309,6 @@ impl Suduku {
     pub fn ali_je_sudoku_resljiv_pocasi(&self) -> bool {
         let mut kopirani_sudoku = self.kopiraj_sudoku();
         let mut resen = Resevanje::nov_za_resevanje(&mut kopirani_sudoku);
-        return resen.resi();
+        return resen.resi(true);
     }
 }
