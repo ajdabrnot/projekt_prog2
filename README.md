@@ -9,5 +9,5 @@ Kdor želi program preizkusiti, naj najprej klonira git repozitorij in ga odpre 
 V terminalu se tedaj izpiše naslov spletne strani. S klikom nanjo se odpre spletna stran projekta.
 Na spletni strani je pod naslovom gumb z napisom "Navodila", ki uporabniku dodatno razloži, kaj lahko s programom počne. 
 
-Uporabili sva knjižnice sauron, wasm_bindgen in web_sys.
+Uporabili sva knjižnice sauron, wasm_bindgen, web_sys, html2pdf in sudoku.
 
