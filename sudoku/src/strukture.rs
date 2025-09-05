@@ -22,6 +22,7 @@ pub enum Msg {
     KorakNaprej,
     ZacniZnova,
     Barve,
+    PremakniCursor(String),
 }
 
 pub struct App {
@@ -34,6 +35,8 @@ pub struct App {
     pub trenutna_mreza: usize,
     pub barvne_sheme: Vec<String>,
     pub trenutna_barvna_shema: usize,
+    pub trenutna_vrstica_cursor: usize,
+    pub trenutni_stolpec_cursor: usize,
 }
 
 pub struct Resevanje<'a> {
