@@ -30,19 +30,19 @@ impl Polje {
 
     pub fn ali_bi_bila_st_veljavna_v_vrstici(&self, suduku: &Suduku, st: u8) -> bool {
         //preveri, da se števka, ki jo želimo vpisati v izbrano polje, še ni pojavila v tej vrstici
-        let zadovoljive = suduku.manjkajoca_v_vrstici_boljsi_nacin(self.vrstica);
+        let zadovoljive = suduku.manjkajoca_v_vrstici(self.vrstica);
         return zadovoljive.contains(&st);
     }
 
     pub fn ali_bi_bila_st_veljavna_v_skatli(&self, suduku: &Suduku, st: u8) -> bool {
         //preveri, da se števka, ki jo želimo vpisati v izbrano polje, še ni pojavila v tej škatli
-        let zadovoljive = suduku.manjkajoca_v_skatli_boljsi_nacin(self.skatla);
+        let zadovoljive = suduku.manjkajoca_v_skatli(self.skatla);
         return zadovoljive.contains(&st);
     }
 
     pub fn ali_bi_bila_st_veljavna_v_stolpcu(&self, suduku: &Suduku, st: u8) -> bool {
         //preveri, da se števka, ki jo želimo vpisati v izbrano polje, še ni pojavila v tem stolpcu
-        let zadovoljive = suduku.manjkajoca_v_stolpcu_boljsi_nacin(self.stolpec);
+        let zadovoljive = suduku.manjkajoca_v_stolpcu(self.stolpec);
         return zadovoljive.contains(&st);
     }
 
@@ -54,9 +54,9 @@ impl Polje {
     pub fn ugotovi_moznosti(&mut self, suduku: &Suduku) -> () {
         //spremeni možnosti polja
         self.moznosti = vec![];
-        let vrstica = suduku.manjkajoca_v_vrstici_boljsi_nacin(self.vrstica);
-        let stolpec = suduku.manjkajoca_v_stolpcu_boljsi_nacin(self.stolpec);
-        let skatla = suduku.manjkajoca_v_skatli_boljsi_nacin(self.skatla);
+        let vrstica = suduku.manjkajoca_v_vrstici(self.vrstica);
+        let stolpec = suduku.manjkajoca_v_stolpcu(self.stolpec);
+        let skatla = suduku.manjkajoca_v_skatli(self.skatla);
         for i in vrstica {
             if stolpec.contains(&i) && skatla.contains(&i) {
                 self.moznosti.push(i)

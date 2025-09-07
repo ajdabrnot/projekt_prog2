@@ -163,50 +163,21 @@ fn main() {
     let zacetek = Instant::now();
     sudoku.manjkajoca_v_skatli(3);
     let cas_prva = zacetek.elapsed();
-    let zacetek = Instant::now();
-    sudoku.manjkajoca_v_skatli_boljsi_nacin(3);
-    let cas_druga = zacetek.elapsed();
-    println!("Funkcija manjkajoca v skatli stara: {:?}", cas_prva);
-    println!("Funkcija manjkajoca v skatli nova: {:?}", cas_druga);
-    if cas_prva < cas_druga {
-        println!("Stara funkcija je hitrejša za {:.2}x", 
-                 cas_druga.as_nanos() as f64 / cas_prva.as_nanos() as f64);
-    } else {
-        println!("Nova funkcija je hitrejša za {:.2}x", 
-                 cas_prva.as_nanos() as f64 / cas_druga.as_nanos() as f64);
-    }
+    println!("Funkcija manjkajoca v skatli: {:?}", cas_prva);
+
 
     let zacetek = Instant::now();
     sudoku.manjkajoca_v_vrstici(3);
     let cas_prva = zacetek.elapsed();
-    let zacetek = Instant::now();
-    sudoku.manjkajoca_v_vrstici_boljsi_nacin(3);
-    let cas_druga = zacetek.elapsed();
-    println!("Funkcija manjkajoca v vrstici stara: {:?}", cas_prva);
-    println!("Funkcija manjkajoca v vrstici nova: {:?}", cas_druga);
-    if cas_prva < cas_druga {
-        println!("Stara funkcija je hitrejša za {:.2}x", 
-                 cas_druga.as_nanos() as f64 / cas_prva.as_nanos() as f64);
-    } else {
-        println!("Nova funkcija je hitrejša za {:.2}x", 
-                 cas_prva.as_nanos() as f64 / cas_druga.as_nanos() as f64);
-    }
+    println!("Funkcija manjkajoca v vrstici: {:?}", cas_prva);
+    
+    
 
     let zacetek = Instant::now();
     sudoku.manjkajoca_v_stolpcu(3);
     let cas_prva = zacetek.elapsed();
-    let zacetek = Instant::now();
-    sudoku.manjkajoca_v_stolpcu_boljsi_nacin(3);
-    let cas_druga = zacetek.elapsed();
-    println!("Funkcija manjkajoca v stolpcu stara: {:?}", cas_prva);
-    println!("Funkcija manjkajoca v stolpcu nova: {:?}", cas_druga);
-    if cas_prva < cas_druga {
-        println!("Stara funkcija je hitrejša za {:.2}x", 
-                 cas_druga.as_nanos() as f64 / cas_prva.as_nanos() as f64);
-    } else {
-        println!("Nova funkcija je hitrejša za {:.2}x", 
-                 cas_prva.as_nanos() as f64 / cas_druga.as_nanos() as f64);
-    }
+    println!("Funkcija manjkajoca v stolpcu: {:?}", cas_prva);
+    
 }
 
 //časi za težek sudoku:
